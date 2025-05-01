@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,10 +12,23 @@ import {
   SelectValue
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Download, HelpCircle, FileText } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Textarea } from "@/components/ui/textarea";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useToast } from "@/hooks/use-toast";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter
+} from "@/components/ui/dialog";
+import { getAIProjectInsights, getGroqApiKey, setGroqApiKey, type ProjectDetails } from "@/utils/aiUtils";
+import { generatePDF, generateQuoteNumber } from "@/utils/pdfUtils";
 
-type QuizStep = 'type' | 'size' | 'materials' | 'results';
+type QuizStep = 'type' | 'size' | 'materials' | 'ai-questions' | 'results';
 
 interface MaterialPrice {
   [key: string]: number; // price per unit in Rs
@@ -33,6 +46,7 @@ const materialPrices: MaterialPrice = {
 };
 
 const PriceEstimatorQuiz = () => {
+  const { toast } = useToast();
   const [currentStep, setCurrentStep] = useState<QuizStep>('type');
   const [projectType, setProjectType] = useState<string>('');
   const [areaSize, setAreaSize] = useState<number>(500);
@@ -40,8 +54,18 @@ const PriceEstimatorQuiz = () => {
   const [numWindows, setNumWindows] = useState<number>(6);
   const [selectedMaterials, setSelectedMaterials] = useState<string[]>([]);
   const [estimatedPrice, setEstimatedPrice] = useState<number>(0);
+  const [aiInsights, setAiInsights] = useState<string>('');
+  const [isLoadingInsights, setIsLoadingInsights] = useState<boolean>(false);
+  const [apiKeyDialogOpen, setApiKeyDialogOpen] = useState<boolean>(false);
+  const [tempApiKey, setTempApiKey] = useState<string>('');
+  const [aiQuestionResponses, setAiQuestionResponses] = useState<{[key: string]: string}>({
+    projectPurpose: '',
+    specificRequirements: '',
+    timeline: '',
+    challenges: ''
+  });
 
-  const handleNextStep = () => {
+  const handleNextStep = async () => {
     switch(currentStep) {
       case 'type':
         setCurrentStep('size');
@@ -51,7 +75,29 @@ const PriceEstimatorQuiz = () => {
         break;
       case 'materials':
         calculateEstimate();
-        setCurrentStep('results');
+        setCurrentStep('ai-questions');
+        break;
+      case 'ai-questions':
+        setIsLoadingInsights(true);
+        try {
+          const projectDetails: ProjectDetails = {
+            projectType,
+            areaSize,
+            numDoors,
+            numWindows,
+            selectedMaterials,
+            estimatedPrice
+          };
+
+          const insights = await getAIProjectInsights(projectDetails);
+          setAiInsights(insights);
+        } catch (error) {
+          console.error("Error fetching AI insights:", error);
+          setAiInsights("Unable to generate insights at this time. Please try again later.");
+        } finally {
+          setIsLoadingInsights(false);
+          setCurrentStep('results');
+        }
         break;
       default:
         // Reset quiz
@@ -62,6 +108,13 @@ const PriceEstimatorQuiz = () => {
         setNumWindows(6);
         setSelectedMaterials([]);
         setEstimatedPrice(0);
+        setAiInsights('');
+        setAiQuestionResponses({
+          projectPurpose: '',
+          specificRequirements: '',
+          timeline: '',
+          challenges: ''
+        });
     }
   };
 
@@ -93,13 +146,68 @@ const PriceEstimatorQuiz = () => {
       // Area cost (simplified for estimation)
       const areaCost = areaSize * 100; // Base area cost
       
-      estimate = (doorCost + windowCost + areaCost) * baseMultiplier;
+      // Factor in AI question responses for more personalized estimate
+      let complexityMultiplier = 1;
+      if (aiQuestionResponses.specificRequirements.toLowerCase().includes('custom')) {
+        complexityMultiplier += 0.15; // Custom requirements add 15%
+      }
+      if (aiQuestionResponses.timeline.toLowerCase().includes('urgent') || 
+          aiQuestionResponses.timeline.toLowerCase().includes('immediate')) {
+        complexityMultiplier += 0.1; // Urgent timeline adds 10%
+      }
+      if (aiQuestionResponses.challenges.toLowerCase().includes('difficult') ||
+          aiQuestionResponses.challenges.toLowerCase().includes('complex')) {
+        complexityMultiplier += 0.08; // Complex challenges add 8%
+      }
+      
+      estimate = (doorCost + windowCost + areaCost) * baseMultiplier * complexityMultiplier;
     } else {
       // Default estimation if no materials selected
       estimate = areaSize * 500 + (numDoors * 8000) + (numWindows * 5000);
     }
     
     setEstimatedPrice(Math.round(estimate));
+  };
+
+  const handleSaveApiKey = () => {
+    setGroqApiKey(tempApiKey);
+    setApiKeyDialogOpen(false);
+    toast({
+      title: "API Key Saved",
+      description: "Your Groq API key has been temporarily saved for this session.",
+    });
+  };
+
+  const handleDownloadPDF = async () => {
+    try {
+      const projectDetails: ProjectDetails = {
+        projectType,
+        areaSize,
+        numDoors,
+        numWindows,
+        selectedMaterials,
+        estimatedPrice
+      };
+
+      await generatePDF({
+        projectDetails,
+        insights: aiInsights,
+        quoteDate: new Date().toLocaleDateString('en-IN'),
+        quoteNumber: generateQuoteNumber()
+      });
+
+      toast({
+        title: "PDF Generated",
+        description: "Your estimate has been downloaded as a PDF.",
+      });
+    } catch (error) {
+      console.error("PDF Error:", error);
+      toast({
+        title: "PDF Generation Failed",
+        description: error instanceof Error ? error.message : "Unknown error occurred",
+        variant: "destructive"
+      });
+    }
   };
 
   return (
@@ -119,6 +227,7 @@ const PriceEstimatorQuiz = () => {
                 {currentStep === 'type' && "What type of project are you planning?"}
                 {currentStep === 'size' && "What's the size of your project?"}
                 {currentStep === 'materials' && "Select your preferred materials"}
+                {currentStep === 'ai-questions' && "Tell us more about your project"}
                 {currentStep === 'results' && "Your Estimated Project Cost"}
               </CardTitle>
             </CardHeader>
@@ -419,25 +528,176 @@ const PriceEstimatorQuiz = () => {
                       disabled={selectedMaterials.length === 0}
                       className="bg-timber-600 hover:bg-timber-700"
                     >
-                      Get Estimate <ArrowRight className="ml-2" size={18} />
+                      Next <ArrowRight className="ml-2" size={18} />
                     </Button>
                   </div>
                 </div>
               )}
 
-              {/* Step 4: Results */}
-              {currentStep === 'results' && (
+              {/* Step 4: AI Questions */}
+              {currentStep === 'ai-questions' && (
                 <div className="space-y-6">
-                  <div className="text-center py-8">
-                    <p className="text-lg mb-2">Your estimated project cost:</p>
-                    <p className="text-4xl font-bold text-timber-700">₹{estimatedPrice.toLocaleString('en-IN')}</p>
-                    <p className="text-sm text-muted-foreground mt-4">
-                      This is a preliminary estimate based on the information provided. 
-                      For a detailed quote, please contact our team.
-                    </p>
+                  <div className="flex items-center justify-between">
+                    <p className="text-sm font-medium">Help us understand your project better</p>
+                    
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      className="text-forest-700"
+                      onClick={() => setApiKeyDialogOpen(true)}
+                    >
+                      <HelpCircle className="h-4 w-4 mr-1" />
+                      Set API Key
+                    </Button>
                   </div>
                   
-                  <div className="flex flex-col sm:flex-row justify-center gap-4 mt-6">
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="project-purpose">What is the main purpose of this project?</Label>
+                      <Textarea 
+                        id="project-purpose" 
+                        placeholder="E.g., Home renovation, new office space, etc."
+                        value={aiQuestionResponses.projectPurpose}
+                        onChange={(e) => setAiQuestionResponses(prev => ({...prev, projectPurpose: e.target.value}))}
+                        className="resize-none"
+                      />
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label htmlFor="specific-requirements">Do you have any specific requirements or preferences?</Label>
+                      <Textarea 
+                        id="specific-requirements" 
+                        placeholder="E.g., Custom designs, specific finishes, etc."
+                        value={aiQuestionResponses.specificRequirements}
+                        onChange={(e) => setAiQuestionResponses(prev => ({...prev, specificRequirements: e.target.value}))}
+                        className="resize-none"
+                      />
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label htmlFor="timeline">What's your timeline for this project?</Label>
+                      <Textarea 
+                        id="timeline" 
+                        placeholder="E.g., Need it completed within 3 months, etc."
+                        value={aiQuestionResponses.timeline}
+                        onChange={(e) => setAiQuestionResponses(prev => ({...prev, timeline: e.target.value}))}
+                        className="resize-none"
+                      />
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label htmlFor="challenges">Any challenges or concerns you foresee?</Label>
+                      <Textarea 
+                        id="challenges" 
+                        placeholder="E.g., Limited space, budget constraints, etc."
+                        value={aiQuestionResponses.challenges}
+                        onChange={(e) => setAiQuestionResponses(prev => ({...prev, challenges: e.target.value}))}
+                        className="resize-none"
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="flex justify-between mt-6">
+                    <Button 
+                      variant="outline" 
+                      onClick={() => setCurrentStep('materials')}
+                    >
+                      Back
+                    </Button>
+                    <Button 
+                      onClick={handleNextStep} 
+                      className="bg-timber-600 hover:bg-timber-700"
+                    >
+                      Get AI-Enhanced Estimate <ArrowRight className="ml-2" size={18} />
+                    </Button>
+                  </div>
+                </div>
+              )}
+
+              {/* Step 5: Results */}
+              {currentStep === 'results' && (
+                <div className="space-y-6">
+                  <div className="text-center py-6">
+                    <p className="text-lg mb-2">Your estimated project cost:</p>
+                    <p className="text-4xl font-bold text-timber-700">₹{estimatedPrice.toLocaleString('en-IN')}</p>
+                  </div>
+                  
+                  <Tabs defaultValue="estimate" className="w-full">
+                    <TabsList className="grid grid-cols-2">
+                      <TabsTrigger value="estimate">Estimate Details</TabsTrigger>
+                      <TabsTrigger value="insights">Expert Insights</TabsTrigger>
+                    </TabsList>
+                    
+                    <TabsContent value="estimate" className="pt-4">
+                      <div className="space-y-4">
+                        <div className="grid grid-cols-2 gap-2 text-sm">
+                          <div className="font-medium">Project Type:</div>
+                          <div>{projectType === 'residential' ? 'Residential' : 'Commercial'}</div>
+                          
+                          <div className="font-medium">Area Size:</div>
+                          <div>{areaSize.toLocaleString()} sq. ft.</div>
+                          
+                          <div className="font-medium">Number of Doors:</div>
+                          <div>{numDoors}</div>
+                          
+                          <div className="font-medium">Number of Windows:</div>
+                          <div>{numWindows}</div>
+                          
+                          <div className="font-medium">Selected Materials:</div>
+                          <div>{selectedMaterials.map(m => {
+                            const nameMap: {[key: string]: string} = {
+                              'burmaTeak': 'Burma Teak',
+                              'ghanaTeak': 'Ghana Teak',
+                              'brazilianTeak': 'Brazilian Teak',
+                              'indianSal': 'Indian Sal',
+                              'centuryPlySainik': 'Century Ply Sainik MR',
+                              'marinePlywood': 'Marine Plywood',
+                              'laminatedPlywood': 'Laminated Plywood',
+                              'waterproofPlywood': 'Waterproof Plywood'
+                            };
+                            return nameMap[m] || m;
+                          }).join(', ')}</div>
+                        </div>
+                        
+                        <p className="text-sm text-muted-foreground mt-4">
+                          This is a preliminary estimate based on the information provided. 
+                          For a detailed quote, please contact our team.
+                        </p>
+                      </div>
+                    </TabsContent>
+                    
+                    <TabsContent value="insights" className="pt-4">
+                      {isLoadingInsights ? (
+                        <div className="py-8 text-center">
+                          <div className="animate-spin w-6 h-6 border-2 border-timber-700 border-t-transparent rounded-full mx-auto mb-4"></div>
+                          <p>Generating expert insights...</p>
+                        </div>
+                      ) : (
+                        <div className="prose prose-sm max-w-none">
+                          {!getGroqApiKey() ? (
+                            <div className="p-4 bg-amber-50 text-amber-800 rounded-md">
+                              <p className="font-medium">API key not set</p>
+                              <p className="text-sm mt-1">Please set your Groq API key to get AI-powered insights.</p>
+                              <Button 
+                                variant="outline" 
+                                size="sm" 
+                                onClick={() => setApiKeyDialogOpen(true)}
+                                className="mt-2"
+                              >
+                                Set API Key
+                              </Button>
+                            </div>
+                          ) : aiInsights ? (
+                            <div className="whitespace-pre-line">{aiInsights}</div>
+                          ) : (
+                            <p>No insights available. Please try again later.</p>
+                          )}
+                        </div>
+                      )}
+                    </TabsContent>
+                  </Tabs>
+                  
+                  <div className="flex flex-col sm:flex-row justify-center gap-4 mt-8">
                     <Button 
                       variant="outline" 
                       onClick={() => setCurrentStep('type')}
@@ -445,7 +705,14 @@ const PriceEstimatorQuiz = () => {
                       Start Over
                     </Button>
                     <Button 
-                      className="bg-forest-700 hover:bg-forest-800"
+                      variant="outline"
+                      className="flex-1"
+                      onClick={handleDownloadPDF}
+                    >
+                      <FileText className="mr-2 h-4 w-4" /> Download PDF Quote
+                    </Button>
+                    <Button 
+                      className="bg-forest-700 hover:bg-forest-800 flex-1"
                       asChild
                     >
                       <a href="/contact">Get Detailed Quote</a>
@@ -457,6 +724,48 @@ const PriceEstimatorQuiz = () => {
           </Card>
         </div>
       </div>
+      
+      {/* API Key Dialog */}
+      <Dialog open={apiKeyDialogOpen} onOpenChange={setApiKeyDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Enter Groq API Key</DialogTitle>
+            <DialogDescription>
+              Enter your Groq API key to enable AI-powered insights for your project estimate.
+              This key will only be stored temporarily in your browser's memory.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <Label htmlFor="api-key">API Key</Label>
+              <Input 
+                id="api-key" 
+                type="password"
+                placeholder="Enter your Groq API key" 
+                value={tempApiKey}
+                onChange={(e) => setTempApiKey(e.target.value)}
+              />
+              <p className="text-xs text-muted-foreground">
+                Don't have a key? You can get one at <a href="https://console.groq.com/keys" target="_blank" rel="noreferrer" className="underline">console.groq.com</a>
+              </p>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button 
+              variant="outline" 
+              onClick={() => setApiKeyDialogOpen(false)}
+            >
+              Cancel
+            </Button>
+            <Button 
+              onClick={handleSaveApiKey}
+              disabled={!tempApiKey}
+            >
+              Save Key
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
