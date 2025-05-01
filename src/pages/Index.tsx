@@ -8,6 +8,8 @@ import FeaturesSection from "../components/home/FeaturesSection";
 import TestimonialsSection from "../components/home/TestimonialsSection";
 import CTASection from "../components/home/CTASection";
 import PriceEstimatorQuiz from "../components/home/PriceEstimatorQuiz";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const Index = () => {
   useEffect(() => {
@@ -17,6 +19,13 @@ const Index = () => {
   return (
     <Layout>
       <Hero />
+      <div className="container my-8 flex justify-center">
+        <Link to="/dashboard">
+          <Button variant="default" size="lg">
+            View Dashboard
+          </Button>
+        </Link>
+      </div>
       <CategorySection />
       <CustomerSegment />
       <PriceEstimatorQuiz />
