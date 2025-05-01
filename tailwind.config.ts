@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -52,6 +53,32 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+                timber: {
+                    50: '#f8f6f2',
+                    100: '#f0ebe0',
+                    200: '#e5d9c7',
+                    300: '#d7c2a8',
+                    400: '#c6a683',
+                    500: '#b48b63',
+                    600: '#a47453',
+                    700: '#8a6046',
+                    800: '#714f3d',
+                    900: '#5d4234',
+                    950: '#332118',
+                },
+                forest: {
+                    50: '#f2f7f3',
+                    100: '#e1ebe2',
+                    200: '#c3d6c7',
+                    300: '#9db8a3',
+                    400: '#749a7c',
+                    500: '#587e62',
+                    600: '#44654e',
+                    700: '#385141',
+                    800: '#2e4037',
+                    900: '#273730',
+                    950: '#131e19',
+                },
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
@@ -84,12 +111,53 @@ export default {
 					to: {
 						height: '0'
 					}
-				}
+				},
+                'fade-in': {
+                    '0%': {
+                        opacity: '0',
+                        transform: 'translateY(10px)'
+                    },
+                    '100%': {
+                        opacity: '1',
+                        transform: 'translateY(0)'
+                    }
+                },
+                'fade-out': {
+                    '0%': {
+                        opacity: '1',
+                        transform: 'translateY(0)'
+                    },
+                    '100%': {
+                        opacity: '0',
+                        transform: 'translateY(10px)'
+                    }
+                },
+                'slide-in': {
+                    '0%': {
+                        transform: 'translateX(-100%)',
+                        opacity: '0'
+                    },
+                    '100%': {
+                        transform: 'translateX(0)',
+                        opacity: '1'
+                    }
+                }
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
-			}
+				'accordion-up': 'accordion-up 0.2s ease-out',
+                'fade-in': 'fade-in 0.3s ease-out',
+                'fade-out': 'fade-out 0.3s ease-out',
+                'slide-in': 'slide-in 0.5s ease-out'
+			},
+            fontFamily: {
+                'playfair': ['"Playfair Display"', 'serif'],
+                'poppins': ['Poppins', 'sans-serif'],
+            },
+            backgroundImage: {
+                'wood-texture': "url('/images/wood-texture.jpg')",
+                'hero-pattern': "url('/images/hero-pattern.jpg')",
+            }
 		}
 	},
 	plugins: [require("tailwindcss-animate")],
