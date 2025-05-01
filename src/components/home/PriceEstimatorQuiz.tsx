@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -13,7 +14,7 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { ArrowRight, Download, FileText } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
@@ -238,7 +239,48 @@ const PriceEstimatorQuiz = () => {
     regionalPreferences: ''
   });
 
+  // New state for Express Mode
+  const [isExpressMode, setIsExpressMode] = useState<boolean>(false);
+
+  // Helper function to update AI question responses
+  const updateAIQuestionResponse = (field: keyof AIQuestionResponses, value: string) => {
+    setAiQuestionResponses(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
   const handleNextStep = async () => {
+    // In express mode, we'll skip certain steps or use default values
+    if (isExpressMode) {
+      switch(currentStep) {
+        case 'type':
+          setCurrentStep('sub-type');
+          break;
+        case 'sub-type':
+          setCurrentStep('size');
+          break;
+        case 'size':
+          // Skip directly to materials in express mode
+          setCurrentStep('materials');
+          break;
+        case 'materials':
+          // Skip to budget in express mode
+          setCurrentStep('budget');
+          break;
+        case 'budget':
+          calculateEstimate();
+          setCurrentStep('results');
+          break;
+        default:
+          handleRegularNextStep();
+      }
+    } else {
+      handleRegularNextStep();
+    }
+  };
+
+  const handleRegularNextStep = async () => {
     switch(currentStep) {
       case 'type':
         setCurrentStep('sub-type');
@@ -356,6 +398,7 @@ const PriceEstimatorQuiz = () => {
     setPriorityFactor('quality');
     setEstimatedPrice(0);
     setAiInsights('');
+    setIsExpressMode(false);
     setAiQuestionResponses({
       projectPurpose: '',
       specificRequirements: '',
@@ -599,20 +642,37 @@ const PriceEstimatorQuiz = () => {
         <div className="max-w-3xl mx-auto">
           <Card className="bg-white">
             <CardHeader>
-              <CardTitle className="text-xl text-center">
-                {currentStep === 'type' && "What type of project are you planning?"}
-                {currentStep === 'sub-type' && "Select your specific project type"}
-                {currentStep === 'size' && "What's the size of your project?"}
-                {currentStep === 'door-details' && "Tell us about the doors you need"}
-                {currentStep === 'window-details' && "Tell us about the windows you need"}
-                {currentStep === 'additional-woodwork' && "Any additional woodwork requirements?"}
-                {currentStep === 'materials' && "Select your preferred materials"}
-                {currentStep === 'design-preferences' && "What design style are you looking for?"}
-                {currentStep === 'environmental' && "Environmental & durability considerations"}
-                {currentStep === 'budget' && "Budget and priorities"}
-                {currentStep === 'ai-questions' && "Tell us more about your project"}
-                {currentStep === 'results' && "Your Detailed Project Estimate"}
-              </CardTitle>
+              <div className="flex justify-between items-center">
+                <CardTitle className="text-xl text-center flex-1">
+                  {currentStep === 'type' && "What type of project are you planning?"}
+                  {currentStep === 'sub-type' && "Select your specific project type"}
+                  {currentStep === 'size' && "What's the size of your project?"}
+                  {currentStep === 'door-details' && "Tell us about the doors you need"}
+                  {currentStep === 'window-details' && "Tell us about the windows you need"}
+                  {currentStep === 'additional-woodwork' && "Any additional woodwork requirements?"}
+                  {currentStep === 'materials' && "Select your preferred materials"}
+                  {currentStep === 'design-preferences' && "What design style are you looking for?"}
+                  {currentStep === 'environmental' && "Environmental & durability considerations"}
+                  {currentStep === 'budget' && "Budget and priorities"}
+                  {currentStep === 'ai-questions' && "Tell us more about your project"}
+                  {currentStep === 'results' && "Your Detailed Project Estimate"}
+                </CardTitle>
+                {currentStep === 'type' && (
+                  <div className="flex items-center space-x-2">
+                    <Label htmlFor="express-mode" className="text-sm">Express Mode</Label>
+                    <Switch 
+                      id="express-mode" 
+                      checked={isExpressMode} 
+                      onCheckedChange={setIsExpressMode} 
+                    />
+                  </div>
+                )}
+              </div>
+              {isExpressMode && currentStep !== 'type' && currentStep !== 'results' && (
+                <p className="text-sm text-muted-foreground mt-2">
+                  Express mode is on. You can skip detailed options and still get a quick estimate.
+                </p>
+              )}
             </CardHeader>
             <CardContent className="pt-4">
               {/* Step 1: Project Type */}
@@ -686,13 +746,23 @@ const PriceEstimatorQuiz = () => {
                     >
                       Back
                     </Button>
-                    <Button 
-                      onClick={handleNextStep} 
-                      disabled={!projectSubType}
-                      className="bg-timber-600 hover:bg-timber-700"
-                    >
-                      Next <ArrowRight className="ml-2" size={18} />
-                    </Button>
+                    <div className="space-x-2">
+                      {isExpressMode && (
+                        <Button 
+                          variant="ghost" 
+                          onClick={handleNextStep}
+                        >
+                          Skip
+                        </Button>
+                      )}
+                      <Button 
+                        onClick={handleNextStep} 
+                        disabled={!isExpressMode && !projectSubType}
+                        className="bg-timber-600 hover:bg-timber-700"
+                      >
+                        Next <ArrowRight className="ml-2" size={18} />
+                      </Button>
+                    </div>
                   </div>
                 </div>
               )}
@@ -771,12 +841,22 @@ const PriceEstimatorQuiz = () => {
                     >
                       Back
                     </Button>
-                    <Button 
-                      onClick={handleNextStep} 
-                      className="bg-timber-600 hover:bg-timber-700"
-                    >
-                      Next <ArrowRight className="ml-2" size={18} />
-                    </Button>
+                    <div className="space-x-2">
+                      {isExpressMode && (
+                        <Button 
+                          variant="ghost" 
+                          onClick={handleNextStep}
+                        >
+                          Skip to Materials
+                        </Button>
+                      )}
+                      <Button 
+                        onClick={handleNextStep} 
+                        className="bg-timber-600 hover:bg-timber-700"
+                      >
+                        Next <ArrowRight className="ml-2" size={18} />
+                      </Button>
+                    </div>
                   </div>
                 </div>
               )}
@@ -869,4 +949,654 @@ const PriceEstimatorQuiz = () => {
                   </div>
                   <div className="flex justify-between mt-6">
                     <Button 
-                      variant
+                      variant="outline" 
+                      onClick={() => setCurrentStep('size')}
+                    >
+                      Back
+                    </Button>
+                    <div className="space-x-2">
+                      <Button 
+                        variant="ghost" 
+                        onClick={handleNextStep}
+                      >
+                        {selectedDoorTypes.length === 0 ? "Skip" : "Next"}
+                      </Button>
+                      {selectedDoorTypes.length > 0 && (
+                        <Button 
+                          onClick={handleNextStep} 
+                          className="bg-timber-600 hover:bg-timber-700"
+                        >
+                          Next <ArrowRight className="ml-2" size={18} />
+                        </Button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Step 4: Window Details */}
+              {currentStep === 'window-details' && numWindows > 0 && (
+                <div className="space-y-6">
+                  <div className="space-y-4">
+                    <Label className="text-base font-medium">Window Types (select all that apply):</Label>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-2">
+                      {windowTypes.map((window) => (
+                        <div key={window.type} className="flex items-start space-x-3">
+                          <Checkbox 
+                            id={`window-${window.type}`} 
+                            checked={selectedWindowTypes.includes(window.type)} 
+                            onCheckedChange={() => toggleWindowType(window.type)}
+                          />
+                          <div className="space-y-1">
+                            <Label 
+                              htmlFor={`window-${window.type}`} 
+                              className="font-medium cursor-pointer"
+                            >
+                              {window.type.charAt(0).toUpperCase() + window.type.slice(1)}
+                            </Label>
+                            <p className="text-sm text-muted-foreground">
+                              {window.description}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="pt-4">
+                      <Label className="text-base font-medium">Average Window Dimensions:</Label>
+                      <div className="grid grid-cols-2 gap-4 mt-2">
+                        <div className="space-y-2">
+                          <Label htmlFor="window-width">Width (feet)</Label>
+                          <div className="flex items-center space-x-2">
+                            <Input 
+                              id="window-width" 
+                              type="number" 
+                              min="1"
+                              max="10"
+                              step="0.5"
+                              value={windowSizes.width} 
+                              onChange={(e) => setWindowSizes(prev => ({...prev, width: parseFloat(e.target.value) || prev.width}))}
+                            />
+                            <span className="text-sm">ft</span>
+                          </div>
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="window-height">Height (feet)</Label>
+                          <div className="flex items-center space-x-2">
+                            <Input 
+                              id="window-height" 
+                              type="number" 
+                              min="1"
+                              max="10"
+                              step="0.5"
+                              value={windowSizes.height} 
+                              onChange={(e) => setWindowSizes(prev => ({...prev, height: parseFloat(e.target.value) || prev.height}))}
+                            />
+                            <span className="text-sm">ft</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex justify-between mt-6">
+                    <Button 
+                      variant="outline" 
+                      onClick={() => setCurrentStep('door-details')}
+                    >
+                      Back
+                    </Button>
+                    <div className="space-x-2">
+                      <Button 
+                        variant="ghost" 
+                        onClick={handleNextStep}
+                      >
+                        {selectedWindowTypes.length === 0 ? "Skip" : "Next"}
+                      </Button>
+                      {selectedWindowTypes.length > 0 && (
+                        <Button 
+                          onClick={handleNextStep} 
+                          className="bg-timber-600 hover:bg-timber-700"
+                        >
+                          Next <ArrowRight className="ml-2" size={18} />
+                        </Button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Step 5: Additional Woodwork */}
+              {currentStep === 'additional-woodwork' && (
+                <div className="space-y-6">
+                  <div className="space-y-4">
+                    <Label className="text-base font-medium">Need any additional woodwork? (Select all that apply)</Label>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-2">
+                      {additionalWoodworkTypes.map((item) => (
+                        <div key={item.id} className="flex items-center space-x-2">
+                          <Checkbox 
+                            id={`woodwork-${item.id}`} 
+                            checked={additionalWoodwork.includes(item.id)} 
+                            onCheckedChange={() => toggleAdditionalWoodwork(item.id)}
+                          />
+                          <Label htmlFor={`woodwork-${item.id}`}>{item.label}</Label>
+                        </div>
+                      ))}
+                    </div>
+
+                    {additionalWoodwork.length > 0 && (
+                      <div className="pt-4">
+                        <Label htmlFor="woodwork-details" className="text-base font-medium">
+                          Any specific details about your woodwork requirements?
+                        </Label>
+                        <Textarea
+                          id="woodwork-details"
+                          placeholder="Tell us more about your woodwork needs..."
+                          className="mt-2"
+                          value={additionalWoodworkDetails}
+                          onChange={(e) => setAdditionalWoodworkDetails(e.target.value)}
+                        />
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex justify-between mt-6">
+                    <Button 
+                      variant="outline" 
+                      onClick={() => setCurrentStep('window-details')}
+                    >
+                      Back
+                    </Button>
+                    <div className="space-x-2">
+                      <Button 
+                        variant="ghost" 
+                        onClick={handleNextStep}
+                      >
+                        {additionalWoodwork.length === 0 ? "Skip" : "Next"}
+                      </Button>
+                      {additionalWoodwork.length > 0 && (
+                        <Button 
+                          onClick={handleNextStep} 
+                          className="bg-timber-600 hover:bg-timber-700"
+                        >
+                          Next <ArrowRight className="ml-2" size={18} />
+                        </Button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Step 6: Materials */}
+              {currentStep === 'materials' && (
+                <div className="space-y-6">
+                  <div className="space-y-4">
+                    <Label className="text-base font-medium">Select your preferred materials (optional):</Label>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 mt-2">
+                      {Object.keys(materialPrices).map((material) => (
+                        <div key={material} className="flex items-center space-x-2">
+                          <Checkbox 
+                            id={`material-${material}`} 
+                            checked={selectedMaterials.includes(material)} 
+                            onCheckedChange={() => toggleMaterial(material)}
+                          />
+                          <Label htmlFor={`material-${material}`}>
+                            {material.replace(/([A-Z])/g, ' $1').replace(/^./, (str) => str.toUpperCase())}
+                          </Label>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="flex justify-between mt-6">
+                    <Button 
+                      variant="outline" 
+                      onClick={() => isExpressMode ? setCurrentStep('size') : setCurrentStep('additional-woodwork')}
+                    >
+                      Back
+                    </Button>
+                    <div className="space-x-2">
+                      <Button 
+                        variant="ghost" 
+                        onClick={handleNextStep}
+                      >
+                        {selectedMaterials.length === 0 ? "Skip" : "Next"}
+                      </Button>
+                      {selectedMaterials.length > 0 && !isExpressMode && (
+                        <Button 
+                          onClick={handleNextStep} 
+                          className="bg-timber-600 hover:bg-timber-700"
+                        >
+                          Next <ArrowRight className="ml-2" size={18} />
+                        </Button>
+                      )}
+                      {isExpressMode && (
+                        <Button 
+                          onClick={handleNextStep} 
+                          className="bg-timber-600 hover:bg-timber-700"
+                        >
+                          Skip to Budget <ArrowRight className="ml-2" size={18} />
+                        </Button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Step 7: Design Preferences */}
+              {currentStep === 'design-preferences' && (
+                <div className="space-y-6">
+                  <div className="space-y-4">
+                    <div>
+                      <Label className="text-base font-medium">Select your design style (optional):</Label>
+                      <RadioGroup 
+                        value={designStyle} 
+                        onValueChange={setDesignStyle}
+                        className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-2"
+                      >
+                        {designStyles.map((style) => (
+                          <div key={style.id} className="flex items-center space-x-2">
+                            <RadioGroupItem value={style.id} id={`style-${style.id}`} />
+                            <Label htmlFor={`style-${style.id}`}>{style.label}</Label>
+                          </div>
+                        ))}
+                      </RadioGroup>
+                    </div>
+
+                    <div className="pt-4">
+                      <Label className="text-base font-medium">Select finish preferences (optional):</Label>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-2">
+                        {finishTypes.map((finish) => (
+                          <div key={finish.id} className="flex items-center space-x-2">
+                            <Checkbox 
+                              id={`finish-${finish.id}`} 
+                              checked={finishPreferences.includes(finish.id)} 
+                              onCheckedChange={() => toggleFinishType(finish.id)}
+                            />
+                            <Label htmlFor={`finish-${finish.id}`}>{finish.label}</Label>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex justify-between mt-6">
+                    <Button 
+                      variant="outline" 
+                      onClick={() => setCurrentStep('materials')}
+                    >
+                      Back
+                    </Button>
+                    <div className="space-x-2">
+                      <Button 
+                        variant="ghost" 
+                        onClick={handleNextStep}
+                      >
+                        Skip
+                      </Button>
+                      <Button 
+                        onClick={handleNextStep} 
+                        className="bg-timber-600 hover:bg-timber-700"
+                      >
+                        Next <ArrowRight className="ml-2" size={18} />
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Step 8: Environmental Considerations */}
+              {currentStep === 'environmental' && (
+                <div className="space-y-6">
+                  <div className="space-y-4">
+                    <div>
+                      <Label className="text-base font-medium">Climate zone (optional):</Label>
+                      <RadioGroup 
+                        value={climateZone} 
+                        onValueChange={setClimateZone}
+                        className="grid grid-cols-1 gap-3 mt-2"
+                      >
+                        {climateZones.map((zone) => (
+                          <div key={zone.id} className="flex items-center space-x-2">
+                            <RadioGroupItem value={zone.id} id={`zone-${zone.id}`} />
+                            <Label htmlFor={`zone-${zone.id}`}>{zone.label}</Label>
+                          </div>
+                        ))}
+                      </RadioGroup>
+                    </div>
+
+                    <div className="pt-4">
+                      <Label htmlFor="sustainability" className="text-base font-medium">
+                        Sustainability importance (optional): {sustainabilityPreference}/5
+                      </Label>
+                      <Slider
+                        id="sustainability"
+                        defaultValue={[sustainabilityPreference]}
+                        min={1}
+                        max={5}
+                        step={1}
+                        onValueChange={(value) => setSustainabilityPreference(value[0])}
+                        className="my-4"
+                      />
+                      <div className="flex justify-between text-sm text-muted-foreground">
+                        <span>Not important</span>
+                        <span>Very important</span>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
+                      <div className="flex items-center space-x-2">
+                        <Switch 
+                          id="termite-protection" 
+                          checked={termiteProtection} 
+                          onCheckedChange={setTermiteProtection}
+                        />
+                        <Label htmlFor="termite-protection">Termite protection</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <Switch 
+                          id="moisture-resistance" 
+                          checked={moistureResistance} 
+                          onCheckedChange={setMoistureResistance}
+                        />
+                        <Label htmlFor="moisture-resistance">Moisture resistance</Label>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex justify-between mt-6">
+                    <Button 
+                      variant="outline" 
+                      onClick={() => setCurrentStep('design-preferences')}
+                    >
+                      Back
+                    </Button>
+                    <div className="space-x-2">
+                      <Button 
+                        variant="ghost" 
+                        onClick={handleNextStep}
+                      >
+                        Skip
+                      </Button>
+                      <Button 
+                        onClick={handleNextStep} 
+                        className="bg-timber-600 hover:bg-timber-700"
+                      >
+                        Next <ArrowRight className="ml-2" size={18} />
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Step 9: Budget */}
+              {currentStep === 'budget' && (
+                <div className="space-y-6">
+                  <div className="space-y-4">
+                    <div>
+                      <Label className="text-base font-medium">Budget range:</Label>
+                      <RadioGroup 
+                        value={budgetRange} 
+                        onValueChange={setBudgetRange}
+                        className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-2"
+                      >
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="low" id="budget-low" />
+                          <Label htmlFor="budget-low">Economy/Low</Label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="medium" id="budget-medium" />
+                          <Label htmlFor="budget-medium">Medium/Standard</Label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="high" id="budget-high" />
+                          <Label htmlFor="budget-high">High/Premium</Label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="luxury" id="budget-luxury" />
+                          <Label htmlFor="budget-luxury">Luxury/Custom</Label>
+                        </div>
+                      </RadioGroup>
+                    </div>
+
+                    <div className="pt-4">
+                      <Label className="text-base font-medium">Budget flexibility (optional):</Label>
+                      <RadioGroup 
+                        value={budgetFlexibility} 
+                        onValueChange={setBudgetFlexibility}
+                        className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-2"
+                      >
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="strict" id="flexibility-strict" />
+                          <Label htmlFor="flexibility-strict">Very strict</Label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="somewhat" id="flexibility-somewhat" />
+                          <Label htmlFor="flexibility-somewhat">Somewhat flexible</Label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="very" id="flexibility-very" />
+                          <Label htmlFor="flexibility-very">Very flexible</Label>
+                        </div>
+                      </RadioGroup>
+                    </div>
+
+                    <div className="pt-4">
+                      <Label className="text-base font-medium">Priority (optional):</Label>
+                      <RadioGroup 
+                        value={priorityFactor} 
+                        onValueChange={setPriorityFactor}
+                        className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-2"
+                      >
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="cost" id="priority-cost" />
+                          <Label htmlFor="priority-cost">Cost saving</Label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="quality" id="priority-quality" />
+                          <Label htmlFor="priority-quality">Quality</Label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="speed" id="priority-speed" />
+                          <Label htmlFor="priority-speed">Speed of delivery</Label>
+                        </div>
+                      </RadioGroup>
+                    </div>
+                  </div>
+                  <div className="flex justify-between mt-6">
+                    <Button 
+                      variant="outline" 
+                      onClick={() => isExpressMode ? setCurrentStep('materials') : setCurrentStep('environmental')}
+                    >
+                      Back
+                    </Button>
+                    <Button 
+                      onClick={handleNextStep} 
+                      className="bg-timber-600 hover:bg-timber-700"
+                    >
+                      {isExpressMode ? "Get Estimate" : "Next"} <ArrowRight className="ml-2" size={18} />
+                    </Button>
+                  </div>
+                </div>
+              )}
+
+              {/* Step 10: AI Questions */}
+              {currentStep === 'ai-questions' && (
+                <div className="space-y-6">
+                  <div className="space-y-6">
+                    <div>
+                      <Label htmlFor="project-purpose" className="text-base font-medium">
+                        What is the primary purpose of your project?
+                      </Label>
+                      <Textarea 
+                        id="project-purpose"
+                        placeholder="E.g., New construction, renovation, expansion, etc."
+                        className="mt-2"
+                        value={aiQuestionResponses.projectPurpose}
+                        onChange={(e) => updateAIQuestionResponse('projectPurpose', e.target.value)}
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="specific-requirements" className="text-base font-medium">
+                        Any specific requirements or custom features?
+                      </Label>
+                      <Textarea 
+                        id="specific-requirements"
+                        placeholder="E.g., Custom designs, special features, etc."
+                        className="mt-2"
+                        value={aiQuestionResponses.specificRequirements}
+                        onChange={(e) => updateAIQuestionResponse('specificRequirements', e.target.value)}
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="timeline" className="text-base font-medium">
+                        What's your project timeline?
+                      </Label>
+                      <Textarea 
+                        id="timeline"
+                        placeholder="E.g., Urgent, within 3 months, flexible, etc."
+                        className="mt-2"
+                        value={aiQuestionResponses.timeline}
+                        onChange={(e) => updateAIQuestionResponse('timeline', e.target.value)}
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="challenges" className="text-base font-medium">
+                        Any specific challenges or constraints?
+                      </Label>
+                      <Textarea 
+                        id="challenges"
+                        placeholder="E.g., Limited space, existing structures, etc."
+                        className="mt-2"
+                        value={aiQuestionResponses.challenges}
+                        onChange={(e) => updateAIQuestionResponse('challenges', e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  <div className="flex justify-between mt-6">
+                    <Button 
+                      variant="outline" 
+                      onClick={() => setCurrentStep('budget')}
+                    >
+                      Back
+                    </Button>
+                    <div className="space-x-2">
+                      <Button 
+                        variant="ghost" 
+                        onClick={handleNextStep}
+                      >
+                        Skip
+                      </Button>
+                      <Button 
+                        onClick={handleNextStep} 
+                        className="bg-timber-600 hover:bg-timber-700"
+                      >
+                        Generate Estimate <ArrowRight className="ml-2" size={18} />
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Step 11: Results */}
+              {currentStep === 'results' && (
+                <div className="space-y-8">
+                  {isLoadingInsights ? (
+                    <div className="text-center py-8">
+                      <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] text-primary motion-reduce:animate-[spin_1.5s_linear_infinite]"></div>
+                      <p className="mt-4">Generating AI insights for your project...</p>
+                    </div>
+                  ) : (
+                    <>
+                      <div className="text-center">
+                        <h3 className="text-2xl md:text-3xl font-bold text-forest-700">Estimated Price:</h3>
+                        <p className="text-3xl md:text-4xl font-bold mt-2">₹{estimatedPrice.toLocaleString('en-IN')}</p>
+                        {isExpressMode && (
+                          <p className="text-sm text-muted-foreground mt-2">
+                            This is a quick estimate based on your basic inputs. For a more detailed estimate, try turning off Express Mode.
+                          </p>
+                        )}
+                      </div>
+
+                      <div className="space-y-4">
+                        <h4 className="text-xl font-semibold">Project Details:</h4>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div className="border rounded-lg p-3">
+                            <span className="text-sm font-medium text-muted-foreground">Project Type:</span>
+                            <p className="font-medium">{projectType.charAt(0).toUpperCase() + projectType.slice(1)} - {projectSubType}</p>
+                          </div>
+                          <div className="border rounded-lg p-3">
+                            <span className="text-sm font-medium text-muted-foreground">Area Size:</span>
+                            <p className="font-medium">{areaSize} sq.ft</p>
+                          </div>
+                          <div className="border rounded-lg p-3">
+                            <span className="text-sm font-medium text-muted-foreground">Doors:</span>
+                            <p className="font-medium">{numDoors} {selectedDoorTypes.length > 0 ? `(${selectedDoorTypes.join(", ")})` : ""}</p>
+                          </div>
+                          <div className="border rounded-lg p-3">
+                            <span className="text-sm font-medium text-muted-foreground">Windows:</span>
+                            <p className="font-medium">{numWindows} {selectedWindowTypes.length > 0 ? `(${selectedWindowTypes.join(", ")})` : ""}</p>
+                          </div>
+                          {selectedMaterials.length > 0 && (
+                            <div className="border rounded-lg p-3 md:col-span-2">
+                              <span className="text-sm font-medium text-muted-foreground">Materials:</span>
+                              <p className="font-medium">{selectedMaterials.map(m => m.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())).join(", ")}</p>
+                            </div>
+                          )}
+                          {designStyle && (
+                            <div className="border rounded-lg p-3">
+                              <span className="text-sm font-medium text-muted-foreground">Design Style:</span>
+                              <p className="font-medium">{designStyle.charAt(0).toUpperCase() + designStyle.slice(1)}</p>
+                            </div>
+                          )}
+                          {budgetRange && (
+                            <div className="border rounded-lg p-3">
+                              <span className="text-sm font-medium text-muted-foreground">Budget Range:</span>
+                              <p className="font-medium">{budgetRange.charAt(0).toUpperCase() + budgetRange.slice(1)}</p>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      {aiInsights && (
+                        <div className="space-y-4">
+                          <h4 className="text-xl font-semibold">AI Insights:</h4>
+                          <Card>
+                            <CardContent className="p-4">
+                              <p className="whitespace-pre-line">{aiInsights}</p>
+                            </CardContent>
+                          </Card>
+                        </div>
+                      )}
+
+                      <div className="flex flex-col md:flex-row justify-between gap-4 pt-4">
+                        <Button 
+                          variant="outline" 
+                          onClick={resetQuiz}
+                          className="w-full md:w-auto"
+                        >
+                          Start Over
+                        </Button>
+                        <div className="flex flex-col md:flex-row gap-2 w-full md:w-auto">
+                          <Button 
+                            onClick={handleDownloadPDF}
+                            className="bg-forest-700 hover:bg-forest-800 w-full md:w-auto"
+                          >
+                            <Download className="mr-2" size={18} /> Download Quote
+                          </Button>
+                          <Button 
+                            variant="secondary"
+                            className="w-full md:w-auto"
+                          >
+                            <FileText className="mr-2" size={18} /> Send to Email
+                          </Button>
+                        </div>
+                      </div>
+                    </>
+                  )}
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default PriceEstimatorQuiz;
