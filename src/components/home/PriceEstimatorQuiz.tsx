@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,7 +11,7 @@ import {
   SelectValue
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
-import { ArrowRight, Download, HelpCircle, FileText } from "lucide-react";
+import { ArrowRight, Download, FileText } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -25,7 +24,7 @@ import {
   DialogDescription,
   DialogFooter
 } from "@/components/ui/dialog";
-import { getAIProjectInsights, getGroqApiKey, setGroqApiKey, type ProjectDetails } from "@/utils/aiUtils";
+import { getAIProjectInsights, type ProjectDetails } from "@/utils/aiUtils";
 import { generatePDF, generateQuoteNumber } from "@/utils/pdfUtils";
 
 type QuizStep = 'type' | 'size' | 'materials' | 'ai-questions' | 'results';
@@ -56,8 +55,6 @@ const PriceEstimatorQuiz = () => {
   const [estimatedPrice, setEstimatedPrice] = useState<number>(0);
   const [aiInsights, setAiInsights] = useState<string>('');
   const [isLoadingInsights, setIsLoadingInsights] = useState<boolean>(false);
-  const [apiKeyDialogOpen, setApiKeyDialogOpen] = useState<boolean>(false);
-  const [tempApiKey, setTempApiKey] = useState<string>('');
   const [aiQuestionResponses, setAiQuestionResponses] = useState<{[key: string]: string}>({
     projectPurpose: '',
     specificRequirements: '',
@@ -167,15 +164,6 @@ const PriceEstimatorQuiz = () => {
     }
     
     setEstimatedPrice(Math.round(estimate));
-  };
-
-  const handleSaveApiKey = () => {
-    setGroqApiKey(tempApiKey);
-    setApiKeyDialogOpen(false);
-    toast({
-      title: "API Key Saved",
-      description: "Your Groq API key has been temporarily saved for this session.",
-    });
   };
 
   const handleDownloadPDF = async () => {
@@ -537,19 +525,7 @@ const PriceEstimatorQuiz = () => {
               {/* Step 4: AI Questions */}
               {currentStep === 'ai-questions' && (
                 <div className="space-y-6">
-                  <div className="flex items-center justify-between">
-                    <p className="text-sm font-medium">Help us understand your project better</p>
-                    
-                    <Button 
-                      variant="ghost" 
-                      size="sm" 
-                      className="text-forest-700"
-                      onClick={() => setApiKeyDialogOpen(true)}
-                    >
-                      <HelpCircle className="h-4 w-4 mr-1" />
-                      Set API Key
-                    </Button>
-                  </div>
+                  <p className="text-sm font-medium">Help us understand your project better</p>
                   
                   <div className="space-y-4">
                     <div className="space-y-2">
@@ -674,20 +650,7 @@ const PriceEstimatorQuiz = () => {
                         </div>
                       ) : (
                         <div className="prose prose-sm max-w-none">
-                          {!getGroqApiKey() ? (
-                            <div className="p-4 bg-amber-50 text-amber-800 rounded-md">
-                              <p className="font-medium">API key not set</p>
-                              <p className="text-sm mt-1">Please set your Groq API key to get AI-powered insights.</p>
-                              <Button 
-                                variant="outline" 
-                                size="sm" 
-                                onClick={() => setApiKeyDialogOpen(true)}
-                                className="mt-2"
-                              >
-                                Set API Key
-                              </Button>
-                            </div>
-                          ) : aiInsights ? (
+                          {aiInsights ? (
                             <div className="whitespace-pre-line">{aiInsights}</div>
                           ) : (
                             <p>No insights available. Please try again later.</p>
@@ -724,48 +687,6 @@ const PriceEstimatorQuiz = () => {
           </Card>
         </div>
       </div>
-      
-      {/* API Key Dialog */}
-      <Dialog open={apiKeyDialogOpen} onOpenChange={setApiKeyDialogOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Enter Groq API Key</DialogTitle>
-            <DialogDescription>
-              Enter your Groq API key to enable AI-powered insights for your project estimate.
-              This key will only be stored temporarily in your browser's memory.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="space-y-4 py-4">
-            <div className="space-y-2">
-              <Label htmlFor="api-key">API Key</Label>
-              <Input 
-                id="api-key" 
-                type="password"
-                placeholder="Enter your Groq API key" 
-                value={tempApiKey}
-                onChange={(e) => setTempApiKey(e.target.value)}
-              />
-              <p className="text-xs text-muted-foreground">
-                Don't have a key? You can get one at <a href="https://console.groq.com/keys" target="_blank" rel="noreferrer" className="underline">console.groq.com</a>
-              </p>
-            </div>
-          </div>
-          <DialogFooter>
-            <Button 
-              variant="outline" 
-              onClick={() => setApiKeyDialogOpen(false)}
-            >
-              Cancel
-            </Button>
-            <Button 
-              onClick={handleSaveApiKey}
-              disabled={!tempApiKey}
-            >
-              Save Key
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
     </div>
   );
 };

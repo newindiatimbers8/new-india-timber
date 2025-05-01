@@ -8,7 +8,6 @@ import FeaturesSection from "../components/home/FeaturesSection";
 import TestimonialsSection from "../components/home/TestimonialsSection";
 import CTASection from "../components/home/CTASection";
 import PriceEstimatorQuiz from "../components/home/PriceEstimatorQuiz";
-import { Toaster } from "@/components/ui/toaster";
 
 const Index = () => {
   useEffect(() => {
@@ -24,7 +23,6 @@ const Index = () => {
       <FeaturesSection />
       <TestimonialsSection />
       <CTASection />
-      <Toaster />
     </Layout>
   );
 };
