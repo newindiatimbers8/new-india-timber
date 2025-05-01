@@ -7,6 +7,7 @@ import CustomerSegment from "../components/home/CustomerSegment";
 import FeaturesSection from "../components/home/FeaturesSection";
 import TestimonialsSection from "../components/home/TestimonialsSection";
 import CTASection from "../components/home/CTASection";
+import PriceEstimatorQuiz from "../components/home/PriceEstimatorQuiz";
 
 const Index = () => {
   useEffect(() => {
@@ -18,6 +19,7 @@ const Index = () => {
       <Hero />
       <CategorySection />
       <CustomerSegment />
+      <PriceEstimatorQuiz />
       <FeaturesSection />
       <TestimonialsSection />
       <CTASection />
