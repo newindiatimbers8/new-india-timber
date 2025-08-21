@@ -58,8 +58,8 @@ const Header = () => {
       <div className="container mx-auto py-4 px-4 flex justify-between items-center">
         {/* Logo */}
         <Link to="/" className="flex items-center">
-          <h1 className="text-2xl md:text-3xl font-bold font-playfair">
-            <span className="wood-grain-text">South Indian</span> Timbers
+          <h1 className="text-2xl md:text-3xl font-bold font-montserrat">
+            <span className="wood-grain-text">New India</span> Timber
           </h1>
         </Link>
 

@@ -151,8 +151,8 @@ export default {
                 'slide-in': 'slide-in 0.5s ease-out'
 			},
             fontFamily: {
-                'playfair': ['"Playfair Display"', 'serif'],
-                'poppins': ['Poppins', 'sans-serif'],
+                'montserrat': ['Montserrat', 'sans-serif'],
+                'opensans': ['"Open Sans"', 'sans-serif'],
             },
             backgroundImage: {
                 'wood-texture': "url('/images/wood-texture.jpg')",

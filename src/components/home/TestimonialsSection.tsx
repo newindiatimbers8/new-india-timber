@@ -13,7 +13,7 @@ const testimonials = [
     id: 1,
     name: "Rajesh Kumar",
     role: "Interior Designer",
-    content: "We've been sourcing our teak wood from South Indian Timbers for over 5 years. The quality is consistent, and their Burma Teak is simply outstanding for our premium interior projects.",
+    content: "We've been sourcing our teak wood from New India Timber for over 5 years. The quality is consistent, and their Burma Teak is simply outstanding for our premium interior projects.",
     rating: 5
   },
   {
@@ -27,7 +27,7 @@ const testimonials = [
     id: 3,
     name: "Karthik Reddy",
     role: "Construction Contractor",
-    content: "For bulk orders, South Indian Timbers has been our go-to supplier. Their delivery is prompt, pricing competitive, and they understand our commercial project needs perfectly.",
+    content: "For bulk orders, New India Timber has been our go-to supplier. Their delivery is prompt, pricing competitive, and they understand our commercial project needs perfectly.",
     rating: 4
   },
   {

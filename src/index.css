@@ -1,5 +1,5 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Open+Sans:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -16,17 +16,17 @@
     --popover: 0 0% 100%;
     --popover-foreground: 20 14.3% 4.1%;
 
-    --primary: 22 54% 55%;
+    --primary: 214 57% 27%;
     --primary-foreground: 60 9.1% 97.8%;
 
-    --secondary: 150 20% 20%;
+    --secondary: 23 76% 57%;
     --secondary-foreground: 0 0% 98%;
 
     --muted: 60 4.8% 95.9%;
     --muted-foreground: 25 5.3% 44.7%;
 
-    --accent: 22 50% 92%;
-    --accent-foreground: 24 9.8% 10%;
+    --accent: 41 67% 88%;
+    --accent-foreground: 23 48% 14%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 60 9.1% 97.8%;
@@ -57,7 +57,7 @@
     --popover: 20 14.3% 4.1%;
     --popover-foreground: 60 9.1% 97.8%;
 
-    --primary: 20.5 90.2% 48.2%;
+    --primary: 23 76% 57%;
     --primary-foreground: 60 9.1% 97.8%;
 
     --secondary: 12 6.5% 15.1%;
@@ -92,10 +92,10 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground font-poppins;
+    @apply bg-background text-foreground font-opensans;
   }
   h1, h2, h3, h4, h5, h6 {
-    @apply font-playfair font-semibold;
+    @apply font-montserrat font-bold;
   }
 }
 

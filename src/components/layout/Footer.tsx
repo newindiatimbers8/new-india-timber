@@ -9,9 +9,9 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Info */}
           <div>
-            <h3 className="text-xl font-playfair font-bold mb-4">South Indian Timbers</h3>
+            <h3 className="text-xl font-montserrat font-bold mb-4">New India Timber</h3>
             <p className="text-gray-300 mb-4">
-              Premium supplier of quality timber products in Bangalore, serving homeowners, 
+              Quality Forever - Premium supplier of quality timber products in Bangalore, serving homeowners, 
               businesses, and contractors since 2005.
             </p>
             <div className="flex space-x-4">
@@ -29,7 +29,7 @@ const Footer = () => {
           
           {/* Quick Links */}
           <div>
-            <h3 className="text-xl font-playfair font-bold mb-4">Quick Links</h3>
+            <h3 className="text-xl font-montserrat font-bold mb-4">Quick Links</h3>
             <ul className="space-y-2">
               <li>
                 <Link to="/" className="text-gray-300 hover:text-timber-300">Home</Link>
@@ -51,7 +51,7 @@ const Footer = () => {
           
           {/* Products */}
           <div>
-            <h3 className="text-xl font-playfair font-bold mb-4">Products</h3>
+            <h3 className="text-xl font-montserrat font-bold mb-4">Products</h3>
             <ul className="space-y-2">
               <li>
                 <Link to="/products/teak" className="text-gray-300 hover:text-timber-300">Teak Wood</Link>
@@ -70,7 +70,7 @@ const Footer = () => {
           
           {/* Contact Info */}
           <div>
-            <h3 className="text-xl font-playfair font-bold mb-4">Contact Us</h3>
+            <h3 className="text-xl font-montserrat font-bold mb-4">Contact Us</h3>
             <ul className="space-y-3">
               <li className="flex items-start">
                 <MapPin size={18} className="mt-1 mr-2 flex-shrink-0" />
@@ -82,7 +82,7 @@ const Footer = () => {
               </li>
               <li className="flex items-center">
                 <Mail size={18} className="mr-2 flex-shrink-0" />
-                <span>contact@southindiantimbers.com</span>
+                <span>contact@newindiatimber.com</span>
               </li>
               <li className="flex items-start">
                 <Clock size={18} className="mt-1 mr-2 flex-shrink-0" />
@@ -99,7 +99,7 @@ const Footer = () => {
         
         <div className="flex flex-col md:flex-row justify-between items-center">
           <p className="text-gray-400 text-sm">
-            &copy; {new Date().getFullYear()} South Indian Timbers. All rights reserved.
+            &copy; {new Date().getFullYear()} New India Timber. All rights reserved.
           </p>
           <div className="mt-4 md:mt-0">
             <ul className="flex space-x-6 text-sm text-gray-400">

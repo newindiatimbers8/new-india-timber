@@ -14,9 +14,9 @@ const AboutPage = () => {
       <div className="bg-timber-50 py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">About South Indian Timbers</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">About New India Timber</h1>
             <p className="text-lg text-gray-600">
-              Trusted supplier of premium timber products in Bangalore since 2005
+              Quality Forever - Trusted supplier of premium timber products in Bangalore since 2005
             </p>
           </div>
         </div>
@@ -32,7 +32,7 @@ const AboutPage = () => {
           <div>
             <h2 className="text-3xl font-bold mb-4">Our Story</h2>
             <p className="text-gray-600 mb-6">
-              Founded in 2005, South Indian Timbers began as a small family business dedicated to providing quality timber products to local contractors and homeowners in Bangalore. With an unwavering commitment to quality and customer satisfaction, we've grown to become one of the most trusted timber suppliers in the region.
+              Founded in 2005, New India Timber began as a small family business dedicated to providing quality timber products to local contractors and homeowners in Bangalore. With an unwavering commitment to quality and customer satisfaction, we've grown to become one of the most trusted timber suppliers in the region.
             </p>
             <p className="text-gray-600 mb-6">
               Our journey started with a simple mission: to source the finest timber products and make them accessible to our customers at competitive prices. Today, we continue to uphold this mission while expanding our product range to include premium teak varieties, plywood solutions, and hardwood logs for various applications.
@@ -80,7 +80,7 @@ const AboutPage = () => {
         </div>
         
         <div className="mt-16">
-          <h2 className="text-3xl font-bold mb-6 text-center">Why Choose South Indian Timbers?</h2>
+          <h2 className="text-3xl font-bold mb-6 text-center">Why Choose New India Timber?</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="bg-white p-6 rounded-lg shadow-md">

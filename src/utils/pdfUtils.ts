@@ -22,7 +22,7 @@ export async function generatePDF(quoteDetails: QuoteDetails): Promise<void> {
     
     doc.setTextColor(255, 255, 255);
     doc.setFontSize(22);
-    doc.text('South Indian Timbers', 105, 20, { align: 'center' });
+    doc.text('New India Timber', 105, 20, { align: 'center' });
     
     doc.setFontSize(10);
     doc.text('No. 134/20, 5th Main, HSR Layout Sector 7, Bangalore - 560068', 105, 30, { align: 'center' });
@@ -237,10 +237,10 @@ export async function generatePDF(quoteDetails: QuoteDetails): Promise<void> {
     doc.setFontSize(8);
     doc.setTextColor(100, 100, 100);
     doc.text('This is a detailed estimate based on the information provided. For a professional quotation, please contact our team.', 105, footerY, { align: 'center' });
-    doc.text('South Indian Timbers | Phone: +91-9876543210 | Email: info@southindiantimbers.com', 105, footerY + 5, { align: 'center' });
+    doc.text('New India Timber | Phone: +91-9876543210 | Email: info@newindiatimber.com', 105, footerY + 5, { align: 'center' });
     
     // Save PDF
-    doc.save(`SIT_DetailedEstimate_${quoteDetails.quoteNumber}.pdf`);
+    doc.save(`NIT_DetailedEstimate_${quoteDetails.quoteNumber}.pdf`);
     
   } catch (error) {
     console.error("PDF generation error:", error);
@@ -249,7 +249,7 @@ export async function generatePDF(quoteDetails: QuoteDetails): Promise<void> {
 }
 
 export function generateQuoteNumber(): string {
-  const prefix = "SIT-";
+  const prefix = "NIT-";
   const timestamp = new Date().getTime().toString().slice(-6);
   const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
   

@@ -89,7 +89,7 @@ const LoginForm = () => {
       
       toast({
         title: "Login Successful",
-        description: "Welcome back to South Indian Timbers!",
+        description: "Welcome back to New India Timber!",
       });
       
       // Redirect to home after successful login
