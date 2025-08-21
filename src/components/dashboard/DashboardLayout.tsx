@@ -110,12 +110,17 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
               </SidebarMenuItem>
             </SidebarMenu>
           </SidebarFooter>
-          
-          <SidebarTrigger />
         </Sidebar>
         
-        <SidebarInset className="p-4 md:p-6 lg:p-8">
-          {children}
+        <SidebarInset className="flex-1">
+          <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
+            <SidebarTrigger className="-ml-1" />
+            <div className="h-4 w-px bg-border mx-2" />
+            <h1 className="text-lg font-semibold">Dashboard</h1>
+          </header>
+          <div className="p-4 md:p-6 lg:p-8">
+            {children}
+          </div>
         </SidebarInset>
       </div>
     </SidebarProvider>
