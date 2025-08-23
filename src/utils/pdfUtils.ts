@@ -255,3 +255,96 @@ export function generateQuoteNumber(): string {
   
   return `${prefix}${timestamp}-${random}`;
 }
+
+export async function generateDetailedEstimatePDF(quoteData: {
+  quoteNumber: string;
+  customerName: string;
+  projectType: string;
+  areaSize: number;
+  items: any[];
+  breakdown: { [category: string]: number };
+  totalCost: number;
+  validUntil: Date;
+}): Promise<void> {
+  const { jsPDF } = await import('jspdf');
+  const autoTable = (await import('jspdf-autotable')).default;
+  
+  try {
+    const doc = new jsPDF();
+    
+    // Add company header
+    doc.setFillColor(30, 58, 109); // Deep Navy Blue
+    doc.rect(0, 0, 210, 40, 'F');
+    
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(22);
+    doc.text('New India Timber', 105, 20, { align: 'center' });
+    
+    doc.setFontSize(10);
+    doc.text('Quality Forever', 105, 28, { align: 'center' });
+    doc.text('No. 134/20, 5th Main, HSR Layout Sector 7, Bangalore - 560068', 105, 35, { align: 'center' });
+    
+    // Quote details
+    doc.setTextColor(0, 0, 0);
+    doc.setFontSize(16);
+    doc.text('Detailed Project Estimate', 14, 55);
+    
+    doc.setFontSize(10);
+    doc.text(`Quote #: ${quoteData.quoteNumber}`, 14, 65);
+    doc.text(`Date: ${new Date().toLocaleDateString()}`, 14, 70);
+    doc.text(`Valid Until: ${quoteData.validUntil.toLocaleDateString()}`, 14, 75);
+    doc.text(`Project Type: ${quoteData.projectType}`, 14, 80);
+    doc.text(`Area: ${quoteData.areaSize} sq ft`, 14, 85);
+    
+    // Items table
+    const itemsData = quoteData.items.map(item => [
+      item.name,
+      `${item.dimensions.width}' × ${item.dimensions.height}'${item.dimensions.depth ? ` × ${item.dimensions.depth}'` : ''}`,
+      item.material.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase()),
+      item.quantity.toString(),
+      `₹${item.unitPrice.toLocaleString('en-IN')}`,
+      `₹${item.totalPrice.toLocaleString('en-IN')}`
+    ]);
+
+    autoTable(doc, {
+      head: [['Item', 'Dimensions', 'Material', 'Qty', 'Unit Price', 'Total']],
+      body: itemsData,
+      startY: 95,
+      styles: { fontSize: 8 },
+      headStyles: { fillColor: [30, 58, 109] }
+    });
+
+    // Add breakdown summary
+    const finalY = (doc as any).lastAutoTable.finalY + 20;
+    
+    doc.setFontSize(12);
+    doc.text('Cost Breakdown', 14, finalY);
+    
+    let yPos = finalY + 10;
+    Object.entries(quoteData.breakdown).forEach(([category, amount]) => {
+      if (amount > 0) {
+        doc.setFontSize(10);
+        doc.text(`${category.charAt(0).toUpperCase() + category.slice(1)}: ₹${amount.toLocaleString('en-IN')}`, 14, yPos);
+        yPos += 5;
+      }
+    });
+    
+    // Total
+    yPos += 5;
+    doc.setFontSize(14);
+    doc.setFont(undefined, 'bold');
+    doc.text(`Total: ₹${quoteData.totalCost.toLocaleString('en-IN')}`, 14, yPos);
+    
+    // Footer
+    doc.setFontSize(8);
+    doc.setFont(undefined, 'normal');
+    doc.text('Terms: Prices subject to change. Valid for 30 days from quote date.', 14, 280);
+    doc.text('Contact: +91 80 2571 5555 | info@newindiatimber.com', 14, 285);
+    
+    // Save the PDF
+    doc.save(`detailed-estimate-${quoteData.quoteNumber}.pdf`);
+  } catch (error) {
+    console.error('Error generating PDF:', error);
+    throw error;
+  }
+}

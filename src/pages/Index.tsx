@@ -7,7 +7,7 @@ import CustomerSegment from "../components/home/CustomerSegment";
 import FeaturesSection from "../components/home/FeaturesSection";
 import TestimonialsSection from "../components/home/TestimonialsSection";
 import CTASection from "../components/home/CTASection";
-import PriceEstimatorQuiz from "../components/home/PriceEstimatorQuiz";
+import DetailedPriceEstimator from "../components/estimator/DetailedPriceEstimator";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
@@ -28,7 +28,7 @@ const Index = () => {
       </div>
       <CategorySection />
       <CustomerSegment />
-      <PriceEstimatorQuiz />
+      <DetailedPriceEstimator />
       <FeaturesSection />
       <TestimonialsSection />
       <CTASection />
