@@ -4,6 +4,12 @@ import { useSearchParams } from "react-router-dom";
 import Layout from "../components/layout/Layout";
 import ProductGrid, { ProductType } from "../components/products/ProductGrid";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { Filter, SlidersHorizontal, X, Search } from "lucide-react";
+import { getPlaceholderImage } from "../utils/imageUtils";
+import { cn } from "@/lib/utils";
 
 // Sample product data
 const sampleProducts: ProductType[] = [
@@ -17,7 +23,7 @@ const sampleProducts: ProductType[] = [
     dimensions: "7ft x 3.5ft",
     color: "Dark Brown",
     features: ["Water Resistant", "Termite Proof", "Long Lasting"],
-    image: "/images/wood-texture.jpg",
+    image: getPlaceholderImage("teak"),
     stockStatus: "In Stock",
     usage: "own_premium",
     purpose: "both"
@@ -32,7 +38,7 @@ const sampleProducts: ProductType[] = [
     dimensions: "4ft x 3ft",
     color: "Medium Brown",
     features: ["Weather Resistant", "Low Maintenance"],
-    image: "/images/wood-texture.jpg",
+    image: getPlaceholderImage("teak"),
     stockStatus: "In Stock",
     usage: "own_premium",
     purpose: "both"
@@ -47,7 +53,7 @@ const sampleProducts: ProductType[] = [
     dimensions: "6ft x 4ft",
     color: "Golden Brown",
     features: ["Scratch Resistant", "Heat Resistant", "Polished Finish"],
-    image: "/images/wood-texture.jpg",
+    image: getPlaceholderImage("teak"),
     stockStatus: "Low Stock",
     usage: "own_premium",
     purpose: "both"
@@ -62,7 +68,7 @@ const sampleProducts: ProductType[] = [
     dimensions: "7ft x 3.5ft",
     color: "Light Brown",
     features: ["Cost Effective", "Good Strength"],
-    image: "/images/wood-texture.jpg",
+    image: getPlaceholderImage("teak"),
     stockStatus: "In Stock",
     usage: "rental",
     purpose: "both"
@@ -76,7 +82,7 @@ const sampleProducts: ProductType[] = [
     price: 1100,
     thickness: "12mm",
     features: ["Moisture Resistant", "Uniform Thickness", "No Hollow Spaces"],
-    image: "/images/wood-texture.jpg",
+    image: getPlaceholderImage("teak"),
     stockStatus: "In Stock",
     usage: "own_premium",
     purpose: "both"
@@ -90,7 +96,7 @@ const sampleProducts: ProductType[] = [
     price: 2300,
     thickness: "18mm",
     features: ["Heavy Duty", "Moisture Resistant", "High Strength"],
-    image: "/images/wood-texture.jpg",
+    image: getPlaceholderImage("teak"),
     stockStatus: "In Stock",
     usage: "own_premium",
     purpose: "both"
@@ -104,7 +110,7 @@ const sampleProducts: ProductType[] = [
     price: 3200,
     thickness: "19mm",
     features: ["Waterproof", "Weather Resistant", "Durable"],
-    image: "/images/wood-texture.jpg",
+    image: getPlaceholderImage("teak"),
     stockStatus: "Low Stock",
     usage: "own_premium",
     purpose: "commercial"
@@ -118,7 +124,7 @@ const sampleProducts: ProductType[] = [
     price: 2800,
     thickness: "18mm",
     features: ["Pre-finished", "Easy to Clean", "Scratch Resistant"],
-    image: "/images/wood-texture.jpg",
+    image: getPlaceholderImage("teak"),
     stockStatus: "In Stock",
     usage: "own_budget",
     purpose: "both"
@@ -132,7 +138,7 @@ const sampleProducts: ProductType[] = [
     price: 2800,
     thickness: "18mm",
     features: ["100% Waterproof", "Fungus Resistant", "Termite Free"],
-    image: "/images/wood-texture.jpg",
+    image: getPlaceholderImage("teak"),
     stockStatus: "In Stock",
     usage: "own_budget",
     purpose: "both"
@@ -146,7 +152,7 @@ const sampleProducts: ProductType[] = [
     price: null,
     dimensions: "Varies",
     color: "Golden Brown",
-    image: "/images/wood-texture.jpg",
+    image: getPlaceholderImage("teak"),
     stockStatus: "In Stock",
     usage: "own_premium",
     purpose: "both"
@@ -156,7 +162,20 @@ const sampleProducts: ProductType[] = [
 const ProductsPage = () => {
   const [searchParams] = useSearchParams();
   const [products, setProducts] = useState<ProductType[]>(sampleProducts);
+  const [filteredProducts, setFilteredProducts] = useState<ProductType[]>(sampleProducts);
   const [activeCategory, setActiveCategory] = useState<string>("all");
+  const [activeFilters, setActiveFilters] = useState<{
+    usage: string[];
+    purpose: string[];
+    stockStatus: string[];
+    priceRange: string | null;
+  }>({
+    usage: [],
+    purpose: [],
+    stockStatus: [],
+    priceRange: null
+  });
+  const [isFilterSheetOpen, setIsFilterSheetOpen] = useState(false);
   
   const usageParam = searchParams.get('usage');
   const purposeParam = searchParams.get('purpose');
@@ -187,19 +206,115 @@ const ProductsPage = () => {
   const handleCategoryChange = (category: string) => {
     setActiveCategory(category);
     
+    let categoryFiltered: ProductType[];
     if (category === "all") {
-      setProducts(sampleProducts);
+      categoryFiltered = sampleProducts;
     } else {
-      setProducts(sampleProducts.filter(p => p.category === category));
+      categoryFiltered = sampleProducts.filter(p => p.category === category);
+    }
+    
+    setProducts(categoryFiltered);
+    applyFilters(categoryFiltered);
+  };
+  
+  const applyFilters = (baseProducts: ProductType[] = products) => {
+    let filtered = [...baseProducts];
+    
+    // Apply usage filter
+    if (activeFilters.usage.length > 0) {
+      filtered = filtered.filter(p => activeFilters.usage.includes(p.usage));
+    }
+    
+    // Apply purpose filter
+    if (activeFilters.purpose.length > 0) {
+      filtered = filtered.filter(p => 
+        activeFilters.purpose.includes(p.purpose) || p.purpose === "both"
+      );
+    }
+    
+    // Apply stock status filter
+    if (activeFilters.stockStatus.length > 0) {
+      filtered = filtered.filter(p => activeFilters.stockStatus.includes(p.stockStatus));
+    }
+    
+    // Apply price range filter
+    if (activeFilters.priceRange) {
+      filtered = filtered.filter(p => {
+        if (p.price === null) return true; // Include "Request for Price" items
+        
+        switch (activeFilters.priceRange) {
+          case 'under-25k':
+            return p.price < 25000;
+          case '25k-50k':
+            return p.price >= 25000 && p.price <= 50000;
+          case '50k-75k':
+            return p.price > 50000 && p.price <= 75000;
+          case 'above-75k':
+            return p.price > 75000;
+          default:
+            return true;
+        }
+      });
+    }
+    
+    setFilteredProducts(filtered);
+  };
+  
+  const toggleFilter = (type: keyof typeof activeFilters, value: string) => {
+    if (type === 'priceRange') {
+      setActiveFilters(prev => ({
+        ...prev,
+        [type]: prev[type] === value ? null : value
+      }));
+    } else {
+      setActiveFilters(prev => {
+        const currentValues = prev[type] as string[];
+        const newValues = currentValues.includes(value)
+          ? currentValues.filter(v => v !== value)
+          : [...currentValues, value];
+        
+        return { ...prev, [type]: newValues };
+      });
     }
   };
   
+  const clearAllFilters = () => {
+    setActiveFilters({
+      usage: [],
+      purpose: [],
+      stockStatus: [],
+      priceRange: null
+    });
+  };
+  
+  const getActiveFilterCount = () => {
+    return activeFilters.usage.length + 
+           activeFilters.purpose.length + 
+           activeFilters.stockStatus.length + 
+           (activeFilters.priceRange ? 1 : 0);
+  };
+  
+  const formatUsageLabel = (usage: string) => {
+    switch (usage) {
+      case "own_premium": return "Premium";
+      case "own_budget": return "Budget";
+      case "rental": return "Rental";
+      default: return usage;
+    }
+  };
+  
+  // Apply filters whenever activeFilters changes
+  useEffect(() => {
+    applyFilters();
+  }, [activeFilters]);
+  
   return (
     <Layout>
-      <div className="container mx-auto py-12 px-4">
-        <div className="text-center mb-12">
-          <h1 className="text-3xl md:text-4xl font-bold mb-4">Our Products</h1>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+      <div className="container mx-auto py-6 md:py-12 px-4">
+        {/* Mobile-First Header */}
+        <div className="text-center mb-6 md:mb-12">
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-2 md:mb-4">Our Products</h1>
+          <p className="text-base md:text-lg text-gray-600 max-w-3xl mx-auto">
             Browse our extensive collection of premium timber products
             {usageParam && purposeParam && (
               <span> tailored for {purposeParam === "commercial" ? "commercial" : "residential"} {
@@ -213,23 +328,232 @@ const ProductsPage = () => {
           </p>
         </div>
         
+        {/* Mobile Filter Controls */}
+        <div className="mb-4 md:mb-6">
+          {/* Filter Button & Active Filters Row */}
+          <div className="flex items-center gap-2 mb-3">
+            <Sheet open={isFilterSheetOpen} onOpenChange={setIsFilterSheetOpen}>
+              <SheetTrigger asChild>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="h-10 px-4 border-2 hover:border-timber-600"
+                >
+                  <SlidersHorizontal className="h-4 w-4 mr-2" />
+                  Filters
+                  {getActiveFilterCount() > 0 && (
+                    <Badge className="ml-2 bg-timber-600 text-white text-xs">
+                      {getActiveFilterCount()}
+                    </Badge>
+                  )}
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="bottom" className="h-[80vh] overflow-y-auto">
+                <SheetHeader className="pb-4">
+                  <SheetTitle>Filter Products</SheetTitle>
+                </SheetHeader>
+                
+                {/* Mobile Filter Content */}
+                <div className="space-y-6">
+                  {/* Usage Filter */}
+                  <div>
+                    <h4 className="font-medium mb-3 text-sm uppercase tracking-wide text-gray-600">Usage Type</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {['own_premium', 'own_budget', 'rental'].map((usage) => (
+                        <Button
+                          key={usage}
+                          variant={activeFilters.usage.includes(usage) ? "default" : "outline"}
+                          size="sm"
+                          onClick={() => toggleFilter('usage', usage)}
+                          className={cn(
+                            "h-10 px-4 rounded-full",
+                            activeFilters.usage.includes(usage) 
+                              ? "bg-timber-600 text-white border-timber-600" 
+                              : "border-gray-300 hover:border-timber-600"
+                          )}
+                        >
+                          {formatUsageLabel(usage)}
+                        </Button>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  {/* Purpose Filter */}
+                  <div>
+                    <h4 className="font-medium mb-3 text-sm uppercase tracking-wide text-gray-600">Purpose</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {['residential', 'commercial'].map((purpose) => (
+                        <Button
+                          key={purpose}
+                          variant={activeFilters.purpose.includes(purpose) ? "default" : "outline"}
+                          size="sm"
+                          onClick={() => toggleFilter('purpose', purpose)}
+                          className={cn(
+                            "h-10 px-4 rounded-full capitalize",
+                            activeFilters.purpose.includes(purpose) 
+                              ? "bg-timber-600 text-white border-timber-600" 
+                              : "border-gray-300 hover:border-timber-600"
+                          )}
+                        >
+                          {purpose}
+                        </Button>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  {/* Stock Status Filter */}
+                  <div>
+                    <h4 className="font-medium mb-3 text-sm uppercase tracking-wide text-gray-600">Availability</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {['In Stock', 'Low Stock'].map((status) => (
+                        <Button
+                          key={status}
+                          variant={activeFilters.stockStatus.includes(status) ? "default" : "outline"}
+                          size="sm"
+                          onClick={() => toggleFilter('stockStatus', status)}
+                          className={cn(
+                            "h-10 px-4 rounded-full",
+                            activeFilters.stockStatus.includes(status) 
+                              ? "bg-timber-600 text-white border-timber-600" 
+                              : "border-gray-300 hover:border-timber-600"
+                          )}
+                        >
+                          {status}
+                        </Button>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  {/* Price Range Quick Filters */}
+                  <div>
+                    <h4 className="font-medium mb-3 text-sm uppercase tracking-wide text-gray-600">Price Range</h4>
+                    <div className="grid grid-cols-2 gap-2">
+                      {[
+                        { label: 'Under ₹25K', value: 'under-25k' },
+                        { label: '₹25K - ₹50K', value: '25k-50k' },
+                        { label: '₹50K - ₹75K', value: '50k-75k' },
+                        { label: 'Above ₹75K', value: 'above-75k' }
+                      ].map((range) => (
+                        <Button
+                          key={range.value}
+                          variant={activeFilters.priceRange === range.value ? "default" : "outline"}
+                          size="sm"
+                          onClick={() => toggleFilter('priceRange', range.value)}
+                          className={cn(
+                            "h-10 px-3 rounded-lg text-sm",
+                            activeFilters.priceRange === range.value 
+                              ? "bg-timber-600 text-white border-timber-600" 
+                              : "border-gray-300 hover:border-timber-600"
+                          )}
+                        >
+                          {range.label}
+                        </Button>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  {/* Filter Actions */}
+                  <div className="flex gap-3 pt-4 border-t">
+                    <Button 
+                      variant="outline" 
+                      onClick={clearAllFilters}
+                      className="flex-1 h-12"
+                    >
+                      Clear All
+                    </Button>
+                    <Button 
+                      onClick={() => setIsFilterSheetOpen(false)}
+                      className="flex-1 h-12 bg-timber-600 hover:bg-timber-700"
+                    >
+                      Apply Filters
+                    </Button>
+                  </div>
+                </div>
+              </SheetContent>
+            </Sheet>
+            
+            {/* Quick Clear All Filters */}
+            {getActiveFilterCount() > 0 && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={clearAllFilters}
+                className="h-10 px-3 text-gray-600 hover:text-gray-800"
+              >
+                <X className="h-4 w-4" />
+                Clear
+              </Button>
+            )}
+          </div>
+          
+          {/* Active Filter Chips */}
+          {getActiveFilterCount() > 0 && (
+            <div className="flex flex-wrap gap-2">
+              {activeFilters.usage.map((usage) => (
+                <Badge
+                  key={`usage-${usage}`}
+                  variant="secondary"
+                  className="bg-timber-100 text-timber-800 hover:bg-timber-200 cursor-pointer"
+                  onClick={() => toggleFilter('usage', usage)}
+                >
+                  {formatUsageLabel(usage)}
+                  <X className="h-3 w-3 ml-1" />
+                </Badge>
+              ))}
+              {activeFilters.purpose.map((purpose) => (
+                <Badge
+                  key={`purpose-${purpose}`}
+                  variant="secondary"
+                  className="bg-timber-100 text-timber-800 hover:bg-timber-200 cursor-pointer capitalize"
+                  onClick={() => toggleFilter('purpose', purpose)}
+                >
+                  {purpose}
+                  <X className="h-3 w-3 ml-1" />
+                </Badge>
+              ))}
+              {activeFilters.stockStatus.map((status) => (
+                <Badge
+                  key={`stock-${status}`}
+                  variant="secondary"
+                  className="bg-timber-100 text-timber-800 hover:bg-timber-200 cursor-pointer"
+                  onClick={() => toggleFilter('stockStatus', status)}
+                >
+                  {status}
+                  <X className="h-3 w-3 ml-1" />
+                </Badge>
+              ))}
+              {activeFilters.priceRange && (
+                <Badge
+                  variant="secondary"
+                  className="bg-timber-100 text-timber-800 hover:bg-timber-200 cursor-pointer"
+                  onClick={() => toggleFilter('priceRange', activeFilters.priceRange!)}
+                >
+                  Price Range
+                  <X className="h-3 w-3 ml-1" />
+                </Badge>
+              )}
+            </div>
+          )}
+        </div>
+        
+        {/* Mobile-Optimized Category Tabs */}
         <Tabs defaultValue="all" value={activeCategory} onValueChange={handleCategoryChange}>
-          <div className="mb-8 overflow-auto">
-            <TabsList className="inline-flex w-auto">
-              <TabsTrigger value="all">All Products</TabsTrigger>
-              <TabsTrigger value="teak">Teak Wood</TabsTrigger>
-              <TabsTrigger value="plywood">Plywood</TabsTrigger>
-              <TabsTrigger value="hardwood">Hardwood Logs</TabsTrigger>
+          <div className="mb-6 md:mb-8">
+            <TabsList className="grid w-full grid-cols-2 md:inline-flex md:w-auto h-auto md:h-10">
+              <TabsTrigger value="all" className="text-xs md:text-sm py-2.5 md:py-2">All Products</TabsTrigger>
+              <TabsTrigger value="teak" className="text-xs md:text-sm py-2.5 md:py-2">Teak Wood</TabsTrigger>
+              <TabsTrigger value="plywood" className="text-xs md:text-sm py-2.5 md:py-2">Plywood</TabsTrigger>
+              <TabsTrigger value="hardwood" className="text-xs md:text-sm py-2.5 md:py-2">Hardwood Logs</TabsTrigger>
             </TabsList>
           </div>
           
           <TabsContent value="all">
-            <ProductGrid products={products} />
+            <ProductGrid products={filteredProducts} />
           </TabsContent>
           
           <TabsContent value="teak">
             <ProductGrid
-              products={products.filter(p => p.category === "teak")}
+              products={filteredProducts.filter(p => p.category === "teak")}
               title="Premium Teak Wood"
               description="Explore our collection of Burma, Ghana, Brazilian, and Indian Sal teak wood options."
             />
@@ -237,7 +561,7 @@ const ProductsPage = () => {
           
           <TabsContent value="plywood">
             <ProductGrid
-              products={products.filter(p => p.category === "plywood")}
+              products={filteredProducts.filter(p => p.category === "plywood")}
               title="Quality Plywood"
               description="Century Ply Sainik MR, Marine, Laminated, and Waterproof plywood solutions."
             />
@@ -245,7 +569,7 @@ const ProductsPage = () => {
           
           <TabsContent value="hardwood">
             <ProductGrid
-              products={products.filter(p => p.category === "hardwood")}
+              products={filteredProducts.filter(p => p.category === "hardwood")}
               title="Hardwood Logs"
               description="Various hardwood logs perfect for custom projects and specialized needs."
             />

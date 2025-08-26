@@ -1,10 +1,15 @@
 
 import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin, Clock, Facebook, Twitter, Instagram } from "lucide-react";
+import { cn } from "@/lib/utils";
 
-const Footer = () => {
+interface FooterProps {
+  className?: string;
+}
+
+const Footer = ({ className }: FooterProps) => {
   return (
-    <footer className="bg-forest-900 text-white pt-12 pb-6">
+    <footer className={cn("bg-forest-900 text-white pt-12 pb-6", className)}>
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Info */}

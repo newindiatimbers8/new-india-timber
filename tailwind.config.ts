@@ -155,8 +155,8 @@ export default {
                 'opensans': ['"Open Sans"', 'sans-serif'],
             },
             backgroundImage: {
-                'wood-texture': "url('/images/wood-texture.jpg')",
-                'hero-pattern': "url('/images/hero-pattern.jpg')",
+                'wood-pattern': 'linear-gradient(45deg, #D2691E 25%, #CD853F 25%, #CD853F 50%, #D2691E 50%, #D2691E 75%, #CD853F 75%)',
+                'hero-gradient': 'linear-gradient(135deg, #2D5016 0%, #8B4513 50%, #A0522D 100%)',
             }
 		}
 	},

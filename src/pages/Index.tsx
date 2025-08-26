@@ -4,11 +4,11 @@ import Layout from "../components/layout/Layout";
 import Hero from "../components/home/Hero";
 import CategorySection from "../components/home/CategorySection";
 import CustomerSegment from "../components/home/CustomerSegment";
+import HowItWorks from "../components/home/HowItWorks";
 import FeaturesSection from "../components/home/FeaturesSection";
 import TestimonialsSection from "../components/home/TestimonialsSection";
 import CTASection from "../components/home/CTASection";
 import DetailedPriceEstimator from "../components/estimator/DetailedPriceEstimator";
-import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
 const Index = () => {
@@ -19,15 +19,9 @@ const Index = () => {
   return (
     <Layout>
       <Hero />
-      <div className="container my-8 flex justify-center">
-        <Link to="/dashboard">
-          <Button variant="default" size="lg">
-            View Dashboard
-          </Button>
-        </Link>
-      </div>
       <CategorySection />
       <CustomerSegment />
+      <HowItWorks />
       <DetailedPriceEstimator />
       <FeaturesSection />
       <TestimonialsSection />

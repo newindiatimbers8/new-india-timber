@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -53,6 +53,7 @@ const registrationSchema = z.object({
 
 const LoginForm = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
 
   // Login form
@@ -92,8 +93,8 @@ const LoginForm = () => {
         description: "Welcome back to New India Timber!",
       });
       
-      // Redirect to home after successful login
-      // navigate("/");
+      // Redirect to dashboard after successful login
+      navigate("/dashboard");
     } catch (error) {
       toast({
         title: "Login Failed",
@@ -116,11 +117,12 @@ const LoginForm = () => {
       
       toast({
         title: "Registration Successful",
-        description: "Your account has been created. You can now log in.",
+        description: "Your account has been created. Welcome to New India Timber!",
       });
       
-      // Reset the form
+      // Reset the form and redirect to dashboard
       registrationForm.reset();
+      navigate("/dashboard");
     } catch (error) {
       toast({
         title: "Registration Failed",

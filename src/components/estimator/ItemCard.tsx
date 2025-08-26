@@ -43,28 +43,28 @@ export const ItemCard: React.FC<ItemCardProps> = ({
   };
 
   return (
-    <Card className="relative group hover:shadow-md transition-shadow">
+    <Card className="group relative hover:shadow-lg transition-all duration-200 border border-gray-200 hover:border-timber-300">
       <CardHeader className="pb-3">
-        <div className="flex items-start justify-between">
-          <div className="flex-1">
-            <CardTitle className="text-lg mb-1">{item.name}</CardTitle>
-            <div className="flex gap-2 mb-2">
-              <Badge className={getTypeColor()}>
+        <div className="flex items-start justify-between gap-3">
+          <div className="flex-1 min-w-0">
+            <CardTitle className="text-base md:text-lg mb-2 truncate pr-2 leading-tight">{item.name}</CardTitle>
+            <div className="flex flex-wrap gap-1.5 mb-2">
+              <Badge className={`${getTypeColor()} text-xs font-medium`}>
                 {item.type}
               </Badge>
               {item.quantity > 1 && (
-                <Badge variant="outline">
+                <Badge variant="outline" className="text-xs">
                   Qty: {item.quantity}
                 </Badge>
               )}
             </div>
           </div>
-          <div className="text-right">
-            <div className="text-2xl font-bold text-primary">
+          <div className="text-right flex-shrink-0">
+            <div className="text-lg md:text-xl font-bold text-timber-600">
               ₹{item.totalPrice.toLocaleString('en-IN')}
             </div>
             {item.quantity > 1 && (
-              <div className="text-sm text-muted-foreground">
+              <div className="text-xs md:text-sm text-gray-500">
                 ₹{item.unitPrice.toLocaleString('en-IN')} each
               </div>
             )}
@@ -73,64 +73,67 @@ export const ItemCard: React.FC<ItemCardProps> = ({
       </CardHeader>
       
       <CardContent>
-        <div className="space-y-2 text-sm">
-          <div className="flex justify-between">
+        <div className="space-y-2.5 text-sm">
+          <div className="flex justify-between items-center">
             <span className="text-muted-foreground">Dimensions:</span>
-            <span className="font-medium">{getDimensionText()}</span>
+            <span className="font-medium text-right">{getDimensionText()}</span>
           </div>
           
-          <div className="flex justify-between">
+          <div className="flex justify-between items-center">
             <span className="text-muted-foreground">Material:</span>
-            <span className="font-medium">{getMaterialDisplayName(item.material)}</span>
+            <span className="font-medium text-right truncate ml-2">{getMaterialDisplayName(item.material)}</span>
           </div>
           
           {item.style && (
-            <div className="flex justify-between">
+            <div className="flex justify-between items-center">
               <span className="text-muted-foreground">Style:</span>
-              <span className="font-medium capitalize">{item.style}</span>
+              <span className="font-medium capitalize text-right truncate ml-2">{item.style}</span>
             </div>
           )}
           
           {item.finish && (
-            <div className="flex justify-between">
+            <div className="flex justify-between items-center">
               <span className="text-muted-foreground">Finish:</span>
-              <span className="font-medium capitalize">{item.finish}</span>
+              <span className="font-medium capitalize text-right truncate ml-2">{item.finish}</span>
             </div>
           )}
           
           {item.description && (
-            <div className="pt-2 border-t">
-              <p className="text-muted-foreground text-xs">{item.description}</p>
+            <div className="pt-3 border-t border-gray-100">
+              <p className="text-muted-foreground text-xs leading-relaxed">{item.description}</p>
             </div>
           )}
         </div>
 
-        {/* Action buttons - only visible on hover */}
-        <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-          <div className="flex gap-1">
+        {/* Mobile-first action buttons */}
+        <div className="pt-4 mt-4 border-t border-gray-100">
+          <div className="flex gap-2 justify-end">
             <Button 
-              variant="ghost" 
+              variant="outline" 
               size="sm"
               onClick={() => onEdit(item)}
-              className="h-8 w-8 p-0"
+              className="h-8 px-3 text-xs hover:bg-blue-50 hover:border-blue-200"
             >
-              <Edit className="h-3 w-3" />
+              <Edit className="h-3 w-3 mr-1" />
+              Edit
             </Button>
             <Button 
-              variant="ghost" 
+              variant="outline" 
               size="sm"
               onClick={() => onDuplicate(item)}
-              className="h-8 w-8 p-0"
+              className="h-8 px-3 text-xs hover:bg-green-50 hover:border-green-200"
             >
-              <Copy className="h-3 w-3" />
+              <Copy className="h-3 w-3 mr-1" />
+              Copy
             </Button>
             <Button 
-              variant="ghost" 
+              variant="outline" 
               size="sm"
               onClick={() => onDelete(item.id)}
-              className="h-8 w-8 p-0 text-destructive hover:text-destructive"
+              className="h-8 px-3 text-xs text-destructive hover:bg-red-50 hover:border-red-200 hover:text-destructive"
             >
-              <Trash2 className="h-3 w-3" />
+              <Trash2 className="h-3 w-3 mr-1" />
+              Delete
             </Button>
           </div>
         </div>
