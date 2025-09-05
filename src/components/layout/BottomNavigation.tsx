@@ -97,13 +97,11 @@ const BottomNavigation = () => {
                   : "text-gray-500 hover:text-timber-600 hover:bg-timber-50"
               }`}
             >
-              <Icon 
-                size={18} 
-                className={`mb-1 ${item.active ? "text-timber-600" : "text-gray-500"}`} 
+              <Icon
+                size={18}
+                className={`mb-1 ${item.active ? "text-timber-600" : "text-gray-500"}`}
               />
-              <span className={`text-[10px] font-medium leading-tight ${
-                item.active ? "text-timber-600" : "text-gray-500"
-              }`}>
+              <span className={`text-[10px] font-medium leading-tight ${item.active ? "text-timber-600" : "text-gray-500"}`}>
                 {item.label}
               </span>
             </Link>
