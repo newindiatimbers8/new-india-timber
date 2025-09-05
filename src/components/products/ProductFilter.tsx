@@ -135,8 +135,6 @@ const ProductFilter = ({ products, onFilterChange }: ProductFilterProps) => {
         return "Premium (Own Use)";
       case "own_budget":
         return "Budget (Own Use)";
-      case "rental":
-        return "Rental";
       default:
         return usage;
     }

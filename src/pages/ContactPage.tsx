@@ -90,7 +90,7 @@ const ContactPage = () => {
                 <div>
                   <h3 className="font-semibold mb-1">Our Location</h3>
                   <p className="text-gray-600">
-                    No. 134/20, 5th Main, HSR Layout Sector 7, Bangalore - 560068
+                    24/4 Sarjapura Main Road Doddakanna halli, beside Uber Verdant, Phase 1, apartments, Bengaluru, Karnataka 560035
                   </p>
                 </div>
               </div>
@@ -100,7 +100,7 @@ const ContactPage = () => {
                 <div>
                   <h3 className="font-semibold mb-1">Phone</h3>
                   <p className="text-gray-600">
-                    +91 8095701235
+                    +91 9886033342
                   </p>
                 </div>
               </div>
@@ -110,7 +110,7 @@ const ContactPage = () => {
                 <div>
                   <h3 className="font-semibold mb-1">Email</h3>
                   <p className="text-gray-600">
-                    contact@southindiantimbers.com
+                    newindiatimbers8@gmail.com
                   </p>
                 </div>
               </div>
@@ -126,11 +126,7 @@ const ContactPage = () => {
                 </div>
               </div>
             </div>
-            
-            {/* Google Map Embed Placeholder */}
-            <div className="mt-8 h-72 bg-gray-200 rounded-lg flex items-center justify-center">
-              <p className="text-gray-500">Google Map Embed Goes Here</p>
-            </div>
+
           </div>
           
           {/* Contact Form */}
@@ -161,7 +157,7 @@ const ContactPage = () => {
                       <FormItem>
                         <FormLabel>Email</FormLabel>
                         <FormControl>
-                          <Input placeholder="email@example.com" {...field} />
+                          <Input placeholder="newindiatimbers8@gmail.com" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -175,7 +171,7 @@ const ContactPage = () => {
                       <FormItem>
                         <FormLabel>Phone</FormLabel>
                         <FormControl>
-                          <Input placeholder="+91 1234567890" {...field} />
+                          <Input placeholder="+91 9886033342" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>

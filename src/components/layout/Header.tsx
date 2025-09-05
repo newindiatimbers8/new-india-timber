@@ -12,7 +12,11 @@ import {
   Bell,
   ArrowLeft,
   Home,
-  Calculator
+  // Calculator, // COMMENTED OUT
+  Package,
+  TreePine,
+  BarChart3,
+  Info
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -39,7 +43,7 @@ const Header = () => {
     if (location.pathname === "/") return "New India Timber";
     if (location.pathname.includes("/products")) return "Products";
     if (location.pathname.includes("/bulk-orders")) return "Bulk Orders";
-    if (location.pathname.includes("/estimator")) return "Price Estimator";
+    // if (location.pathname.includes("/estimator")) return "Price Estimator"; // COMMENTED OUT
     if (location.pathname.includes("/about")) return "About Us";
     if (location.pathname.includes("/contact")) return "Contact";
     if (location.pathname.includes("/login")) return "Account";
@@ -57,11 +61,11 @@ const Header = () => {
           <div className="flex items-center space-x-4">
             <div className="flex items-center">
               <Phone size={14} className="mr-1" />
-              <span>+91 8095701235</span>
+              <span>+91 9886033342</span>
             </div>
             <div className="flex items-center">
               <Mail size={14} className="mr-1" />
-              <span>contact@southindiantimbers.com</span>
+              <span>newindiatimbers8@gmail.com</span>
             </div>
           </div>
           <div className="flex items-center space-x-4">
@@ -126,29 +130,51 @@ const Header = () => {
                   </Link>
                   
                   <div className="py-2">
-                    <h3 className="px-3 text-sm font-semibold text-gray-500 uppercase tracking-wider">Products</h3>
-                    <Link to="/products/teak" className="px-3 py-2 hover:bg-accent rounded-lg ml-4 flex items-center text-sm">
+                    <h3 className="px-3 text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Products</h3>
+                    
+                    {/* All Products Link */}
+                    <Link to="/products" className="px-3 py-2 hover:bg-accent rounded-lg ml-4 flex items-center text-sm font-medium">
+                      <Package className="mr-2" size={16} />
+                      All Products
+                    </Link>
+                    
+                    {/* Product Categories */}
+                    <Link to="/products?category=teak" className="px-3 py-2 hover:bg-accent rounded-lg ml-4 flex items-center text-sm">
                       Teak Wood
                     </Link>
-                    <Link to="/products/plywood" className="px-3 py-2 hover:bg-accent rounded-lg ml-4 flex items-center text-sm">
+                    <Link to="/products?category=plywood" className="px-3 py-2 hover:bg-accent rounded-lg ml-4 flex items-center text-sm">
                       Plywood
                     </Link>
-                    <Link to="/products/hardwood" className="px-3 py-2 hover:bg-accent rounded-lg ml-4 flex items-center text-sm">
+                    <Link to="/products?category=hardwood" className="px-3 py-2 hover:bg-accent rounded-lg ml-4 flex items-center text-sm">
                       Hardwood Logs
+                    </Link>
+                    
+                    {/* Wood Directory Link */}
+                    <Link to="/products/wood/burma-teak" className="px-3 py-2 hover:bg-accent rounded-lg ml-4 flex items-center text-sm text-timber-600">
+                      <TreePine className="mr-2" size={16} />
+                      Wood Directory
                     </Link>
                   </div>
                   
+                  {/* CALCULATOR LINK COMMENTED OUT
                   <Link to="/estimator" className="px-3 py-3 hover:bg-accent rounded-lg flex items-center">
                     <Calculator className="mr-3" size={20} />
                     Price Estimator
                   </Link>
+                  */}
                   
                   <Link to="/bulk-orders" className="px-3 py-3 hover:bg-accent rounded-lg flex items-center">
                     <ShoppingCart className="mr-3" size={20} />
                     Bulk Orders
                   </Link>
                   
+                  <Link to="/compare" className="px-3 py-3 hover:bg-accent rounded-lg flex items-center">
+                    <BarChart3 className="mr-3" size={20} />
+                    Compare Woods
+                  </Link>
+                  
                   <Link to="/about" className="px-3 py-3 hover:bg-accent rounded-lg flex items-center">
+                    <Info className="mr-3" size={20} />
                     About Us
                   </Link>
                   
@@ -166,11 +192,11 @@ const Header = () => {
                   <div className="px-3 py-2 text-xs text-gray-500">
                     <div className="flex items-center mb-1">
                       <Phone size={12} className="mr-1" />
-                      +91 8095701235
+                      +91 9886033342
                     </div>
                     <div className="flex items-center">
                       <Mail size={12} className="mr-1" />
-                      contact@newindiatimber.com
+                      newindiatimbers8@gmail.com
                     </div>
                   </div>
                 </div>
@@ -205,23 +231,14 @@ const Header = () => {
                 <NavigationMenuItem>
                   <NavigationMenuTrigger>Products</NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <div className="w-[600px] p-4 grid grid-cols-2 gap-4">
+                    <div className="w-[400px] p-4">
                       <div>
                         <h3 className="font-bold mb-2 text-forest-700">Teak Wood</h3>
                         <ul className="space-y-1">
-                          <li><Link to="/products/teak/burma" className="hover:text-timber-600">Burma Teak</Link></li>
-                          <li><Link to="/products/teak/ghana" className="hover:text-timber-600">Ghana Teak</Link></li>
-                          <li><Link to="/products/teak/brazilian" className="hover:text-timber-600">Brazilian Teak</Link></li>
-                          <li><Link to="/products/teak/indian-sal" className="hover:text-timber-600">Indian Sal</Link></li>
-                        </ul>
-                      </div>
-                      <div>
-                        <h3 className="font-bold mb-2 text-forest-700">Plywood</h3>
-                        <ul className="space-y-1">
-                          <li><Link to="/products/plywood/sainik-mr" className="hover:text-timber-600">Century Ply Sainik MR</Link></li>
-                          <li><Link to="/products/plywood/marine" className="hover:text-timber-600">Marine Plywood</Link></li>
-                          <li><Link to="/products/plywood/laminated" className="hover:text-timber-600">Laminated Plywood</Link></li>
-                          <li><Link to="/products/plywood/waterproof" className="hover:text-timber-600">Waterproof Plywood</Link></li>
+                          <li><Link to="/products/wood/burma-teak" className="hover:text-timber-600">Burma Teak</Link></li>
+                          <li><Link to="/products/wood/ghana-teak" className="hover:text-timber-600">Ghana Teak</Link></li>
+                          <li><Link to="/products/wood/brazilian-teak" className="hover:text-timber-600">Brazilian Teak</Link></li>
+                          <li><Link to="/products/wood/indian-sal" className="hover:text-timber-600">Indian Sal</Link></li>
                         </ul>
                       </div>
                     </div>

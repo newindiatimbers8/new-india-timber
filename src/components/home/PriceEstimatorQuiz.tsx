@@ -1,4 +1,5 @@
 
+/* PRICE ESTIMATOR QUIZ COMPONENT COMMENTED OUT
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -1600,3 +1601,5 @@ const PriceEstimatorQuiz = () => {
 };
 
 export default PriceEstimatorQuiz;
+*/
+/* END PRICE ESTIMATOR QUIZ COMPONENT COMMENTED OUT */

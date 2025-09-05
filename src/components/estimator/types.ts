@@ -1,3 +1,4 @@
+/* ESTIMATOR TYPES COMMENTED OUT
 export interface EstimatorItem {
   id: string;
   type: 'door' | 'window' | 'custom';
@@ -47,3 +48,5 @@ export interface ItemTemplate {
   styles?: string[];
   priceMultiplier: number;
 }
+*/
+/* END ESTIMATOR TYPES COMMENTED OUT */

@@ -11,7 +11,7 @@ import {
   Star,
   MapPin,
   Phone,
-  Calculator,
+  // Calculator, // COMMENTED OUT
   Package
 } from "lucide-react";
 
@@ -80,13 +80,13 @@ const Hero = () => {
             {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-fade-in [animation-delay:1s]">
               <Button asChild size="lg" className="bg-timber-600 hover:bg-timber-700 text-white px-8 py-4 text-lg rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group">
-                <Link to="/login" className="inline-flex items-center justify-center">
-                  Start Your Project
+                <a href="https://wa.me/919886033342?text=Hello%20I%20am%20interested%20in%20your%20services" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center">
+                  Get a Quote
                   <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={20} />
-                </Link>
+                </a>
               </Button>
               
-              <Button asChild variant="outline" size="lg" className="border-2 border-white/30 text-white hover:bg-white/10 backdrop-blur-sm px-8 py-4 text-lg rounded-xl">
+              <Button asChild variant="outline" size="lg" className="bg-transparent border-2 border-white/30 text-white hover:bg-white/10 hover:text-white backdrop-blur-sm px-8 py-4 text-lg rounded-xl">
                 <Link to="/products" className="inline-flex items-center justify-center">
                   <Package className="mr-2" size={18} />
                   Browse Products
@@ -115,7 +115,6 @@ const Hero = () => {
           <div className="lg:col-span-5 relative">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-4 max-w-md mx-auto lg:max-w-none">
               
-              {/* Price Estimator Card */}
               <Card className="bg-white/10 backdrop-blur-lg border border-white/20 hover:bg-white/15 transition-all duration-300 transform hover:scale-105 animate-fade-in [animation-delay:1.4s]">
                 <CardContent className="p-6">
                   <div className="flex items-center space-x-3 mb-3">
@@ -128,7 +127,7 @@ const Hero = () => {
                     </div>
                   </div>
                   <Button asChild size="sm" className="w-full bg-timber-600/80 hover:bg-timber-600 text-white">
-                    <Link to="/estimator">Calculate Now</Link>
+                    <a href="https://wa.me/919886033342?text=Hello%20I%20am%20interested%20in%20your%20services" target="_blank" rel="noopener noreferrer">WhatsApp Now</a>
                   </Button>
                 </CardContent>
               </Card>
@@ -167,7 +166,7 @@ const Hero = () => {
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-blue-200">Across Bangalore</span>
                     <Button asChild size="sm" variant="ghost" className="text-white hover:bg-white/10 p-2">
-                      <a href="tel:+918095701235">
+                      <a href="tel:+919886033342">
                         <Phone className="w-4 h-4" />
                       </a>
                     </Button>

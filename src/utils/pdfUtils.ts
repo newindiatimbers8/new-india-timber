@@ -25,7 +25,7 @@ export async function generatePDF(quoteDetails: QuoteDetails): Promise<void> {
     doc.text('New India Timber', 105, 20, { align: 'center' });
     
     doc.setFontSize(10);
-    doc.text('No. 134/20, 5th Main, HSR Layout Sector 7, Bangalore - 560068', 105, 30, { align: 'center' });
+    doc.text('24/4 Sarjapura Main Road Doddakanna halli, beside Uber Verdant, Phase 1, apartments, Bengaluru, Karnataka 560035', 105, 30, { align: 'center' });
     
     // Quote details
     doc.setTextColor(0, 0, 0);
@@ -237,7 +237,7 @@ export async function generatePDF(quoteDetails: QuoteDetails): Promise<void> {
     doc.setFontSize(8);
     doc.setTextColor(100, 100, 100);
     doc.text('This is a detailed estimate based on the information provided. For a professional quotation, please contact our team.', 105, footerY, { align: 'center' });
-    doc.text('New India Timber | Phone: +91-9876543210 | Email: info@newindiatimber.com', 105, footerY + 5, { align: 'center' });
+    doc.text('New India Timber | Phone: +91-9886033342 | Email: newindiatimbers8@gmail.com', 105, footerY + 5, { align: 'center' });
     
     // Save PDF
     doc.save(`NIT_DetailedEstimate_${quoteDetails.quoteNumber}.pdf`);
@@ -254,6 +254,125 @@ export function generateQuoteNumber(): string {
   const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
   
   return `${prefix}${timestamp}-${random}`;
+}
+
+export async function generateSimpleEstimatePDF(data: {
+  estimateData: {
+    projectType: string;
+    woodType: string;
+    area: number;
+    quantity: number;
+    customRequirements: string;
+    estimatedCost: number;
+  };
+  quoteNumber: string;
+  quoteDate: string;
+}): Promise<void> {
+  const { jsPDF } = await import('jspdf');
+  const autoTable = (await import('jspdf-autotable')).default;
+  
+  try {
+    const doc = new jsPDF();
+    
+    // Add company header
+    doc.setFillColor(139, 69, 19); // Timber brown color
+    doc.rect(0, 0, 210, 40, 'F');
+    
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(22);
+    doc.text('New India Timber', 105, 20, { align: 'center' });
+    
+    doc.setFontSize(10);
+    doc.text('Quality Wood Solutions', 105, 28, { align: 'center' });
+    doc.text('24/4 Sarjapura Main Road Doddakanna halli, beside Uber Verdant, Phase 1, apartments, Bengaluru, Karnataka 560035', 105, 35, { align: 'center' });
+    
+    // Quote details
+    doc.setTextColor(0, 0, 0);
+    doc.setFontSize(16);
+    doc.text('Quick Cost Estimate', 14, 55);
+    
+    doc.setFontSize(10);
+    doc.text(`Quote #: ${data.quoteNumber}`, 14, 65);
+    doc.text(`Date: ${data.quoteDate}`, 14, 70);
+    
+    // Project details
+    const projectData = [
+      ['Project Type', data.estimateData.projectType],
+      ['Wood Type', data.estimateData.woodType],
+      ['Area Required', `${data.estimateData.area} sq. ft.`],
+      ['Quantity', data.estimateData.quantity.toString()],
+      ['Custom Requirements', data.estimateData.customRequirements || 'None specified']
+    ];
+    
+    autoTable(doc, {
+      head: [['Item', 'Details']],
+      body: projectData,
+      startY: 80,
+      styles: { fontSize: 10, cellPadding: 4 },
+      headStyles: { fillColor: [139, 69, 19], textColor: 255 },
+      alternateRowStyles: { fillColor: [245, 245, 245] }
+    });
+    
+    // Estimated cost
+    const finalY = (doc as any).lastAutoTable.finalY + 20;
+    
+    doc.setFillColor(34, 197, 94); // Green background
+    doc.rect(14, finalY - 5, 182, 25, 'F');
+    
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(18);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Estimated Total Cost:', 20, finalY + 8);
+    doc.text(`₹${data.estimateData.estimatedCost.toLocaleString('en-IN')}`, 20, finalY + 18);
+    
+    // Reset text color and font
+    doc.setTextColor(0, 0, 0);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(8);
+    
+    // Important notes
+    let notesY = finalY + 35;
+    doc.text('Important Notes:', 14, notesY);
+    notesY += 8;
+    
+    const notes = [
+      '• This is a preliminary estimate based on the information provided',
+      '• Final pricing may vary based on actual measurements and specifications',
+      '• Estimate includes material cost, labor, and standard overhead',
+      '• Custom requirements may affect the final pricing',
+      '• Prices are valid for 30 days from the date of this estimate',
+      '• For detailed quotation, please contact our sales team'
+    ];
+    
+    notes.forEach(note => {
+      doc.text(note, 14, notesY);
+      notesY += 5;
+    });
+    
+    // Contact information
+    notesY += 10;
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Contact Us for Detailed Quote:', 14, notesY);
+    
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(9);
+    notesY += 8;
+    doc.text('Phone: +91 9886033342 | Email: newindiatimbers8@gmail.com', 14, notesY);
+    doc.text('Website: www.newindiatimber.com', 14, notesY + 5);
+    
+    // Footer
+    doc.setFontSize(8);
+    doc.setTextColor(100, 100, 100);
+    doc.text('Generated by New India Timber Quick Estimator', 105, 280, { align: 'center' });
+    
+    // Save the PDF
+    doc.save(`NIT_QuickEstimate_${data.quoteNumber}.pdf`);
+    
+  } catch (error) {
+    console.error('Error generating simple estimate PDF:', error);
+    throw new Error('Failed to generate PDF. Please try again.');
+  }
 }
 
 export async function generateDetailedEstimatePDF(quoteData: {
@@ -282,7 +401,7 @@ export async function generateDetailedEstimatePDF(quoteData: {
     
     doc.setFontSize(10);
     doc.text('Quality Forever', 105, 28, { align: 'center' });
-    doc.text('No. 134/20, 5th Main, HSR Layout Sector 7, Bangalore - 560068', 105, 35, { align: 'center' });
+    doc.text('24/4 Sarjapura Main Road Doddakanna halli, beside Uber Verdant, Phase 1, apartments, Bengaluru, Karnataka 560035', 105, 35, { align: 'center' });
     
     // Quote details
     doc.setTextColor(0, 0, 0);
@@ -339,7 +458,7 @@ export async function generateDetailedEstimatePDF(quoteData: {
     doc.setFontSize(8);
     doc.setFont(undefined, 'normal');
     doc.text('Terms: Prices subject to change. Valid for 30 days from quote date.', 14, 280);
-    doc.text('Contact: +91 80 2571 5555 | info@newindiatimber.com', 14, 285);
+    doc.text('Contact: +91 9886033342 | newindiatimbers8@gmail.com', 14, 285);
     
     // Save the PDF
     doc.save(`detailed-estimate-${quoteData.quoteNumber}.pdf`);

@@ -1,3 +1,4 @@
+/* PRICING ENGINE COMMENTED OUT
 import { EstimatorItem, ProjectEstimate, MaterialRate } from './types';
 
 export const materialRates: MaterialRate[] = [
@@ -207,3 +208,5 @@ export function getAlternativeSuggestions(items: EstimatorItem[]): string[] {
 
   return suggestions.slice(0, 3); // Return top 3 suggestions
 }
+*/
+/* END PRICING ENGINE COMMENTED OUT */

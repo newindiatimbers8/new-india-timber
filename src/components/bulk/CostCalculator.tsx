@@ -1,4 +1,5 @@
 
+/* CALCULATOR COMPONENT COMMENTED OUT
 import { useState } from "react";
 import {
   Card,
@@ -360,3 +361,5 @@ const CostCalculator = () => {
 };
 
 export default CostCalculator;
+*/
+/* END CALCULATOR COMPONENT COMMENTED OUT */

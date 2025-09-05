@@ -24,6 +24,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { Switch } from "@/components/ui/switch";
+import { dbService } from "@/services/database";
+import { authService } from "@/services/auth";
 
 const formSchema = z.object({
   purpose: z.enum(["commercial", "residential"], {
@@ -89,25 +91,46 @@ const BulkOrderForm = () => {
   
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsSubmitting(true);
-    
+
     try {
-      // Here you would implement the actual submission logic
-      console.log("Form submitted:", values);
-      
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      // Get current user if authenticated
+      let userId = null;
+      try {
+        const user = await authService.getCurrentUser();
+        userId = user?.$id || null;
+      } catch {
+        // User not authenticated, that's okay for bulk orders
+      }
+
+      // Create order data
+      const orderData = {
+        userId,
+        purpose: values.purpose,
+        frames: parseInt(values.frames),
+        deliveryRequired: values.deliveryRequired,
+        address: values.address || undefined,
+        name: values.name,
+        email: values.email,
+        phone: values.phone,
+        customization: values.customization || undefined,
+        status: 'pending' as const,
+        estimatedValue: 0, // This would be calculated based on wood type and quantity
+      };
+
+      // Save order to database
+      await dbService.createOrder(orderData);
+
       toast({
         title: "Bulk order request submitted",
         description: "We'll contact you within 48 hours to confirm the details.",
       });
-      
+
       // Reset the form
       form.reset();
-    } catch (error) {
+    } catch (error: any) {
       toast({
         title: "Submission failed",
-        description: "There was an error submitting your request. Please try again.",
+        description: error.message || "There was an error submitting your request. Please try again.",
         variant: "destructive",
       });
     } finally {
@@ -216,7 +239,7 @@ const BulkOrderForm = () => {
                 <p className="text-amber-700 text-sm">
                   You can pick up your order from our store at:
                   <br />
-                  No. 134/20, 5th Main, HSR Layout Sector 7, Bangalore - 560068
+                  24/4 Sarjapura Main Road Doddakanna halli, beside Uber Verdant, Phase 1, apartments, Bengaluru, Karnataka 560035
                   <br />
                   We'll contact you when your order is ready for pickup.
                 </p>
@@ -244,7 +267,7 @@ const BulkOrderForm = () => {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="email@example.com" {...field} />
+                    <Input placeholder="newindiatimbers8@gmail.com" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -258,7 +281,7 @@ const BulkOrderForm = () => {
                 <FormItem>
                   <FormLabel>Phone Number</FormLabel>
                   <FormControl>
-                    <Input placeholder="+91 1234567890" {...field} />
+                    <Input placeholder="+91 9886033342" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -312,7 +335,7 @@ const BulkOrderForm = () => {
           <BookYourWoodStep 
             stepNumber={3} 
             title="Delivery or Pickup" 
-            description="Once confirmed, arrange for delivery or pickup from our HSR Layout store."
+            description="Once confirmed, arrange for delivery or pickup from our Sarjapura Main Road store."
           />
         </div>
         

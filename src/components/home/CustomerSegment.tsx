@@ -37,12 +37,6 @@ const CustomerSegment = () => {
       title: "Budget Friendly",
       description: "Quality wood products at affordable prices without compromising durability.",
       image: getPlaceholderImage("plywood")
-    },
-    {
-      id: "rental",
-      title: "Rental Options",
-      description: "Temporary solutions for short-term projects with flexible rental terms.",
-      image: getPlaceholderImage("hardwood")
     }
   ];
 

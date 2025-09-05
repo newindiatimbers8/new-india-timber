@@ -5,10 +5,10 @@ import Hero from "../components/home/Hero";
 import CategorySection from "../components/home/CategorySection";
 import CustomerSegment from "../components/home/CustomerSegment";
 import HowItWorks from "../components/home/HowItWorks";
+// import SimpleCostEstimator from "../components/home/SimpleCostEstimator";
 import FeaturesSection from "../components/home/FeaturesSection";
 import TestimonialsSection from "../components/home/TestimonialsSection";
 import CTASection from "../components/home/CTASection";
-import DetailedPriceEstimator from "../components/estimator/DetailedPriceEstimator";
 import { Link } from "react-router-dom";
 
 const Index = () => {
@@ -22,7 +22,7 @@ const Index = () => {
       <CategorySection />
       <CustomerSegment />
       <HowItWorks />
-      <DetailedPriceEstimator />
+      {/* <SimpleCostEstimator /> */}
       <FeaturesSection />
       <TestimonialsSection />
       <CTASection />

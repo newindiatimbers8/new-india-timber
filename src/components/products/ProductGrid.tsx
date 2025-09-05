@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   Card,
@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { getPlaceholderImage, handleImageError } from "@/utils/imageUtils";
+import { WoodProduct } from "@/services/database";
 
 export interface ProductType {
   id: string;
@@ -36,18 +37,59 @@ export interface ProductType {
   dimensions?: string;
   image: string;
   stockStatus: "In Stock" | "Low Stock" | "Out of Stock";
-  usage: "own_premium" | "own_budget" | "rental";
+  usage: "own_premium" | "own_budget";
   purpose: "commercial" | "residential" | "both";
 }
 
+// Helper function to convert database WoodProduct to ProductType
+export const convertWoodProductToProductType = (woodProduct: WoodProduct): ProductType => {
+  return {
+    id: woodProduct.id,
+    title: woodProduct.name,
+    category: woodProduct.category as "teak" | "plywood" | "hardwood",
+    subcategory: woodProduct.grade,
+    description: woodProduct.overview.description,
+    price: woodProduct.pricing.pricePerSqFt,
+    thickness: woodProduct.specifications.density ? `${woodProduct.specifications.density}kg/m³` : undefined,
+    color: woodProduct.specifications.grainPattern,
+    features: woodProduct.overview.keyBenefits,
+    dimensions: undefined, // Not available in current structure
+    image: getPlaceholderImage(woodProduct.category),
+    stockStatus: "In Stock", // Default status
+    usage: woodProduct.grade === 'premium' ? "own_premium" : "own_budget",
+    purpose: "both" // Default purpose
+  };
+};
+
 interface ProductGridProps {
-  products: ProductType[];
+  products: ProductType[] | WoodProduct[];
   title?: string;
   description?: string;
+  loading?: boolean;
+  error?: string | null;
 }
 
-const ProductGrid = ({ products, title, description }: ProductGridProps) => {
+const ProductGrid = ({ products, title, description, loading, error }: ProductGridProps) => {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Convert WoodProduct to ProductType if needed
+  const normalizedProducts: ProductType[] = products.map(product => {
+    // Check if it's a WoodProduct (has overview property)
+    if ('overview' in product) {
+      return convertWoodProductToProductType(product as WoodProduct);
+    }
+    return product as ProductType;
+  });
   
   const getStockStatusColor = (status: string) => {
     switch (status) {
@@ -62,6 +104,45 @@ const ProductGrid = ({ products, title, description }: ProductGridProps) => {
     }
   };
   
+  // Loading state
+  if (loading) {
+    return (
+      <div className="w-full">
+        {(title || description) && (
+          <div className="mb-6 md:mb-8 text-center md:text-left">
+            {title && <h2 className="text-2xl md:text-3xl font-bold mb-2">{title}</h2>}
+            {description && <p className="text-gray-600 text-sm md:text-base">{description}</p>}
+          </div>
+        )}
+        <div className="flex justify-center items-center py-12">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-timber-600"></div>
+          <span className="ml-3 text-gray-600">Loading products...</span>
+        </div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <div className="w-full">
+        {(title || description) && (
+          <div className="mb-6 md:mb-8 text-center md:text-left">
+            {title && <h2 className="text-2xl md:text-3xl font-bold mb-2">{title}</h2>}
+            {description && <p className="text-gray-600 text-sm md:text-base">{description}</p>}
+          </div>
+        )}
+        <div className="text-center py-12">
+          <div className="bg-red-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+            <Search className="h-8 w-8 text-red-400" />
+          </div>
+          <h3 className="text-lg font-medium text-gray-900 mb-2">Error loading products</h3>
+          <p className="text-gray-500 text-sm">{error}</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="w-full">
       {(title || description) && (
@@ -76,7 +157,7 @@ const ProductGrid = ({ products, title, description }: ProductGridProps) => {
         <div className="flex items-center gap-2">
           <Search className="h-4 w-4 text-gray-500" />
           <p className="text-sm text-gray-600">
-            <span className="font-medium">{products.length}</span> products found
+            <span className="font-medium">{normalizedProducts.length}</span> products found
           </p>
         </div>
         
@@ -108,7 +189,7 @@ const ProductGrid = ({ products, title, description }: ProductGridProps) => {
       </div>
       
       {/* Product Grid/List */}
-      {products.length === 0 ? (
+      {normalizedProducts.length === 0 ? (
         <div className="text-center py-12">
           <div className="bg-gray-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
             <ListFilter className="h-8 w-8 text-gray-400" />
@@ -121,25 +202,35 @@ const ProductGrid = ({ products, title, description }: ProductGridProps) => {
       ) : (
         <div className={cn(
           "grid gap-4 md:gap-6",
-          // Mobile-first: always grid on mobile, responsive on desktop
-          "grid-cols-1 sm:grid-cols-2",
-          viewMode === "grid" 
+          // Mobile-first: horizontal cards on mobile, responsive grid on desktop
+          isMobile 
+            ? "grid-cols-1 space-y-3" 
+            : "grid-cols-1 sm:grid-cols-2",
+          !isMobile && viewMode === "grid" 
             ? "lg:grid-cols-3 xl:grid-cols-4" 
             : "lg:grid-cols-1 xl:grid-cols-1"
         )}>
-          {products.map((product) => (
+          {normalizedProducts.map((product) => (
             <Link 
               key={product.id} 
               to={`/products/${product.category}/${product.id}`} 
               className="block no-underline group"
             >
               <Card className={cn(
-                "h-full overflow-hidden transition-all duration-300 hover:shadow-lg border-gray-200 hover:border-timber-300",
-                viewMode === "list" && "lg:flex lg:flex-row"
+                "overflow-hidden transition-all duration-300 hover:shadow-lg border-gray-200 hover:border-timber-300 active:scale-[0.98]",
+                // Mobile: horizontal layout, Desktop: vertical or list layout
+                isMobile 
+                  ? "flex flex-row h-32" 
+                  : "h-full",
+                !isMobile && viewMode === "list" && "lg:flex lg:flex-row"
               )}>
                 <div className={cn(
-                  "relative overflow-hidden bg-gray-50",
-                  viewMode === "grid" ? "aspect-square" : "aspect-square lg:w-1/3 lg:aspect-auto"
+                  "relative overflow-hidden bg-gray-50 flex-shrink-0",
+                  isMobile 
+                    ? "w-32 h-full" 
+                    : viewMode === "grid" 
+                      ? "aspect-square" 
+                      : "aspect-square lg:w-1/3 lg:aspect-auto"
                 )}>
                   <img
                     src={product.image || getPlaceholderImage(product.category)}
@@ -149,50 +240,102 @@ const ProductGrid = ({ products, title, description }: ProductGridProps) => {
                   />
                   <Badge 
                     className={cn(
-                      "absolute top-2 right-2 text-xs",
+                      "absolute text-xs",
+                      isMobile ? "top-1 right-1 text-xs" : "top-2 right-2",
                       getStockStatusColor(product.stockStatus)
                     )}
                   >
-                    {product.stockStatus}
+                    {isMobile ? (product.stockStatus === "In Stock" ? "✓" : "!") : product.stockStatus}
                   </Badge>
                   
                   {/* Usage Badge */}
                   <Badge 
-                    className="absolute top-2 left-2 bg-white/90 text-gray-800 text-xs"
+                    className={cn(
+                      "absolute bg-white/90 text-gray-800 text-xs",
+                      isMobile ? "top-1 left-1 px-1 py-0" : "top-2 left-2"
+                    )}
                     variant="secondary"
                   >
-                    {product.usage === 'own_premium' ? 'Premium' : 
-                     product.usage === 'own_budget' ? 'Budget' : 'Rental'}
+                    {isMobile 
+                      ? (product.usage === 'own_premium' ? 'P' : 'B')
+                      : (product.usage === 'own_premium' ? 'Premium' : 
+                         product.usage === 'own_budget' ? 'Budget' : 'Standard')
+                    }
                   </Badge>
                 </div>
                 
                 <div className={cn(
-                  "flex flex-col",
-                  viewMode === "list" && "lg:w-2/3"
+                  "flex flex-col min-w-0",
+                  isMobile ? "flex-1 p-3" : "flex-col",
+                  !isMobile && viewMode === "list" && "lg:w-2/3"
                 )}>
-                  <CardContent className="p-4 flex-1">
-                    <div className="flex items-start justify-between mb-2">
-                      <CardTitle className="text-lg md:text-xl line-clamp-2 group-hover:text-timber-700 transition-colors">
+                  <CardContent className={cn(
+                    "flex-1",
+                    isMobile ? "p-0" : "p-4"
+                  )}>
+                    <div className={cn(
+                      "flex items-start justify-between",
+                      isMobile ? "mb-1" : "mb-2"
+                    )}>
+                      <CardTitle className={cn(
+                        "line-clamp-2 group-hover:text-timber-700 transition-colors pr-2",
+                        isMobile ? "text-sm font-medium" : "text-lg md:text-xl"
+                      )}>
                         {product.title}
                       </CardTitle>
                     </div>
                     
-                    <CardDescription className="text-sm text-gray-600 line-clamp-2 mb-3">
+                    <CardDescription className={cn(
+                      "text-gray-600 line-clamp-2",
+                      isMobile ? "text-xs mb-1" : "text-sm mb-3"
+                    )}>
                       {product.description}
                     </CardDescription>
                     
-                    {/* Product Details */}
-                    <div className="space-y-1 text-xs text-gray-500">
-                      {product.thickness && (
-                        <p>Thickness: <span className="text-gray-700">{product.thickness}</span></p>
-                      )}
-                      {product.dimensions && (
-                        <p>Size: <span className="text-gray-700">{product.dimensions}</span></p>
-                      )}
-                      {product.color && (
-                        <p>Color: <span className="text-gray-700">{product.color}</span></p>
-                      )}
-                    </div>
+                    {/* Product Details - Compact for mobile */}
+                    {!isMobile && (
+                      <div className="space-y-1 text-xs text-gray-500">
+                        {product.thickness && (
+                          <p>Thickness: <span className="text-gray-700">{product.thickness}</span></p>
+                        )}
+                        {product.dimensions && (
+                          <p>Size: <span className="text-gray-700">{product.dimensions}</span></p>
+                        )}
+                        {product.color && (
+                          <p>Color: <span className="text-gray-700">{product.color}</span></p>
+                        )}
+                      </div>
+                    )}
+                    
+                    {/* Compact info for mobile */}
+                    {isMobile && (
+                      <div className="flex items-center justify-between">
+                        <div>
+                          {product.price ? (
+                            <div className="flex flex-col">
+                              <span className="font-bold text-timber-600 text-sm">
+                                ₹{product.price.toLocaleString('en-IN')}
+                              </span>
+                              {product.category === 'plywood' && (
+                                <span className="text-xs text-gray-500">per sq ft</span>
+                              )}
+                            </div>
+                          ) : (
+                            <span className="text-timber-700 font-medium text-xs bg-timber-50 px-2 py-1 rounded">
+                              Request Price
+                            </span>
+                          )}
+                        </div>
+                        
+                        <Button 
+                          size="sm" 
+                          className="h-8 px-3 text-xs bg-timber-600 hover:bg-timber-700 ml-2 flex-shrink-0"
+                        >
+                          <ShoppingCart size={12} className="mr-1" /> 
+                          {product.price ? "Buy" : "Quote"}
+                        </Button>
+                      </div>
+                    )}
                     
                     {/* Features - Show on larger screens or list view */}
                     {product.features && product.features.length > 0 && (
@@ -216,44 +359,33 @@ const ProductGrid = ({ products, title, description }: ProductGridProps) => {
                     )}
                   </CardContent>
                   
-                  <CardFooter className="p-4 pt-0 flex justify-between items-center">
-                    <div>
-                      {product.price ? (
-                        <div>
-                          <span className="font-bold text-lg md:text-xl text-timber-600">
-                            ₹{product.price.toLocaleString('en-IN')}
-                          </span>
-                          {product.category === 'plywood' && (
-                            <span className="text-xs text-gray-500 ml-1">/sq ft</span>
-                          )}
-                        </div>
-                      ) : (
-                        <span className="text-timber-700 font-medium text-sm">Request Price</span>
-                      )}
-                    </div>
-                    
-                    <Button 
-                      size="sm" 
-                      className={cn(
-                        "h-8 px-3 text-xs",
-                        product.usage === "rental" 
-                          ? "bg-blue-600 hover:bg-blue-700" 
-                          : "bg-timber-600 hover:bg-timber-700"
-                      )}
-                    >
-                      {product.usage === "rental" ? (
-                        <>
-                          <Clock size={14} className="mr-1" /> 
-                          Rent
-                        </>
-                      ) : (
-                        <>
-                          <ShoppingCart size={14} className="mr-1" /> 
-                          Buy
-                        </>
-                      )}
-                    </Button>
-                  </CardFooter>
+                  {/* Desktop Footer - Hidden on mobile since mobile has inline footer */}
+                  {!isMobile && (
+                    <CardFooter className="p-4 pt-0 flex justify-between items-center">
+                      <div>
+                        {product.price ? (
+                          <div>
+                            <span className="font-bold text-lg md:text-xl text-timber-600">
+                              ₹{product.price.toLocaleString('en-IN')}
+                            </span>
+                            {product.category === 'plywood' && (
+                              <span className="text-xs text-gray-500 ml-1">/sq ft</span>
+                            )}
+                          </div>
+                        ) : (
+                          <span className="text-timber-700 font-medium text-sm">Request Price</span>
+                        )}
+                      </div>
+                      
+                      <Button 
+                        size="sm" 
+                        className="h-8 px-3 text-xs bg-timber-600 hover:bg-timber-700"
+                      >
+                        <ShoppingCart size={14} className="mr-1" /> 
+                        Buy
+                      </Button>
+                    </CardFooter>
+                  )}
                 </div>
               </Card>
             </Link>

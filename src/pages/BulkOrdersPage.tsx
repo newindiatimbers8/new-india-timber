@@ -2,7 +2,7 @@
 import { useEffect } from "react";
 import Layout from "../components/layout/Layout";
 import BulkOrderForm from "../components/bulk/BulkOrderForm";
-import CostCalculator from "../components/bulk/CostCalculator";
+// import CostCalculator from "../components/bulk/CostCalculator"; // COMMENTED OUT
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const BulkOrdersPage = () => {
@@ -21,20 +21,22 @@ const BulkOrdersPage = () => {
         </div>
         
         <Tabs defaultValue="order-form" className="max-w-5xl mx-auto">
-          <TabsList className="grid w-full grid-cols-2 mb-8">
+          <TabsList className="grid w-full grid-cols-1 mb-8">
             <TabsTrigger value="order-form">Request Bulk Order</TabsTrigger>
-            <TabsTrigger value="calculator">Calculate Wood Cost</TabsTrigger>
+            {/* <TabsTrigger value="calculator">Calculate Wood Cost</TabsTrigger> COMMENTED OUT */}
           </TabsList>
           
           <TabsContent value="order-form" className="p-4 bg-white rounded-lg border">
             <BulkOrderForm />
           </TabsContent>
           
+          {/* CALCULATOR TAB COMMENTED OUT
           <TabsContent value="calculator" className="p-4 bg-white rounded-lg border">
             <div className="max-w-2xl mx-auto">
               <CostCalculator />
             </div>
           </TabsContent>
+          */}
         </Tabs>
       </div>
     </Layout>

@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { 
   MessageCircle, 
-  Calculator, 
+  // Calculator, // COMMENTED OUT 
   Palette, 
   Truck, 
   BarChart3, 
@@ -23,16 +23,17 @@ const HowItWorks = () => {
       icon: MessageCircle,
       color: "bg-blue-500"
     },
+    // ESTIMATOR STEP COMMENTED OUT
+    // {
+    //   number: 2,
+    //   title: "Get Estimate",
+    //   subtitle: "Transparent pricing",
+    //   description: "Receive detailed estimates for materials, with options for premium and budget solutions.",
+    //   icon: Calculator,
+    //   color: "bg-green-500"
+    // },
     {
       number: 2,
-      title: "Get Estimate",
-      subtitle: "Transparent pricing",
-      description: "Receive detailed estimates for materials, with options for premium, budget, and rental solutions.",
-      icon: Calculator,
-      color: "bg-green-500"
-    },
-    {
-      number: 3,
       title: "Planning & Selection",
       subtitle: "Choose materials",
       description: "Select from our premium collection of teak, plywood, and hardwood with expert guidance.",
@@ -40,7 +41,7 @@ const HowItWorks = () => {
       color: "bg-purple-500"
     },
     {
-      number: 4,
+      number: 3,
       title: "Quality Check",
       subtitle: "Ensure excellence",
       description: "Every piece of timber undergoes rigorous quality checks before delivery to your project site.",
@@ -48,7 +49,7 @@ const HowItWorks = () => {
       color: "bg-amber-500"
     },
     {
-      number: 5,
+      number: 4,
       title: "Delivery & Installation",
       subtitle: "Professional service",
       description: "Timely delivery with optional installation services to ensure perfect execution of your project.",
@@ -165,6 +166,7 @@ const HowItWorks = () => {
               Get a free consultation and estimate for your timber project today.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              {/* ESTIMATOR LINK COMMENTED OUT
               <Link to="/estimator">
                 <Button 
                   size="lg" 
@@ -174,6 +176,7 @@ const HowItWorks = () => {
                   <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
+              */}
               <Link to="/contact">
                 <Button 
                   variant="outline" 

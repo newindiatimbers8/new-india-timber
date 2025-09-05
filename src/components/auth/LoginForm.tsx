@@ -4,13 +4,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { 
-  Card, 
-  CardContent, 
-  CardDescription, 
-  CardFooter, 
-  CardHeader, 
-  CardTitle 
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle
 } from "@/components/ui/card";
 import {
   Tabs,
@@ -18,18 +18,19 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs";
-import { 
+import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
-  FormMessage 
+  FormMessage
 } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { authService } from "@/services/auth";
 
 // Login form schema
 const loginSchema = z.object({
@@ -45,7 +46,7 @@ const registrationSchema = z.object({
   password: z.string().min(8, { message: "Password must be at least 8 characters." }),
   confirmPassword: z.string(),
   companyName: z.string().optional(),
-  usagePreference: z.enum(["own_premium", "own_budget", "rental"]).optional(),
+  usagePreference: z.enum(["own_premium", "own_budget"]).optional(),
 }).refine((data) => data.password === data.confirmPassword, {
   message: "Passwords do not match.",
   path: ["confirmPassword"],
@@ -82,23 +83,19 @@ const LoginForm = () => {
   const handleLogin = async (values: z.infer<typeof loginSchema>) => {
     setIsLoading(true);
     try {
-      // Here you would implement actual login logic
-      console.log("Login form submitted:", values);
-      
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      await authService.login(values);
+
       toast({
         title: "Login Successful",
         description: "Welcome back to New India Timber!",
       });
-      
+
       // Redirect to dashboard after successful login
       navigate("/dashboard");
-    } catch (error) {
+    } catch (error: any) {
       toast({
         title: "Login Failed",
-        description: "Please check your credentials and try again.",
+        description: error.message || "Please check your credentials and try again.",
         variant: "destructive",
       });
     } finally {
@@ -109,24 +106,20 @@ const LoginForm = () => {
   const handleRegister = async (values: z.infer<typeof registrationSchema>) => {
     setIsLoading(true);
     try {
-      // Here you would implement actual registration logic
-      console.log("Registration form submitted:", values);
-      
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      await authService.register(values);
+
       toast({
         title: "Registration Successful",
         description: "Your account has been created. Welcome to New India Timber!",
       });
-      
+
       // Reset the form and redirect to dashboard
       registrationForm.reset();
       navigate("/dashboard");
-    } catch (error) {
+    } catch (error: any) {
       toast({
         title: "Registration Failed",
-        description: "There was an error creating your account. Please try again.",
+        description: error.message || "There was an error creating your account. Please try again.",
         variant: "destructive",
       });
     } finally {
@@ -156,7 +149,7 @@ const LoginForm = () => {
                       <FormItem>
                         <FormLabel>Email</FormLabel>
                         <FormControl>
-                          <Input placeholder="email@example.com" {...field} />
+                          <Input placeholder="newindiatimbers8@gmail.com" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -240,7 +233,7 @@ const LoginForm = () => {
                       <FormItem>
                         <FormLabel>Email</FormLabel>
                         <FormControl>
-                          <Input placeholder="email@example.com" {...field} />
+                          <Input placeholder="newindiatimbers8@gmail.com" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -254,7 +247,7 @@ const LoginForm = () => {
                       <FormItem>
                         <FormLabel>Phone Number</FormLabel>
                         <FormControl>
-                          <Input placeholder="+91 1234567890" {...field} />
+                          <Input placeholder="+91 9886033342" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -315,7 +308,6 @@ const LoginForm = () => {
                           <option value="">Select preference</option>
                           <option value="own_premium">Own Use (Premium)</option>
                           <option value="own_budget">Own Use (Budget)</option>
-                          <option value="rental">Rental</option>
                         </select>
                         <FormMessage />
                       </FormItem>

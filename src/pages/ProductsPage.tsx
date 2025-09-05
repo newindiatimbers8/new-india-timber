@@ -1,15 +1,20 @@
 
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, Link } from "react-router-dom";
 import Layout from "../components/layout/Layout";
 import ProductGrid, { ProductType } from "../components/products/ProductGrid";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { Filter, SlidersHorizontal, X, Search } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Filter, SlidersHorizontal, X, Search, ArrowRight, Star, Leaf, Shield, ChevronRight, MicIcon, SortAsc } from "lucide-react";
 import { getPlaceholderImage } from "../utils/imageUtils";
+import { woodProducts } from "../data/woodProducts";
 import { cn } from "@/lib/utils";
+import { useProducts } from "../hooks/useProducts";
+import { WoodProduct } from "../services/database";
 
 // Sample product data
 const sampleProducts: ProductType[] = [
@@ -70,7 +75,7 @@ const sampleProducts: ProductType[] = [
     features: ["Cost Effective", "Good Strength"],
     image: getPlaceholderImage("teak"),
     stockStatus: "In Stock",
-    usage: "rental",
+    usage: "own_budget",
     purpose: "both"
   },
   {
@@ -161,8 +166,8 @@ const sampleProducts: ProductType[] = [
 
 const ProductsPage = () => {
   const [searchParams] = useSearchParams();
-  const [products, setProducts] = useState<ProductType[]>(sampleProducts);
-  const [filteredProducts, setFilteredProducts] = useState<ProductType[]>(sampleProducts);
+  const { products: dbProducts, loading, error, getProductsByCategory } = useProducts();
+  const [filteredProducts, setFilteredProducts] = useState<WoodProduct[]>([]);
   const [activeCategory, setActiveCategory] = useState<string>("all");
   const [activeFilters, setActiveFilters] = useState<{
     usage: string[];
@@ -176,81 +181,120 @@ const ProductsPage = () => {
     priceRange: null
   });
   const [isFilterSheetOpen, setIsFilterSheetOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [sortBy, setSortBy] = useState<string>("popular");
   
   const usageParam = searchParams.get('usage');
   const purposeParam = searchParams.get('purpose');
+  const categoryParam = searchParams.get('category');
+  const typeParam = searchParams.get('type');
   
   useEffect(() => {
     window.scrollTo(0, 0);
     
-    // Filter products based on URL parameters
-    if (usageParam || purposeParam) {
-      let filtered = [...sampleProducts];
-      
-      if (usageParam) {
-        filtered = filtered.filter(p => p.usage === usageParam);
-      }
-      
-      if (purposeParam) {
-        filtered = filtered.filter(p => 
-          p.purpose === purposeParam || p.purpose === "both"
-        );
-      }
-      
-      setProducts(filtered);
-    } else {
-      setProducts(sampleProducts);
+    // Set active category based on URL parameter
+    if (categoryParam) {
+      setActiveCategory(categoryParam);
     }
-  }, [usageParam, purposeParam]);
+    
+    // Set initial filtered products from database
+    if (dbProducts.length > 0) {
+      setFilteredProducts(dbProducts);
+    }
+  }, [dbProducts, categoryParam]);
+
+  // Handle URL parameter filtering
+  useEffect(() => {
+    if (dbProducts.length === 0) return;
+    
+    let filtered = [...dbProducts];
+    
+    // Filter by category parameter
+    if (categoryParam) {
+      filtered = filtered.filter(p => p.category === categoryParam);
+    }
+    
+    // Filter by type parameter (for plywood subcategories)
+    if (typeParam) {
+      filtered = filtered.filter(p => {
+        const subcategoryMatch = p.grade?.toLowerCase().includes(typeParam.replace('-', ' '));
+        return subcategoryMatch;
+      });
+    }
+    
+    // Filter by usage parameter (based on grade)
+    if (usageParam) {
+      filtered = filtered.filter(p => {
+        const productUsage = p.grade === 'premium' ? 'own_premium' : 'own_budget';
+        return productUsage === usageParam;
+      });
+    }
+    
+    // Filter by purpose parameter (default to both for database products)
+    if (purposeParam) {
+      // Since database products don't have purpose field, we'll show all for now
+      // This can be enhanced later by adding purpose field to database
+    }
+    
+    setFilteredProducts(filtered);
+  }, [dbProducts, usageParam, purposeParam, categoryParam, typeParam]);
   
-  const handleCategoryChange = (category: string) => {
+  const handleCategoryChange = async (category: string) => {
     setActiveCategory(category);
     
-    let categoryFiltered: ProductType[];
     if (category === "all") {
-      categoryFiltered = sampleProducts;
+      setFilteredProducts(dbProducts);
     } else {
-      categoryFiltered = sampleProducts.filter(p => p.category === category);
+      // Fetch products by category from database
+      try {
+        const categoryProducts = await getProductsByCategory(category);
+        setFilteredProducts(categoryProducts);
+      } catch (error) {
+        console.error('Error fetching products by category:', error);
+        // Fallback to filtering existing products
+        const categoryFiltered = dbProducts.filter(p => p.category === category);
+        setFilteredProducts(categoryFiltered);
+      }
     }
-    
-    setProducts(categoryFiltered);
-    applyFilters(categoryFiltered);
   };
   
-  const applyFilters = (baseProducts: ProductType[] = products) => {
+  const applyFilters = (baseProducts: WoodProduct[] = filteredProducts) => {
     let filtered = [...baseProducts];
     
-    // Apply usage filter
+    // Apply usage filter (based on grade)
     if (activeFilters.usage.length > 0) {
-      filtered = filtered.filter(p => activeFilters.usage.includes(p.usage));
+      filtered = filtered.filter(p => {
+        const productUsage = p.grade === 'premium' ? 'own_premium' : 'own_budget';
+        return activeFilters.usage.includes(productUsage);
+      });
     }
     
-    // Apply purpose filter
+    // Apply purpose filter (default to both for database products)
     if (activeFilters.purpose.length > 0) {
-      filtered = filtered.filter(p => 
-        activeFilters.purpose.includes(p.purpose) || p.purpose === "both"
-      );
+      // Since database products don't have purpose field, we'll show all for now
+      // This can be enhanced later by adding purpose field to database
     }
     
-    // Apply stock status filter
+    // Apply stock status filter (default to "In Stock" for database products)
     if (activeFilters.stockStatus.length > 0) {
-      filtered = filtered.filter(p => activeFilters.stockStatus.includes(p.stockStatus));
+      // Since database products don't have stock status, we'll show all for now
+      // This can be enhanced later by adding stock status field to database
     }
     
     // Apply price range filter
     if (activeFilters.priceRange) {
       filtered = filtered.filter(p => {
-        if (p.price === null) return true; // Include "Request for Price" items
+        const price = p.pricing.pricePerSqFt;
         
         switch (activeFilters.priceRange) {
           case 'under-25k':
-            return p.price < 25000;
+            return price < 25000;
           case '25k-50k':
-            return p.price >= 25000 && p.price <= 50000;
+            return price >= 25000 && price <= 50000;
           case '50k-75k':
-            return p.price > 50000 && p.price <= 75000;
+            return price > 50000 && price <= 75000;
           case 'above-75k':
-            return p.price > 75000;
+            return price > 75000;
           default:
             return true;
         }
@@ -298,14 +342,36 @@ const ProductsPage = () => {
     switch (usage) {
       case "own_premium": return "Premium";
       case "own_budget": return "Budget";
-      case "rental": return "Rental";
       default: return usage;
     }
   };
   
+  const categories = [
+    { value: "all", label: "All Products", icon: Filter },
+    { value: "teak", label: "Teak", icon: Leaf },
+    { value: "plywood", label: "Plywood", icon: Shield },
+    { value: "hardwood", label: "Hardwood", icon: Star }
+  ];
+  
+  const removeFilter = (key: string) => {
+    // Implementation for removing individual filters
+    console.log("Remove filter:", key);
+  };
+  
+  const activeFilterCount = getActiveFilterCount();
+  const activeFiltersList: { key: string; label: string }[] = [];
+  
+  // Helper to handle image errors
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>, category: string) => {
+    const target = e.target as HTMLImageElement;
+    target.src = getPlaceholderImage(category);
+  };
+  
   // Apply filters whenever activeFilters changes
   useEffect(() => {
-    applyFilters();
+    if (filteredProducts.length > 0) {
+      applyFilters();
+    }
   }, [activeFilters]);
   
   return (
@@ -322,10 +388,98 @@ const ProductsPage = () => {
                   ? "premium use" 
                   : usageParam === "own_budget" 
                     ? "budget-friendly use" 
-                    : "rental"
+                    : "commercial use"
               }</span>
             )}
           </p>
+        </div>
+        
+        {/* Wood Directory Section */}
+        <div className="mb-12">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">Wood Directory</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Explore our comprehensive collection of premium wood types with detailed specifications, 
+              comparisons, and expert guidance.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            {woodProducts.map((wood) => (
+              <Card key={wood.id} className="group hover:shadow-lg transition-shadow duration-300">
+                <CardHeader className="pb-3">
+                  <div className="flex justify-between items-start mb-2">
+                    <Badge 
+                      variant={wood.grade === 'premium' ? 'default' : 'secondary'}
+                      className="text-xs"
+                    >
+                      {wood.grade.toUpperCase()}
+                    </Badge>
+                    <Badge variant="outline" className="text-xs">
+                      {wood.category.toUpperCase()}
+                    </Badge>
+                  </div>
+                  <CardTitle className="text-lg group-hover:text-timber-600 transition-colors">
+                    {wood.name}
+                  </CardTitle>
+                  <p className="text-sm text-gray-600 line-clamp-2">
+                    {wood.overview.tagline}
+                  </p>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {/* Quick Metrics */}
+                  <div className="grid grid-cols-3 gap-2 text-center">
+                    <div className="flex flex-col items-center">
+                      <Shield className="h-4 w-4 text-green-600 mb-1" />
+                      <span className="text-xs text-gray-600">Durability</span>
+                      <span className="text-sm font-medium">{wood.comparisonMetrics.durability}/5</span>
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <Star className="h-4 w-4 text-yellow-600 mb-1" />
+                      <span className="text-xs text-gray-600">Quality</span>
+                      <span className="text-sm font-medium">{wood.comparisonMetrics.workability}/5</span>
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <Leaf className="h-4 w-4 text-green-600 mb-1" />
+                      <span className="text-xs text-gray-600">Eco</span>
+                      <span className="text-sm font-medium">{wood.comparisonMetrics.sustainability}/5</span>
+                    </div>
+                  </div>
+                  
+                  {/* Pricing */}
+                  <div className="text-center">
+                    <div className="text-lg font-semibold text-green-600">
+                      ₹{wood.pricing.pricePerSqFt}/sq.ft
+                    </div>
+                    <p className="text-xs text-gray-500">
+                      {wood.pricing.priceRange} range
+                    </p>
+                  </div>
+                  
+                  {/* CTA */}
+                  <Button 
+                    asChild 
+                    className="w-full bg-timber-600 hover:bg-timber-700 group-hover:bg-timber-700 transition-colors"
+                    size="sm"
+                  >
+                    <Link to={`/products/wood/${wood.id}`}>
+                      View Details
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+          
+          <div className="text-center">
+            <Button asChild variant="outline" size="lg">
+              <Link to="/products/wood/burma-teak">
+                Explore Full Wood Directory
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            </Button>
+          </div>
         </div>
         
         {/* Mobile Filter Controls */}
@@ -359,7 +513,7 @@ const ProductsPage = () => {
                   <div>
                     <h4 className="font-medium mb-3 text-sm uppercase tracking-wide text-gray-600">Usage Type</h4>
                     <div className="flex flex-wrap gap-2">
-                      {['own_premium', 'own_budget', 'rental'].map((usage) => (
+                      {['own_premium', 'own_budget'].map((usage) => (
                         <Button
                           key={usage}
                           variant={activeFilters.usage.includes(usage) ? "default" : "outline"}
@@ -548,7 +702,11 @@ const ProductsPage = () => {
           </div>
           
           <TabsContent value="all">
-            <ProductGrid products={filteredProducts} />
+            <ProductGrid 
+              products={filteredProducts} 
+              loading={loading}
+              error={error}
+            />
           </TabsContent>
           
           <TabsContent value="teak">
@@ -556,6 +714,8 @@ const ProductsPage = () => {
               products={filteredProducts.filter(p => p.category === "teak")}
               title="Premium Teak Wood"
               description="Explore our collection of Burma, Ghana, Brazilian, and Indian Sal teak wood options."
+              loading={loading}
+              error={error}
             />
           </TabsContent>
           
@@ -564,6 +724,8 @@ const ProductsPage = () => {
               products={filteredProducts.filter(p => p.category === "plywood")}
               title="Quality Plywood"
               description="Century Ply Sainik MR, Marine, Laminated, and Waterproof plywood solutions."
+              loading={loading}
+              error={error}
             />
           </TabsContent>
           
@@ -572,6 +734,8 @@ const ProductsPage = () => {
               products={filteredProducts.filter(p => p.category === "hardwood")}
               title="Hardwood Logs"
               description="Various hardwood logs perfect for custom projects and specialized needs."
+              loading={loading}
+              error={error}
             />
           </TabsContent>
         </Tabs>

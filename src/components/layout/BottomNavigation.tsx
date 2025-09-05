@@ -2,7 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import { 
   Home, 
   Package, 
-  Calculator, 
+  // Calculator, // COMMENTED OUT 
   ShoppingCart, 
   User,
   Search,
@@ -26,12 +26,13 @@ const BottomNavigation = () => {
       label: "Products",
       active: location.pathname.includes("/products")
     },
-    {
-      path: "/estimator",
-      icon: Calculator,
-      label: "Estimate",
-      active: location.pathname.includes("/estimator")
-    },
+    // CALCULATOR NAVIGATION COMMENTED OUT
+    // {
+    //   path: "/estimator",
+    //   icon: Calculator,
+    //   label: "Estimate",
+    //   active: location.pathname.includes("/estimator")
+    // },
     {
       path: "/bulk-orders",
       icon: ShoppingCart,
@@ -107,7 +108,7 @@ const BottomNavigation = () => {
               </span>
             </Link>
           );
-        })}}
+        })}
       </nav>
     </div>
   );

@@ -1,3 +1,4 @@
+/* ITEM BUILDER COMPONENT COMMENTED OUT
 import React, { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -331,3 +332,5 @@ export const ItemBuilder: React.FC<ItemBuilderProps> = ({
     </Dialog>
   );
 };
+*/
+/* END ITEM BUILDER COMPONENT COMMENTED OUT */

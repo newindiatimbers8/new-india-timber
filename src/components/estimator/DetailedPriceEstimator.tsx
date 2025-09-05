@@ -1,3 +1,4 @@
+/* DETAILED PRICE ESTIMATOR COMPONENT COMMENTED OUT
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -903,12 +904,12 @@ const DetailedPriceEstimator = () => {
                   <div className="flex flex-col sm:flex-row gap-2 justify-center items-center text-sm">
                     <div className="flex items-center gap-1 text-timber-600">
                       <Phone className="h-4 w-4" />
-                      <span className="font-medium">+91 8095701235</span>
+                      <span className="font-medium">+91 9886033342</span>
                     </div>
                     <span className="hidden sm:inline text-gray-400">|</span>
                     <div className="flex items-center gap-1 text-timber-600">
                       <Mail className="h-4 w-4" />
-                      <span className="font-medium">contact@newindiatimber.com</span>
+                      <span className="font-medium">newindiatimbers8@gmail.com</span>
                     </div>
                   </div>
                 </div>
@@ -933,3 +934,5 @@ const DetailedPriceEstimator = () => {
 };
 
 export default DetailedPriceEstimator;
+*/
+/* END DETAILED PRICE ESTIMATOR COMPONENT COMMENTED OUT */

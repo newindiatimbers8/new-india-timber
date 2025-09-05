@@ -1,0 +1,17 @@
+[build]
+  publish = "dist"
+  command = "npm run build"
+
+[build.environment]
+  NODE_VERSION = "18"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[context.production.environment]
+  VITE_APPWRITE_ENDPOINT = "https://cloud.appwrite.io/v1"
+  VITE_APPWRITE_PROJECT_ID = "your-project-id-here"
+  VITE_APPWRITE_DATABASE_ID = "timbercraft-db"
+  VITE_GROQ_API_KEY = "your-groq-api-key-here"

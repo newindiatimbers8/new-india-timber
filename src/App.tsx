@@ -12,7 +12,10 @@ import BulkOrdersPage from "./pages/BulkOrdersPage";
 import ContactPage from "./pages/ContactPage";
 import AboutPage from "./pages/AboutPage";
 import DashboardPage from "./pages/DashboardPage";
-import EstimatorPage from "./pages/EstimatorPage";
+// import EstimatorPage from "./pages/EstimatorPage"; // COMMENTED OUT
+import ComparisonPage from "./pages/ComparisonPage";
+import SEOSettingsPage from "./pages/SEOSettingsPage";
+import WoodProductPage from "./components/products/WoodProductPage";
 
 const queryClient = new QueryClient();
 
@@ -26,11 +29,14 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/products" element={<ProductsPage />} />
+          <Route path="/products/wood/:woodType" element={<WoodProductPage />} />
+          <Route path="/compare" element={<ComparisonPage />} />
           <Route path="/bulk-orders" element={<BulkOrdersPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/dashboard" element={<DashboardPage />} />
-          <Route path="/estimator" element={<EstimatorPage />} />
+          <Route path="/dashboard/seo" element={<SEOSettingsPage />} />
+          {/* <Route path="/estimator" element={<EstimatorPage />} /> COMMENTED OUT */}
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

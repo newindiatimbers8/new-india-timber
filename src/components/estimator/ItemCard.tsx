@@ -1,3 +1,4 @@
+/* ITEM CARD COMPONENT COMMENTED OUT
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -141,3 +142,5 @@ export const ItemCard: React.FC<ItemCardProps> = ({
     </Card>
   );
 };
+*/
+/* END ITEM CARD COMPONENT COMMENTED OUT */

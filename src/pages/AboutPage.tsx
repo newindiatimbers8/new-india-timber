@@ -38,7 +38,7 @@ const AboutPage = () => {
               Our journey started with a simple mission: to source the finest timber products and make them accessible to our customers at competitive prices. Today, we continue to uphold this mission while expanding our product range to include premium teak varieties, plywood solutions, and hardwood logs for various applications.
             </p>
             <p className="text-gray-600">
-              Located in the heart of HSR Layout, we take pride in serving both residential and commercial clients with personalized service and expert guidance.
+              Located on Sarjapura Main Road, we take pride in serving both residential and commercial clients with personalized service and expert guidance.
             </p>
           </div>
         </div>
@@ -107,7 +107,7 @@ const AboutPage = () => {
             <div className="bg-white p-6 rounded-lg shadow-md">
               <h3 className="text-xl font-semibold mb-3">Competitive Pricing</h3>
               <p className="text-gray-600">
-                We're committed to offering fair, transparent pricing on all our products, with special discounts available for bulk orders. Our flexible rental options provide cost-effective solutions for temporary projects.
+                We're committed to offering fair, transparent pricing on all our products, with special discounts available for bulk orders and long-term projects.
               </p>
             </div>
           </div>
@@ -116,7 +116,7 @@ const AboutPage = () => {
         <div className="mt-16 text-center">
           <h2 className="text-3xl font-bold mb-6">Visit Our Store</h2>
           <p className="text-lg text-gray-600 mb-8">
-            Come explore our extensive showroom in HSR Layout, where you can see our products up close and consult with our timber experts.
+            Come explore our extensive showroom on Sarjapura Main Road, where you can see our products up close and consult with our timber experts.
           </p>
           
           <Button asChild className="bg-timber-600 hover:bg-timber-700 px-8 py-6 text-lg">

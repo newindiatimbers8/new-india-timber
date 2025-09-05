@@ -53,7 +53,7 @@ const CTASection = () => {
                 </Button>
                 
                 <Button asChild size="lg" variant="outline" className="flex-1 md:flex-none glassmorphism-dark border-2 border-white/30 text-white hover:bg-white/20 rounded-full py-4 md:py-6 transition-all duration-300 transform hover:scale-105 group">
-                  <a href="tel:+918095701235" className="text-base md:text-lg px-6 md:px-8 flex items-center justify-center">
+                  <a href="tel:+919886033342" className="text-base md:text-lg px-6 md:px-8 flex items-center justify-center">
                     <Phone className="mr-2 md:mr-3 h-4 w-4 group-hover:animate-bounce" />
                     <span className="hidden sm:inline">Call </span>Now
                   </a>

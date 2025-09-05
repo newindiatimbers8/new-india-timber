@@ -17,28 +17,21 @@ const categories = [
     title: "Premium Teak Wood",
     description: "Explore our collection of Burma, Ghana, Brazilian, and Indian Sal teak wood options.",
     image: getPlaceholderImage("teak"),
-    link: "/products/teak"
+    link: "/products?category=teak"
   },
   {
     id: "plywood",
     title: "Quality Plywood",
     description: "Century Ply Sainik MR, Marine, Laminated, and Waterproof plywood solutions.",
     image: getPlaceholderImage("plywood"),
-    link: "/products/plywood"
+    link: "/products?category=plywood"
   },
   {
     id: "hardwood",
     title: "Hardwood Logs",
     description: "Various hardwood logs perfect for custom projects and specialized needs.",
     image: getPlaceholderImage("hardwood"),
-    link: "/products/hardwood"
-  },
-  {
-    id: "rental",
-    title: "Rental Solutions",
-    description: "Flexible rental options for temporary projects and budget-conscious customers.",
-    image: getPlaceholderImage("wood"),
-    link: "/products/rental"
+    link: "/products?category=hardwood"
   }
 ];
 

@@ -15,7 +15,7 @@ import {
   SidebarTrigger,
   SidebarInset
 } from "@/components/ui/sidebar";
-import { Home, ShoppingCart, Users, BarChart3, Settings, LogOut } from "lucide-react";
+import { Home, ShoppingCart, Users, BarChart3, Settings, LogOut, Search } from "lucide-react";
 import { Link } from "react-router-dom";
 
 interface DashboardLayoutProps {
@@ -86,6 +86,14 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
               <SidebarGroupLabel>Settings</SidebarGroupLabel>
               <SidebarGroupContent>
                 <SidebarMenu>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton asChild tooltip="SEO Settings">
+                      <Link to="/dashboard/seo">
+                        <Search />
+                        <span>SEO Settings</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
                   <SidebarMenuItem>
                     <SidebarMenuButton asChild tooltip="Settings">
                       <Link to="#">

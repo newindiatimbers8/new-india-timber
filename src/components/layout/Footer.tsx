@@ -67,9 +67,6 @@ const Footer = ({ className }: FooterProps) => {
               <li>
                 <Link to="/products/hardwood" className="text-gray-300 hover:text-timber-300">Hardwood Logs</Link>
               </li>
-              <li>
-                <Link to="/products/rental" className="text-gray-300 hover:text-timber-300">Rental Options</Link>
-              </li>
             </ul>
           </div>
           
@@ -79,15 +76,15 @@ const Footer = ({ className }: FooterProps) => {
             <ul className="space-y-3">
               <li className="flex items-start">
                 <MapPin size={18} className="mt-1 mr-2 flex-shrink-0" />
-                <span>No. 134/20, 5th Main, HSR Layout Sector 7, Bangalore - 560068</span>
+                <span>24/4 Sarjapura Main Road Doddakanna halli, beside Uber Verdant, Phase 1, apartments, Bengaluru, Karnataka 560035</span>
               </li>
               <li className="flex items-center">
                 <Phone size={18} className="mr-2 flex-shrink-0" />
-                <span>+91 8095701235</span>
+                <span>+91 9886033342</span>
               </li>
               <li className="flex items-center">
                 <Mail size={18} className="mr-2 flex-shrink-0" />
-                <span>contact@newindiatimber.com</span>
+                <span>newindiatimbers8@gmail.com</span>
               </li>
               <li className="flex items-start">
                 <Clock size={18} className="mt-1 mr-2 flex-shrink-0" />
