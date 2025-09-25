@@ -1,0 +1,27 @@
+# timber-craft-commerce-hub Development Guidelines
+
+Auto-generated from all feature plans. Last updated: 2025-09-24
+
+## Active Technologies
+- TypeScript 5.x (React 18, Vite build system) + React, Vite, Tailwind CSS, shadcn/ui, React Router (001-make-this-project)
+- JSON-based local storage system (replacing Appwrite), static data files for content persistence (001-make-this-project)
+- Vercel deployment platform for static site hosting (001-make-this-project)
+
+## Project Structure
+```
+src/
+tests/
+```
+
+## Commands
+npm test [ONLY COMMANDS FOR ACTIVE TECHNOLOGIES][ONLY COMMANDS FOR ACTIVE TECHNOLOGIES] npm run lint
+
+## Code Style
+TypeScript 5.0+, React 18+, Vite 4+ (existing stack): Follow standard conventions
+
+## Recent Changes
+- 001-make-this-project: Added TypeScript 5.0+, React 18+, Vite 4+ + React Router, Tailwind CSS, shadcn/ui, Zod validation, React Hook Form, Lucide icons, Google Gemini API, Google AI SDK
+- 001-make-this-project: Added TypeScript 5.0+, React 18+, Vite 4+ (existing stack) + React Router, Tailwind CSS, shadcn/ui, Zod validation, React Hook Form, Lucide icons
+
+<!-- MANUAL ADDITIONS START -->
+<!-- MANUAL ADDITIONS END -->

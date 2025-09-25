@@ -1,0 +1,16 @@
+import type { AdminProfile } from '@/types/admin';
+
+export const adminProfilesData: AdminProfile[] = [
+  {
+    "id": "admin-profile-001",
+    "userId": "admin-001",
+    "displayName": "New India Timber Admin",
+    "avatar": null,
+    "bio": "Administrator for New India Timber e-commerce platform",
+    "permissions": ["products", "blog", "orders", "seo", "users"],
+    "createdAt": "2024-01-01T00:00:00.000Z",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  }
+];
+
+export default adminProfilesData;

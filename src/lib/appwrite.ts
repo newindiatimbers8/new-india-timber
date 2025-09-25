@@ -3,7 +3,7 @@ import { Client, Account, Databases, Storage } from 'appwrite';
 // Appwrite configuration
 export const appwriteConfig = {
   endpoint: import.meta.env.VITE_APPWRITE_ENDPOINT || 'https://cloud.appwrite.io/v1',
-  projectId: import.meta.env.VITE_APPWRITE_PROJECT_ID || 'your-project-id',
+  projectId: import.meta.env.VITE_APPWRITE_PROJECT_ID || '68b0a743000c98e8ca75',
   databaseId: import.meta.env.VITE_APPWRITE_DATABASE_ID || 'timbercraft-db',
   collectionIds: {
     users: 'users',

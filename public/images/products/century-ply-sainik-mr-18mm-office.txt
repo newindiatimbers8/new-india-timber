@@ -1,0 +1,18 @@
+# Century Ply Sainik MR 18mm in Office Context
+# This is a placeholder for the actual generated image
+# 
+# Image Details:
+# - Product: Century Ply Sainik MR 18mm
+# - Context: office
+# - Filename: century-ply-sainik-mr-18mm-office.webp
+# - Dimensions: 1920x1080 (16:9 aspect ratio)
+# - Format: WebP
+# 
+# Generation Prompt:
+# Commercial office kitchenette with Century Ply Sainik MR 18mm, professional moisture-resistant construction, corporate environment, business interior, 16:9 aspect ratio
+# 
+# Status: Ready for actual image generation
+# Generated: 2025-09-26T00:08:53.491365
+# 
+# To generate the actual image, use this prompt with an AI image generator:
+# Commercial office kitchenette with Century Ply Sainik MR 18mm, professional moisture-resistant construction, corporate environment, business interior, 16:9 aspect ratio

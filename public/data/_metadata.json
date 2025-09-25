@@ -1,0 +1,52 @@
+{
+  "version": "1.0.0",
+  "lastMigration": "2024-01-01T00:00:00.000Z",
+  "migrationSource": "appwrite",
+  "collections": {
+    "users": {
+      "file": "users.json",
+      "count": 1,
+      "lastUpdated": "2024-01-01T00:00:00.000Z"
+    },
+    "admin-profiles": {
+      "file": "admin-profiles.json",
+      "count": 1,
+      "lastUpdated": "2024-01-01T00:00:00.000Z"
+    },
+    "blog-posts": {
+      "file": "blog-posts.json",
+      "count": 1,
+      "lastUpdated": "2024-01-15T10:00:00.000Z"
+    },
+    "blog-categories": {
+      "file": "blog-categories.json",
+      "count": 4,
+      "lastUpdated": "2024-01-15T10:00:00.000Z"
+    },
+    "products": {
+      "file": "products.json",
+      "count": 1,
+      "lastUpdated": "2024-01-01T00:00:00.000Z"
+    },
+    "orders": {
+      "file": "orders.json",
+      "count": 0,
+      "lastUpdated": "2024-01-01T00:00:00.000Z"
+    },
+    "pages": {
+      "file": "pages.json",
+      "count": 1,
+      "lastUpdated": "2024-01-01T00:00:00.000Z"
+    },
+    "seo-settings": {
+      "file": "seo-settings.json",
+      "count": 1,
+      "lastUpdated": "2024-01-01T00:00:00.000Z"
+    },
+    "media-assets": {
+      "file": "media-assets.json",
+      "count": 0,
+      "lastUpdated": "2024-01-01T00:00:00.000Z"
+    }
+  }
+}

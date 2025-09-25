@@ -1,0 +1,18 @@
+# Burma Teak Door in Office Context
+# This is a placeholder for the actual generated image
+# 
+# Image Details:
+# - Product: Burma Teak Door
+# - Context: office
+# - Filename: burma-teak-door-office.webp
+# - Dimensions: 1920x1080 (16:9 aspect ratio)
+# - Format: WebP
+# 
+# Generation Prompt:
+# Modern commercial office building entrance with Burma teak door, professional corporate design, clean lines, business environment, architectural photography, 16:9 aspect ratio
+# 
+# Status: Ready for actual image generation
+# Generated: 2025-09-26T00:08:53.490085
+# 
+# To generate the actual image, use this prompt with an AI image generator:
+# Modern commercial office building entrance with Burma teak door, professional corporate design, clean lines, business environment, architectural photography, 16:9 aspect ratio

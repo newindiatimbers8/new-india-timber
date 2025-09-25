@@ -1,0 +1,62 @@
+  - Use self-contained, local database approach instead of third-party services like PocketBase or Appwrite.
+description: |
+  ## Core Principles
+  - Use functional, declarative programming with TypeScript.
+  - Prefer interfaces, named exports, and the RORO (Receive an Object, Return an Object) pattern.
+  - Use lower-case-dash directory names.
+  - Favor early returns and guard clauses for error handling.
+  - Write concise, one-line conditionals; avoid unnecessary curly braces.
+  - Use Shadcn UI, Radix UI, and Tailwind CSS for UI components.
+  - Implement responsive, mobile-first design with Tailwind CSS.
+  - Place static content and interfaces at the end of files.
+
+  ## Data Management Architecture
+  - **Static Data**: Store product catalogs, categories, and configuration in JSON or TypeScript files under `src/data/static/`.
+  - **Dynamic Data**: Store user accounts, orders, estimates, and blog posts in local JSON files under `src/data/database/`.
+  - **Single Data Service**: Provide unified data access through `src/services/dataService.ts` for all data operations.
+  - **File-based Storage**: Use JSON files for data persistence, ensuring compatibility with Vercel's free plan.
+  - **Version Control**: Include database files in git for backup and versioning.
+
+  ## Blog and Content Management
+  - **Blog Structure**: Store blog posts as individual JSON files with metadata, content, and SEO fields.
+  - **Admin Dashboard**: Create protected admin routes under `/admin` for content management.
+  - **Authentication**: Implement simple password-based authentication for admin access using environment variables.
+  - **Content Workflow**: Support draft/publish states, categories, tags, and featured posts.
+  - **SEO Integration**: Include meta title, description, and keywords in all blog post data structures.
+
+  ## Authentication and Security
+  - **Admin Authentication**: Use environment variables for admin credentials with localStorage for session management.
+  - **Route Protection**: Implement protected routes for admin functionality using React Router guards.
+  - **Simple Security**: Avoid complex authentication for initial implementation - focus on admin-only content creation.
+  - **Environment Variables**: Store all sensitive data (passwords, secrets) in environment variables.
+
+  ## Form Handling and Validation
+  - Use Zod for validation and react-hook-form for form handling.
+  - Implement comprehensive form validation for all user inputs.
+  - Use TypeScript interfaces for form data structures.
+
+  ## Client-Side Routing and State
+  - Use React Router for client-side routing and navigation.
+  - Use React Query (TanStack Query) for data fetching and caching.
+  - Implement route-based code splitting for better performance.
+
+  ## Performance and Optimization
+  - Optimize images (WebP, size, lazy loading).
+  - Prioritize Web Vitals and accessibility.
+  - Use Vite for build tooling and development server.
+  - Implement static generation where possible for better performance.
+
+  ## Deployment Strategy
+  - Deploy frontend to Vercel (free plan compatible).
+  - Use self-contained data approach for full static deployment capability.
+  - Configure environment variables for admin authentication.
+  - Ensure all dynamic operations work within serverless function limitations.
+globs:
+  - "**/*.ts"
+  - "**/*.tsx"
+  - "**/*.js"
+  - "**/*.jsx"
+  - "**/*.mdx"
+  - "**/*.md"
+alwaysApply: true
+---

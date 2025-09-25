@@ -1,5 +1,6 @@
 import { useParams, Navigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -15,543 +16,234 @@ import {
   ArrowRight,
   Download,
   Mail,
-  Phone
+  Phone,
+  MapPin,
+  Clock
 } from "lucide-react";
-import { getWoodProduct, getComparisonData, type WoodProduct } from "@/data/woodProducts";
 import Layout from "../layout/Layout";
 import { Progress } from "@/components/ui/progress";
+import { getProducts } from "@/services/products";
+import type { Product } from "@/types/product";
 
 const WoodProductPage = () => {
   const { woodType } = useParams<{ woodType: string }>();
-  const [activeTab, setActiveTab] = useState("overview");
-  
-  const woodData = getWoodProduct(woodType || "");
-  
-  if (!woodData) {
-    return <Navigate to="/products" replace />;
+  const [product, setProduct] = useState<Product | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const loadProduct = async () => {
+      try {
+        setIsLoading(true);
+        const result = await getProducts();
+        const products = result.products;
+        
+        // Find product by wood type (convert kebab-case to match product names)
+        const woodTypeFormatted = woodType?.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+        const searchTerm = woodType?.toLowerCase() || '';
+        
+        const foundProduct = products.find(p => {
+          const productName = p.name.toLowerCase();
+          const productTags = p.tags?.map(tag => tag.toLowerCase()) || [];
+          
+          // Check if product name contains the wood type
+          if (productName.includes(searchTerm)) return true;
+          
+          // Check if any tag contains the wood type
+          if (productTags.some(tag => tag.includes(searchTerm))) return true;
+          
+          // Special case for "burma-teak" -> "burma teak"
+          if (searchTerm === 'burma-teak' && productName.includes('burma teak')) return true;
+          if (searchTerm === 'ghana-teak' && productName.includes('ghana teak')) return true;
+          
+          return false;
+        });
+        
+        if (foundProduct) {
+          setProduct(foundProduct);
+        } else {
+          setError("Product not found");
+        }
+      } catch (err) {
+        console.error("Failed to load product:", err);
+        setError("Failed to load product details");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    if (woodType) {
+      loadProduct();
+    }
+  }, [woodType]);
+
+  if (isLoading) {
+    return (
+      <Layout>
+        <div className="container mx-auto px-4 py-8">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-timber-600 mx-auto mb-4"></div>
+            <p className="text-gray-600">Loading product details...</p>
+          </div>
+        </div>
+      </Layout>
+    );
   }
 
-  // Get related woods for comparison (same category, different grades)
-  const relatedWoods = getComparisonData([
-    'burma-teak', 'ghana-teak', 'red-sal', 'marine-plywood'
-  ]).filter(w => w.id !== woodData.id).slice(0, 3);
-
-  const MetricBar = ({ label, value, maxValue = 5 }: { label: string; value: number; maxValue?: number }) => (
-    <div className="space-y-2">
-      <div className="flex justify-between text-sm">
-        <span>{label}</span>
-        <span>{value}/{maxValue}</span>
-      </div>
-      <Progress value={(value / maxValue) * 100} className="h-2" />
-    </div>
-  );
-
-  const ComparisonCard = ({ wood }: { wood: WoodProduct }) => (
-    <Card className="h-full">
-      <CardHeader className="pb-3">
-        <div className="flex justify-between items-start">
-          <div>
-            <CardTitle className="text-lg">{wood.name}</CardTitle>
-            <p className="text-sm text-gray-600">{wood.overview.tagline}</p>
+  if (error || !product) {
+    return (
+      <Layout>
+        <div className="container mx-auto px-4 py-8">
+          <div className="text-center">
+            <h1 className="text-2xl font-bold mb-4">Product Not Found</h1>
+            <p className="text-gray-600 mb-6">{error || "The requested product could not be found."}</p>
+            <Button asChild>
+              <a href="/products">← Back to Products</a>
+            </Button>
           </div>
-          <Badge variant={wood.grade === 'premium' ? 'default' : 'secondary'}>
-            {wood.grade}
-          </Badge>
         </div>
-      </CardHeader>
-      <CardContent className="space-y-3">
-        <div className="text-lg font-semibold text-green-600">
-          ₹{wood.pricing.pricePerSqFt}/sq.ft
-        </div>
-        <div className="space-y-2">
-          <MetricBar label="Durability" value={wood.comparisonMetrics.durability} />
-          <MetricBar label="Workability" value={wood.comparisonMetrics.workability} />
-          <MetricBar label="Value" value={wood.comparisonMetrics.costValue} />
-        </div>
-        <Button asChild variant="outline" className="w-full">
-          <a href={`/products/wood/${wood.id}`}>
-            View Details <ArrowRight className="ml-2 h-4 w-4" />
-          </a>
-        </Button>
-      </CardContent>
-    </Card>
-  );
+      </Layout>
+    );
+  }
+
+  const woodTypeDisplay = woodType?.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) || 'Wood';
 
   return (
     <Layout>
-      {/* Hero Section */}
-      <div className="bg-gradient-to-r from-timber-50 to-amber-50 py-12">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-            {/* Product Info */}
-            <div className="space-y-6">
-              <div className="space-y-2">
-                <div className="flex items-center gap-3">
-                  <Badge variant="secondary" className="text-sm">
-                    {woodData.category.toUpperCase()}
-                  </Badge>
-                  <Badge 
-                    variant={woodData.grade === 'premium' ? 'default' : 'secondary'}
-                    className="text-sm"
-                  >
-                    {woodData.grade.toUpperCase()}
-                  </Badge>
-                </div>
-                <h1 className="text-4xl md:text-5xl font-bold text-gray-900">
-                  {woodData.name}
-                </h1>
-                {woodData.scientificName && (
-                  <p className="text-lg text-gray-600 italic">
-                    {woodData.scientificName}
-                  </p>
-                )}
-                <p className="text-xl text-timber-600 font-medium">
-                  {woodData.overview.tagline}
-                </p>
-              </div>
+      <Helmet>
+        <title>{product.name} | {woodTypeDisplay} Details | New India Timbers</title>
+        <meta
+          name="description"
+          content={`Learn about ${product.name} - ${product.description}. Premium quality wood products available in Bangalore.`}
+        />
+        <meta
+          name="keywords"
+          content={`${woodTypeDisplay.toLowerCase()}, ${product.name.toLowerCase()}, wood products bangalore, timber bangalore, ${product.tags?.join(', ')}`}
+        />
+      </Helmet>
 
-              {/* Key Metrics */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div className="text-center">
-                  <div className="flex items-center justify-center mb-2">
-                    <Shield className="h-6 w-6 text-green-600" />
-                  </div>
-                  <div className="text-2xl font-bold text-gray-900">
-                    {woodData.comparisonMetrics.durability}/5
-                  </div>
-                  <div className="text-sm text-gray-600">Durability</div>
+      <div className="container mx-auto px-4 py-8">
+        <div className="grid gap-8 lg:grid-cols-2">
+          {/* Product Image */}
+          <div className="space-y-4">
+            <div className="aspect-square rounded-lg bg-gray-100 overflow-hidden">
+              {product.images && product.images.length > 0 ? (
+                <img
+                  src={product.images[0]}
+                  alt={product.name}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center text-gray-400">
+                  <span>No image available</span>
                 </div>
-                <div className="text-center">
-                  <div className="flex items-center justify-center mb-2">
-                    <Star className="h-6 w-6 text-yellow-600" />
-                  </div>
-                  <div className="text-2xl font-bold text-gray-900">
-                    {woodData.comparisonMetrics.workability}/5
-                  </div>
-                  <div className="text-sm text-gray-600">Workability</div>
-                </div>
-                <div className="text-center">
-                  <div className="flex items-center justify-center mb-2">
-                    <Leaf className="h-6 w-6 text-green-600" />
-                  </div>
-                  <div className="text-2xl font-bold text-gray-900">
-                    {woodData.comparisonMetrics.sustainability}/5
-                  </div>
-                  <div className="text-sm text-gray-600">Sustainability</div>
-                </div>
-                <div className="text-center">
-                  <div className="flex items-center justify-center mb-2">
-                    <TrendingUp className="h-6 w-6 text-blue-600" />
-                  </div>
-                  <div className="text-2xl font-bold text-gray-900">
-                    {woodData.comparisonMetrics.costValue}/5
-                  </div>
-                  <div className="text-sm text-gray-600">Value</div>
-                </div>
-              </div>
-
-              {/* Price and CTA */}
-              <div className="space-y-4">
-                <div className="flex items-center gap-4">
-                  <div className="text-3xl font-bold text-green-600">
-                    ₹{woodData.pricing.pricePerSqFt}
-                  </div>
-                  <div className="text-gray-600">per sq.ft</div>
-                  <Badge variant="outline">
-                    {woodData.pricing.marketTrend}
-                  </Badge>
-                </div>
-                <div className="flex flex-col sm:flex-row gap-3">
-                  <Button size="lg" className="bg-timber-600 hover:bg-timber-700">
-                    <Phone className="mr-2 h-5 w-5" />
-                    Get Quote
-                  </Button>
-                  <Button size="lg" variant="outline">
-                    <Download className="mr-2 h-5 w-5" />
-                    Download Specs
-                  </Button>
-                  <Button size="lg" variant="outline">
-                    <Mail className="mr-2 h-5 w-5" />
-                    Contact Expert
-                  </Button>
-                </div>
-              </div>
-            </div>
-
-            {/* Image/Visual */}
-            <div className="relative">
-              <div className="aspect-square bg-gradient-to-br from-amber-100 to-amber-200 rounded-lg flex items-center justify-center">
-                <div className="text-center text-gray-600">
-                  <div className="text-6xl mb-4">🌳</div>
-                  <p className="text-lg font-medium">{woodData.name}</p>
-                  <p className="text-sm">High-quality timber sample</p>
-                </div>
-              </div>
+              )}
             </div>
           </div>
-        </div>
-      </div>
 
-      {/* Detailed Content Tabs */}
-      <div className="container mx-auto px-4 py-12">
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-8">
-          <TabsList className="grid w-full grid-cols-2 md:grid-cols-6">
-            <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="specifications">Specs</TabsTrigger>
-            <TabsTrigger value="applications">Uses</TabsTrigger>
-            <TabsTrigger value="origin">Origin</TabsTrigger>
-            <TabsTrigger value="buying-guide">Buying Guide</TabsTrigger>
-            <TabsTrigger value="comparison">Compare</TabsTrigger>
-          </TabsList>
+          {/* Product Details */}
+          <div className="space-y-6">
+            <div>
+              <Badge variant="secondary" className="mb-2">
+                {product.grade?.toUpperCase()}
+              </Badge>
+              <h1 className="text-3xl font-bold text-forest-900 mb-2">
+                {product.name}
+              </h1>
+              <p className="text-muted-foreground text-lg">
+                {product.description}
+              </p>
+            </div>
 
-          {/* Overview Tab */}
-          <TabsContent value="overview" className="space-y-8">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              <div className="lg:col-span-2 space-y-6">
+            {/* Pricing */}
+            <div className="bg-timber-50 p-4 rounded-lg">
+              <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-2xl font-bold mb-4">About {woodData.name}</h2>
-                  <p className="text-gray-700 leading-relaxed">
-                    {woodData.overview.description}
+                  <p className="text-sm text-muted-foreground">Pricing</p>
+                  <p className="text-2xl font-bold text-forest-900">
+                    {product.pricing?.displayText || 'Contact for Quote'}
                   </p>
+                  {product.pricing?.internalPricing?.unit && (
+                    <p className="text-sm text-muted-foreground">per {product.pricing.internalPricing.unit}</p>
+                  )}
+                  {product.pricing?.internalPricing?.priceRange && (
+                    <p className="text-sm text-timber-600 font-medium">{product.pricing.internalPricing.priceRange}</p>
+                  )}
                 </div>
-
-                <div>
-                  <h3 className="text-xl font-semibold mb-4">Why Choose {woodData.name}?</h3>
-                  <p className="text-gray-700 mb-4">
-                    {woodData.overview.premiumPositioning}
-                  </p>
-                  <ul className="space-y-2">
-                    {woodData.overview.keyBenefits.map((benefit, index) => (
-                      <li key={index} className="flex items-start gap-3">
-                        <CheckCircle className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
-                        <span className="text-gray-700">{benefit}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-
-              <div className="space-y-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <Award className="h-5 w-5 text-yellow-600" />
-                      Quick Specs
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-3">
-                    <div className="flex justify-between">
-                      <span className="text-gray-600">Density:</span>
-                      <span className="font-medium">{woodData.specifications.density} kg/m³</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-600">Hardness:</span>
-                      <span className="font-medium">{woodData.specifications.hardness} Janka</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-600">Durability:</span>
-                      <span className="font-medium capitalize">{woodData.specifications.durability}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-600">Workability:</span>
-                      <span className="font-medium capitalize">{woodData.specifications.workability}</span>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Pros & Cons</CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div>
-                      <h4 className="font-medium text-green-700 mb-2">Advantages</h4>
-                      <ul className="space-y-1">
-                        {woodData.prosAndCons.pros.slice(0, 3).map((pro, index) => (
-                          <li key={index} className="flex items-start gap-2 text-sm">
-                            <CheckCircle className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0" />
-                            <span>{pro}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div>
-                      <h4 className="font-medium text-red-700 mb-2">Considerations</h4>
-                      <ul className="space-y-1">
-                        {woodData.prosAndCons.cons.slice(0, 2).map((con, index) => (
-                          <li key={index} className="flex items-start gap-2 text-sm">
-                            <XCircle className="h-4 w-4 text-red-600 mt-0.5 flex-shrink-0" />
-                            <span>{con}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </CardContent>
-                </Card>
+                <Button size="lg" className="bg-timber-600 hover:bg-timber-700">
+                  <Phone className="w-4 h-4 mr-2" />
+                  {product.pricing?.ctaButton?.text || 'Get Quote'}
+                </Button>
               </div>
             </div>
-          </TabsContent>
 
-          {/* Specifications Tab */}
-          <TabsContent value="specifications" className="space-y-6">
-            <h2 className="text-2xl font-bold">Technical Specifications</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Specifications */}
+            {product.specifications && (
               <Card>
                 <CardHeader>
-                  <CardTitle>Physical Properties</CardTitle>
+                  <CardTitle className="flex items-center">
+                    <Award className="w-5 h-5 mr-2" />
+                    Specifications
+                  </CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-3">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <span className="text-sm text-gray-600">Density</span>
-                      <div className="font-medium">{woodData.specifications.density} kg/m³</div>
-                    </div>
-                    <div>
-                      <span className="text-sm text-gray-600">Hardness</span>
-                      <div className="font-medium">{woodData.specifications.hardness} Janka</div>
-                    </div>
-                    <div>
-                      <span className="text-sm text-gray-600">Moisture</span>
-                      <div className="font-medium">{woodData.specifications.moistureContent}%</div>
-                    </div>
-                    <div>
-                      <span className="text-sm text-gray-600">Grain</span>
-                      <div className="font-medium capitalize">{woodData.specifications.grainPattern}</div>
-                    </div>
+                <CardContent>
+                  <div className="grid gap-3">
+                    {Object.entries(product.specifications).map(([key, value]) => (
+                      <div key={key} className="flex justify-between">
+                        <span className="font-medium capitalize">
+                          {key.replace(/([A-Z])/g, ' $1').trim()}
+                        </span>
+                        <span className="text-muted-foreground">{value}</span>
+                      </div>
+                    ))}
                   </div>
                 </CardContent>
               </Card>
+            )}
 
-              <Card>
-                <CardHeader>
-                  <CardTitle>Performance Ratings</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <MetricBar 
-                    label="Durability" 
-                    value={woodData.comparisonMetrics.durability} 
-                  />
-                  <MetricBar 
-                    label="Workability" 
-                    value={woodData.comparisonMetrics.workability} 
-                  />
-                  <MetricBar 
-                    label="Finish Quality" 
-                    value={woodData.specifications.finishQuality === 'excellent' ? 5 : 
-                           woodData.specifications.finishQuality === 'good' ? 4 : 3} 
-                  />
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle>Natural Resistance</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  {Object.entries(woodData.specifications.naturalResistance).map(([key, value]) => (
-                    <div key={key} className="flex justify-between items-center">
-                      <span className="capitalize text-gray-600">{key}</span>
-                      {value ? (
-                        <CheckCircle className="h-5 w-5 text-green-600" />
-                      ) : (
-                        <XCircle className="h-5 w-5 text-red-600" />
-                      )}
-                    </div>
+            {/* Tags */}
+            {product.tags && product.tags.length > 0 && (
+              <div>
+                <h3 className="font-semibold mb-2">Tags</h3>
+                <div className="flex flex-wrap gap-2">
+                  {product.tags.map((tag) => (
+                    <Badge key={tag} variant="outline">
+                      {tag}
+                    </Badge>
                   ))}
-                </CardContent>
-              </Card>
-            </div>
-          </TabsContent>
+                </div>
+              </div>
+            )}
 
-          {/* Applications Tab */}
-          <TabsContent value="applications" className="space-y-6">
-            <h2 className="text-2xl font-bold">Applications & Use Cases</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-green-700">Recommended Uses</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div>
-                      <h4 className="font-medium mb-2">Primary Applications</h4>
-                      <ul className="space-y-1">
-                        {woodData.applications.primary.map((app, index) => (
-                          <li key={index} className="flex items-start gap-2">
-                            <CheckCircle className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0" />
-                            <span className="text-sm">{app}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div>
-                      <h4 className="font-medium mb-2">Secondary Applications</h4>
-                      <ul className="space-y-1">
-                        {woodData.applications.secondary.map((app, index) => (
-                          <li key={index} className="flex items-start gap-2">
-                            <CheckCircle className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
-                            <span className="text-sm">{app}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-red-700">Not Recommended For</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-2">
-                    {woodData.applications.notRecommended.map((app, index) => (
-                      <li key={index} className="flex items-start gap-2">
-                        <XCircle className="h-4 w-4 text-red-600 mt-0.5 flex-shrink-0" />
-                        <span className="text-sm">{app}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-            </div>
-          </TabsContent>
-
-          {/* Origin Tab */}
-          <TabsContent value="origin" className="space-y-6">
-            <h2 className="text-2xl font-bold">Origin & Sustainability</h2>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Geographic Origin</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div>
-                    <h4 className="font-medium mb-2">Countries</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {woodData.origin.countries.map((country, index) => (
-                        <Badge key={index} variant="outline">{country}</Badge>
-                      ))}
-                    </div>
-                  </div>
-                  <div>
-                    <h4 className="font-medium mb-2">Regions</h4>
-                    <ul className="space-y-1">
-                      {woodData.origin.regions.map((region, index) => (
-                        <li key={index} className="text-sm text-gray-600">• {region}</li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div>
-                    <h4 className="font-medium mb-2">Harvesting Method</h4>
-                    <p className="text-sm text-gray-700">{woodData.origin.harvestingMethod}</p>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle>Certifications & Sustainability</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div>
-                    <h4 className="font-medium mb-2">Certifications</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {woodData.origin.certifications.map((cert, index) => (
-                        <Badge key={index} variant="secondary">{cert}</Badge>
-                      ))}
-                    </div>
-                  </div>
-                  <div>
-                    <h4 className="font-medium mb-2">Sustainability Rating</h4>
-                    <MetricBar 
-                      label="Environmental Score" 
-                      value={woodData.origin.sustainabilityRating} 
-                    />
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </TabsContent>
-
-          {/* Buying Guide Tab */}
-          <TabsContent value="buying-guide" className="space-y-6">
-            <h2 className="text-2xl font-bold">Buying Guide</h2>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Quality Indicators</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-2">
-                    {woodData.buyingGuide.qualityIndicators.map((indicator, index) => (
-                      <li key={index} className="flex items-start gap-2">
-                        <CheckCircle className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0" />
-                        <span className="text-sm">{indicator}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle>Important Considerations</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-2">
-                    {woodData.buyingGuide.importantConsiderations.map((consideration, index) => (
-                      <li key={index} className="flex items-start gap-2">
-                        <Star className="h-4 w-4 text-yellow-600 mt-0.5 flex-shrink-0" />
-                        <span className="text-sm">{consideration}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-            </div>
-
+            {/* Contact Information */}
             <Card>
               <CardHeader>
-                <CardTitle>Expected Lifespan & Value</CardTitle>
+                <CardTitle className="flex items-center">
+                  <MapPin className="w-5 h-5 mr-2" />
+                  Contact Information
+                </CardTitle>
               </CardHeader>
-              <CardContent>
-                <p className="text-gray-700">
-                  <strong>Expected Lifespan:</strong> {woodData.buyingGuide.expectedLifespan}
-                </p>
+              <CardContent className="space-y-3">
+                <div className="flex items-center">
+                  <Phone className="w-4 h-4 mr-2 text-timber-600" />
+                  <a href="tel:+919886033342" className="text-timber-600 hover:underline">
+                    +91 9886033342
+                  </a>
+                </div>
+                <div className="flex items-center">
+                  <Mail className="w-4 h-4 mr-2 text-timber-600" />
+                  <a href="mailto:newindiatimbers8@gmail.com" className="text-timber-600 hover:underline">
+                    newindiatimbers8@gmail.com
+                  </a>
+                </div>
+                <div className="flex items-center">
+                  <Clock className="w-4 h-4 mr-2 text-timber-600" />
+                  <span className="text-sm text-muted-foreground">
+                    Mon-Sat: 9:00 AM - 7:00 PM, Sun: 10:00 AM - 4:00 PM
+                  </span>
+                </div>
               </CardContent>
             </Card>
-          </TabsContent>
-
-          {/* Comparison Tab */}
-          <TabsContent value="comparison" className="space-y-6">
-            <h2 className="text-2xl font-bold">Compare with Other Woods</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {relatedWoods.map((wood) => (
-                <ComparisonCard key={wood.id} wood={wood} />
-              ))}
-            </div>
-          </TabsContent>
-        </Tabs>
-      </div>
-
-      {/* Contact CTA */}
-      <div className="bg-timber-50 py-12">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-4">Ready to Get Started?</h2>
-          <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
-            Get expert guidance on {woodData.name} for your project. Our specialists 
-            will help you make the right choice.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="bg-timber-600 hover:bg-timber-700">
-              <Phone className="mr-2 h-5 w-5" />
-              Call +91 80 2571 5555
-            </Button>
-            <Button size="lg" variant="outline">
-              <Mail className="mr-2 h-5 w-5" />
-              Get Free Quote
-            </Button>
           </div>
         </div>
       </div>

@@ -1,0 +1,183 @@
+[
+  {
+    "id": "seo-001",
+    "page": "home",
+    "metaTitle": "Top Timber Suppliers in Bangalore | New India Timbers",
+    "metaDescription": "Discover premium teak wood, plywood, and construction timber in Bangalore. New India Timbers offers quality materials for all your building needs.",
+    "keywords": [
+      "timber suppliers bangalore",
+      "wood dealers karnataka", 
+      "teak wood bangalore",
+      "plywood suppliers bangalore",
+      "construction timber bangalore",
+      "lumber bangalore",
+      "wood merchants karnataka",
+      "hardwood suppliers bangalore",
+      "timber dealers bangalore",
+      "premium teak bangalore"
+    ],
+    "canonicalUrl": "https://newindiatimbers.com",
+    "structuredData": {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "New India Timbers",
+      "description": "Premium timber and wood suppliers in Bangalore, Karnataka",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "24/4 Sarjapura Main Road Doddakanna halli",
+        "addressLocality": "Bangalore",
+        "addressRegion": "Karnataka",
+        "postalCode": "560035",
+        "addressCountry": "IN"
+      },
+      "telephone": "+91-9886033342",
+      "email": "newindiatimbers8@gmail.com",
+      "url": "https://newindiatimbers.com",
+      "openingHours": "Mo-Sa 09:00-19:00,Su 10:00-16:00",
+      "priceRange": "$$",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "reviewCount": "150"
+      }
+    },
+    "openGraph": {
+      "title": "Top Timber Suppliers in Bangalore | New India Timbers",
+      "description": "Discover premium teak wood, plywood, and construction timber in Bangalore. Quality materials for all your building needs.",
+      "image": "/images/og-home.jpg",
+      "type": "website",
+      "siteName": "New India Timbers"
+    },
+    "createdAt": "2024-01-01T00:00:00.000Z",
+    "updatedAt": "2024-12-19T00:00:00.000Z"
+  },
+  {
+    "id": "seo-002",
+    "page": "products",
+    "metaTitle": "Timber & Plywood Products in Bangalore | Premium Teak & Hardwood",
+    "metaDescription": "Browse New India Timbers' curated catalog of premium teak, plywood, and hardwood solutions for Bangalore builders, architects, and homeowners.",
+    "keywords": [
+      "timber products bangalore",
+      "plywood suppliers bangalore",
+      "teak wood products karnataka",
+      "hardwood logs bangalore",
+      "construction materials bangalore",
+      "wood products bangalore",
+      "premium timber bangalore",
+      "marine plywood bangalore",
+      "burma teak bangalore",
+      "century ply bangalore"
+    ],
+    "canonicalUrl": "https://newindiatimbers.com/products",
+    "structuredData": {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "Premium Timber Products",
+      "description": "High-quality timber, plywood, and hardwood products for construction and furniture",
+      "brand": {
+        "@type": "Brand",
+        "name": "New India Timbers"
+      },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "INR",
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    "openGraph": {
+      "title": "Timber & Plywood Products in Bangalore | Premium Teak & Hardwood",
+      "description": "Browse premium teak, plywood, and hardwood solutions for Bangalore builders and homeowners.",
+      "image": "/images/og-products.jpg",
+      "type": "website",
+      "siteName": "New India Timbers"
+    },
+    "createdAt": "2024-01-01T00:00:00.000Z",
+    "updatedAt": "2024-12-19T00:00:00.000Z"
+  },
+  {
+    "id": "seo-003",
+    "page": "about",
+    "metaTitle": "About New India Timbers | Leading Timber Suppliers in Bangalore",
+    "metaDescription": "Learn about New India Timbers, your trusted timber supplier in Bangalore since 2005, offering quality wood products and exceptional service.",
+    "keywords": [
+      "about new india timbers",
+      "timber company bangalore",
+      "wood suppliers history bangalore",
+      "timber business karnataka",
+      "family timber business bangalore",
+      "trusted timber dealers bangalore",
+      "timber suppliers since 2005",
+      "quality timber bangalore",
+      "reliable wood suppliers karnataka"
+    ],
+    "canonicalUrl": "https://newindiatimbers.com/about",
+    "structuredData": {
+      "@context": "https://schema.org",
+      "@type": "AboutPage",
+      "name": "About New India Timbers",
+      "description": "Learn about our timber business history and commitment to quality in Bangalore",
+      "mainEntity": {
+        "@type": "Organization",
+        "name": "New India Timbers",
+        "foundingDate": "2005",
+        "description": "Family-owned timber business serving Bangalore and Karnataka"
+      }
+    },
+    "openGraph": {
+      "title": "About New India Timbers | Leading Timber Suppliers in Bangalore",
+      "description": "Learn about our trusted timber business serving Bangalore since 2005 with quality wood products.",
+      "image": "/images/og-about.jpg",
+      "type": "website",
+      "siteName": "New India Timbers"
+    },
+    "createdAt": "2024-01-01T00:00:00.000Z",
+    "updatedAt": "2024-12-19T00:00:00.000Z"
+  },
+  {
+    "id": "seo-004",
+    "page": "contact",
+    "metaTitle": "Contact New India Timbers | Timber Suppliers in Bangalore",
+    "metaDescription": "Get in touch with New India Timbers for premium timber products in Bangalore. Call us or visit our store on Sarjapura Main Road today.",
+    "keywords": [
+      "contact timber suppliers bangalore",
+      "timber store bangalore",
+      "wood dealers contact bangalore",
+      "sarjapura road timber dealers",
+      "timber suppliers phone bangalore",
+      "visit timber store bangalore",
+      "timber suppliers address bangalore",
+      "wood suppliers contact karnataka",
+      "timber business hours bangalore"
+    ],
+    "canonicalUrl": "https://newindiatimbers.com/contact",
+    "structuredData": {
+      "@context": "https://schema.org",
+      "@type": "ContactPage",
+      "name": "Contact New India Timbers",
+      "description": "Get in touch with us for timber products and services",
+      "mainEntity": {
+        "@type": "LocalBusiness",
+        "name": "New India Timbers",
+        "telephone": "+91-9886033342",
+        "email": "newindiatimbers8@gmail.com",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "24/4 Sarjapura Main Road Doddakanna halli",
+          "addressLocality": "Bangalore",
+          "addressRegion": "Karnataka",
+          "postalCode": "560035",
+          "addressCountry": "IN"
+        }
+      }
+    },
+    "openGraph": {
+      "title": "Contact New India Timbers | Timber Suppliers in Bangalore",
+      "description": "Get in touch with us for premium timber products. Visit our store on Sarjapura Main Road, Bangalore.",
+      "image": "/images/og-contact.jpg",
+      "type": "website",
+      "siteName": "New India Timbers"
+    },
+    "createdAt": "2024-01-01T00:00:00.000Z",
+    "updatedAt": "2024-12-19T00:00:00.000Z"
+  }
+]

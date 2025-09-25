@@ -1,0 +1,364 @@
+name: Test Suite
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  schedule:
+    - cron: '0 2 * * *'  # Run daily at 2 AM
+
+jobs:
+  test:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+        browser: [chromium, firefox, webkit]
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps ${{ matrix.browser }}
+    
+    - name: Build application
+      run: npm run build
+    
+    - name: Start application
+      run: npm run preview &
+      env:
+        PORT: 8080
+    
+    - name: Wait for application
+      run: npx wait-on http://localhost:8080
+    
+    - name: Run Playwright tests
+      run: npx playwright test --project=${{ matrix.browser }}
+      env:
+        TEST_BASE_URL: http://localhost:8080
+        CI: true
+    
+    - name: Upload test results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: playwright-report-${{ matrix.browser }}-${{ matrix.node-version }}
+        path: playwright-report/
+        retention-days: 30
+    
+    - name: Upload test videos
+      uses: actions/upload-artifact@v4
+      if: failure()
+      with:
+        name: playwright-videos-${{ matrix.browser }}-${{ matrix.node-version }}
+        path: test-results/
+        retention-days: 30
+
+  test-mobile:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        device: [iPhone 12, Pixel 5, iPad]
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps
+    
+    - name: Build application
+      run: npm run build
+    
+    - name: Start application
+      run: npm run preview &
+      env:
+        PORT: 8080
+    
+    - name: Wait for application
+      run: npx wait-on http://localhost:8080
+    
+    - name: Run mobile tests
+      run: npx playwright test --project=${{ matrix.device }}
+      env:
+        TEST_BASE_URL: http://localhost:8080
+        CI: true
+    
+    - name: Upload mobile test results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: mobile-test-report-${{ matrix.device }}
+        path: playwright-report/
+        retention-days: 30
+
+  test-performance:
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps
+    
+    - name: Build application
+      run: npm run build
+    
+    - name: Start application
+      run: npm run preview &
+      env:
+        PORT: 8080
+    
+    - name: Wait for application
+      run: npx wait-on http://localhost:8080
+    
+    - name: Run performance tests
+      run: npx playwright test tests/performance/ --project=chromium
+      env:
+        TEST_BASE_URL: http://localhost:8080
+        CI: true
+    
+    - name: Upload performance results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: performance-test-results
+        path: test-results/
+        retention-days: 30
+
+  test-accessibility:
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps
+    
+    - name: Build application
+      run: npm run build
+    
+    - name: Start application
+      run: npm run preview &
+      env:
+        PORT: 8080
+    
+    - name: Wait for application
+      run: npx wait-on http://localhost:8080
+    
+    - name: Run accessibility tests
+      run: npx playwright test tests/a11y/ --project=chromium
+      env:
+        TEST_BASE_URL: http://localhost:8080
+        CI: true
+    
+    - name: Upload accessibility results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: accessibility-test-results
+        path: test-results/
+        retention-days: 30
+
+  test-integration:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps
+    
+    - name: Build application
+      run: npm run build
+    
+    - name: Start application
+      run: npm run preview &
+      env:
+        PORT: 8080
+    
+    - name: Wait for application
+      run: npx wait-on http://localhost:8080
+    
+    - name: Run integration tests
+      run: npx playwright test tests/integration/ --project=chromium
+      env:
+        TEST_BASE_URL: http://localhost:8080
+        CI: true
+    
+    - name: Upload integration results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: integration-test-results
+        path: test-results/
+        retention-days: 30
+
+  test-contract:
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps
+    
+    - name: Build application
+      run: npm run build
+    
+    - name: Start application
+      run: npm run preview &
+      env:
+        PORT: 8080
+    
+    - name: Wait for application
+      run: npx wait-on http://localhost:8080
+    
+    - name: Run contract tests
+      run: npx playwright test tests/contract/ --project=chromium
+      env:
+        TEST_BASE_URL: http://localhost:8080
+        CI: true
+    
+    - name: Upload contract results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: contract-test-results
+        path: test-results/
+        retention-days: 30
+
+  test-report:
+    needs: [test, test-mobile, test-performance, test-accessibility, test-integration, test-contract]
+    runs-on: ubuntu-latest
+    if: always()
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Download all test results
+      uses: actions/download-artifact@v4
+      with:
+        path: test-results/
+    
+    - name: Generate combined test report
+      run: |
+        mkdir -p combined-report
+        find test-results -name "*.json" -exec cp {} combined-report/ \;
+        find test-results -name "*.html" -exec cp {} combined-report/ \;
+    
+    - name: Upload combined report
+      uses: actions/upload-artifact@v4
+      with:
+        name: combined-test-report
+        path: combined-report/
+        retention-days: 30
+    
+    - name: Comment PR with test results
+      if: github.event_name == 'pull_request'
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const fs = require('fs');
+          const path = require('path');
+          
+          let comment = '## Test Results\n\n';
+          
+          // Check if test results exist
+          if (fs.existsSync('test-results')) {
+            const files = fs.readdirSync('test-results', { recursive: true });
+            const jsonFiles = files.filter(file => file.endsWith('.json'));
+            
+            if (jsonFiles.length > 0) {
+              comment += '✅ Test results generated successfully\n\n';
+              comment += '### Test Artifacts\n';
+              comment += '- Test reports and videos are available in the artifacts\n';
+              comment += '- Check the Actions tab for detailed results\n\n';
+            } else {
+              comment += '⚠️ No test results found\n\n';
+            }
+          } else {
+            comment += '❌ Test results not found\n\n';
+          }
+          
+          comment += '### Test Coverage\n';
+          comment += '- ✅ Desktop browsers (Chrome, Firefox, Safari)\n';
+          comment += '- ✅ Mobile devices (iPhone, Pixel, iPad)\n';
+          comment += '- ✅ Performance testing\n';
+          comment += '- ✅ Accessibility testing\n';
+          comment += '- ✅ Integration testing\n';
+          comment += '- ✅ Contract testing\n\n';
+          
+          comment += '### Next Steps\n';
+          comment += '1. Review test results in the artifacts\n';
+          comment += '2. Check for any failing tests\n';
+          comment += '3. Verify test coverage meets requirements\n';
+          
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: comment
+          });

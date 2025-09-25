@@ -10,10 +10,9 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { 
-  ShoppingCart, 
-  Clock, 
-  Tag, 
+import {
+  Clock,
+  Tag,
   ChevronRight,
   ListFilter,
   Grid3X3,
@@ -22,7 +21,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { getPlaceholderImage, handleImageError } from "@/utils/imageUtils";
-import { WoodProduct } from "@/services/database";
+import { Product } from "@/types/product";
 
 export interface ProductType {
   id: string;
@@ -311,29 +310,21 @@ const ProductGrid = ({ products, title, description, loading, error }: ProductGr
                     {isMobile && (
                       <div className="flex items-center justify-between">
                         <div>
-                          {product.price ? (
-                            <div className="flex flex-col">
-                              <span className="font-bold text-timber-600 text-sm">
-                                ₹{product.price.toLocaleString('en-IN')}
-                              </span>
-                              {product.category === 'plywood' && (
-                                <span className="text-xs text-gray-500">per sq ft</span>
-                              )}
-                            </div>
-                          ) : (
-                            <span className="text-timber-700 font-medium text-xs bg-timber-50 px-2 py-1 rounded">
-                              Request Price
-                            </span>
-                          )}
+                          <Link 
+                            to="/contact" 
+                            className="text-timber-700 font-medium text-xs bg-timber-50 px-2 py-1 rounded hover:text-timber-800 hover:bg-timber-100 transition-colors cursor-pointer"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              // Pre-fill contact form with product info
+                              const productInfo = `Product: ${product.title}\nCategory: ${product.category}\nSubcategory: ${product.subcategory}`;
+                              window.location.href = `/contact?product=${encodeURIComponent(productInfo)}`;
+                            }}
+                          >
+                            Contact for price
+                          </Link>
                         </div>
                         
-                        <Button 
-                          size="sm" 
-                          className="h-8 px-3 text-xs bg-timber-600 hover:bg-timber-700 ml-2 flex-shrink-0"
-                        >
-                          <ShoppingCart size={12} className="mr-1" /> 
-                          {product.price ? "Buy" : "Quote"}
-                        </Button>
                       </div>
                     )}
                     
@@ -363,27 +354,21 @@ const ProductGrid = ({ products, title, description, loading, error }: ProductGr
                   {!isMobile && (
                     <CardFooter className="p-4 pt-0 flex justify-between items-center">
                       <div>
-                        {product.price ? (
-                          <div>
-                            <span className="font-bold text-lg md:text-xl text-timber-600">
-                              ₹{product.price.toLocaleString('en-IN')}
-                            </span>
-                            {product.category === 'plywood' && (
-                              <span className="text-xs text-gray-500 ml-1">/sq ft</span>
-                            )}
-                          </div>
-                        ) : (
-                          <span className="text-timber-700 font-medium text-sm">Request Price</span>
-                        )}
+                        <Link 
+                          to="/contact" 
+                          className="text-timber-700 font-medium text-sm hover:text-timber-800 hover:underline transition-colors cursor-pointer"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            // Pre-fill contact form with product info
+                            const productInfo = `Product: ${product.title}\nCategory: ${product.category}\nSubcategory: ${product.subcategory}`;
+                            window.location.href = `/contact?product=${encodeURIComponent(productInfo)}`;
+                          }}
+                        >
+                          Contact for price
+                        </Link>
                       </div>
                       
-                      <Button 
-                        size="sm" 
-                        className="h-8 px-3 text-xs bg-timber-600 hover:bg-timber-700"
-                      >
-                        <ShoppingCart size={14} className="mr-1" /> 
-                        Buy
-                      </Button>
                     </CardFooter>
                   )}
                 </div>

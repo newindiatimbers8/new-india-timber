@@ -1,0 +1,330 @@
+[
+  {
+    "id": "burma-teak-door",
+    "name": "Burma Teak Door",
+    "category": "teak",
+    "grade": "premium",
+    "description": "Premium quality Burma teak door with rich grain pattern and exceptional durability. Perfect for main entrances in Bangalore homes.",
+    "specifications": {
+      "dimensions": "7ft x 3.5ft",
+      "thickness": "35mm",
+      "finish": "Natural",
+      "moistureContent": "8-12%",
+      "woodSpecies": "Tectona Grandis (Burma Teak)",
+      "density": "650-700 kg/m³",
+      "origin": "Myanmar (Burma)",
+      "certification": "FSC Certified",
+      "availableSizes": "Custom & Standard",
+      "seasoning": "Kiln Dried",
+      "treatment": "Natural/Treated Options",
+      "minimumOrder": "1 Piece"
+    },
+    "pricing": {
+      "basePrice": 50000,
+      "currency": "INR",
+      "unit": "piece",
+      "priceRange": "₹45,000 - ₹65,000",
+      "bulkDiscount": "Available for orders above 5 pieces"
+    },
+    "images": [
+      "/images/products/burma-teak-door-1.jpg",
+      "/images/products/burma-teak-door-2.jpg",
+      "/images/products/burma-teak-door-3.jpg",
+      "/images/products/burma-teak-door-4.jpg"
+    ],
+    "isActive": true,
+    "tags": ["door", "teak", "premium", "bangalore", "burma-teak", "entrance-door"],
+    "seo": {
+      "metaTitle": "Burma Teak Grade A - Teak Wood Suppliers Bangalore | New India Timbers",
+      "metaDescription": "Premium Burma Teak Grade A at best prices in Bangalore. Sustainable sourcing, 25+ years experience. FSC certified. Contact: +91-9886033342",
+      "keywords": ["burma teak door", "bangalore", "premium door", "teak wood", "grade a teak", "teak suppliers bangalore", "burma teak grade a", "premium teak door"]
+    },
+    "benefits": [
+      "Superior Durability - 25+ years lifespan with proper care",
+      "Natural Resistance - Termite and moisture resistant",
+      "Premium Grade Quality - Hand-selected A-grade timber",
+      "Sustainable Sourcing - FSC certified responsible forestry",
+      "Expert Processing - Professional kiln drying and treatment",
+      "Custom Dimensions - Cut to your exact specifications"
+    ],
+    "applications": [
+      "Main Entrance Doors",
+      "Commercial Doors", 
+      "Interior Doors",
+      "French Doors",
+      "Sliding Doors"
+    ],
+    "serviceAreas": [
+      "Bangalore City",
+      "Electronic City", 
+      "Whitefield",
+      "Koramangala",
+      "BTM Layout",
+      "Jayanagar",
+      "Indiranagar",
+      "HSR Layout"
+    ],
+    "createdAt": "2025-01-01T00:00:00.000Z",
+    "updatedAt": "2025-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "marine-plywood-19mm",
+    "name": "Marine Plywood 19mm",
+    "category": "plywood",
+    "grade": "premium",
+    "description": "Water-resistant marine plywood suitable for outdoor furniture and high-moisture areas in Bangalore's climate.",
+    "specifications": {
+      "thickness": "19mm",
+      "size": "8ft x 4ft",
+      "grade": "Marine Grade",
+      "waterResistance": "BWP",
+      "woodSpecies": "Hardwood Veneer",
+      "density": "600-650 kg/m³",
+      "origin": "India",
+      "certification": "IS 303",
+      "availableSizes": "8x4, 7x4, 6x4 feet",
+      "seasoning": "Kiln Dried",
+      "treatment": "BWP (Boiling Water Proof)",
+      "minimumOrder": "1 Sheet"
+    },
+    "pricing": {
+      "basePrice": 3200,
+      "currency": "INR",
+      "unit": "sheet",
+      "priceRange": "₹2,800 - ₹3,500",
+      "bulkDiscount": "Available for orders above 50 sheets"
+    },
+    "images": [
+      "/images/products/marine-plywood-1.jpg",
+      "/images/products/marine-plywood-2.jpg",
+      "/images/products/marine-plywood-3.jpg",
+      "/images/products/marine-plywood-4.jpg"
+    ],
+    "isActive": true,
+    "tags": ["plywood", "marine", "waterproof", "bangalore", "19mm", "bwp"],
+    "seo": {
+      "metaTitle": "Marine Plywood 19mm - Waterproof | New India Timber Bangalore",
+      "metaDescription": "Premium marine plywood sheets perfect for Bangalore's humid climate. Waterproof, durable, ideal for kitchens and bathrooms. Contact: +91-9886033342",
+      "keywords": ["marine plywood", "bangalore", "waterproof plywood", "19mm", "bwp plywood", "marine grade plywood", "plywood suppliers bangalore"]
+    },
+    "benefits": [
+      "Superior Water Resistance - Perfect for humid Bangalore climate",
+      "Structural Strength - High load-bearing capacity",
+      "Premium Grade Quality - Uniform thickness and smooth finish",
+      "Sustainable Sourcing - IS 303 certified quality",
+      "Expert Processing - Professional manufacturing standards",
+      "Custom Sizing - Available in multiple dimensions"
+    ],
+    "applications": [
+      "Kitchen Cabinets",
+      "Bathroom Furniture",
+      "Outdoor Furniture",
+      "Boat Building",
+      "Construction"
+    ],
+    "serviceAreas": [
+      "Bangalore City",
+      "Electronic City", 
+      "Whitefield",
+      "Koramangala",
+      "BTM Layout",
+      "Jayanagar",
+      "Indiranagar",
+      "HSR Layout"
+    ],
+    "createdAt": "2025-01-01T00:00:00.000Z",
+    "updatedAt": "2025-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "ghana-teak-window",
+    "name": "Ghana Teak Window Frame",
+    "category": "teak",
+    "grade": "commercial",
+    "description": "Durable Ghana teak window frame with smooth finish and natural resistance to decay. Ideal for Bangalore apartments.",
+    "specifications": {
+      "dimensions": "4ft x 3ft",
+      "thickness": "25mm",
+      "finish": "Smooth",
+      "treatment": "Kiln Dried"
+    },
+    "pricing": {
+      "basePrice": 18000,
+      "currency": "INR",
+      "unit": "piece"
+    },
+    "images": ["/images/products/burma-teak-door-1.jpg"],
+    "isActive": true,
+    "tags": ["window", "teak", "ghana", "bangalore"],
+    "seo": {
+      "metaTitle": "Ghana Teak Window Frame | New India Timber Bangalore",
+      "metaDescription": "Quality Ghana teak window frames for Bangalore homes. Weather-resistant, smooth finish, professional installation available.",
+      "keywords": ["ghana teak", "window frame", "bangalore", "teak window"]
+    },
+    "createdAt": "2025-01-01T00:00:00.000Z",
+    "updatedAt": "2025-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "century-ply-sainik-mr-18mm",
+    "name": "Century Ply Sainik MR 18mm",
+    "category": "plywood",
+    "grade": "commercial",
+    "description": "High-quality moisture-resistant plywood suitable for kitchen cabinets and interior furniture in Bangalore homes.",
+    "specifications": {
+      "thickness": "18mm",
+      "size": "8ft x 4ft",
+      "grade": "MR Grade",
+      "brand": "Century Ply"
+    },
+    "pricing": {
+      "basePrice": 2300,
+      "currency": "INR",
+      "unit": "sheet"
+    },
+    "images": ["/images/products/burma-teak-door-1.jpg"],
+    "isActive": true,
+    "tags": ["plywood", "century", "moisture resistant", "bangalore"],
+    "seo": {
+      "metaTitle": "Century Ply Sainik MR 18mm | New India Timber Bangalore",
+      "metaDescription": "Premium Century Ply Sainik MR plywood sheets for Bangalore interiors. Moisture-resistant, uniform thickness, ideal for furniture.",
+      "keywords": ["century ply", "sainik mr", "bangalore", "18mm plywood"]
+    },
+    "createdAt": "2025-01-01T00:00:00.000Z",
+    "updatedAt": "2025-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "hardwood-log-teak",
+    "name": "Teak Hardwood Log",
+    "category": "hardwood",
+    "grade": "premium",
+    "description": "Natural teak hardwood log suitable for custom furniture making and woodworking projects in Karnataka.",
+    "specifications": {
+      "length": "8-12 feet",
+      "diameter": "12-18 inches",
+      "grade": "A Grade",
+      "source": "Sustainable Forests",
+      "woodSpecies": "Tectona Grandis",
+      "density": "650-700 kg/m³",
+      "origin": "Karnataka",
+      "certification": "FSC Certified",
+      "availableSizes": "Custom lengths available",
+      "seasoning": "Air Dried",
+      "treatment": "Natural",
+      "minimumOrder": "1 Cubic Foot"
+    },
+    "pricing": {
+      "basePrice": null,
+      "currency": "INR",
+      "unit": "cubic foot",
+      "priceOnRequest": true,
+      "priceRange": "Contact for pricing",
+      "bulkDiscount": "Volume discounts available"
+    },
+    "images": [
+      "/images/products/teak-log-1.jpg",
+      "/images/products/teak-log-2.jpg",
+      "/images/products/teak-log-3.jpg"
+    ],
+    "isActive": true,
+    "tags": ["hardwood", "log", "teak", "karnataka", "custom", "furniture"],
+    "seo": {
+      "metaTitle": "Teak Hardwood Logs | New India Timber Karnataka",
+      "metaDescription": "Premium teak hardwood logs for custom furniture and woodworking projects in Karnataka. Sustainable sourcing, various sizes available. Contact: +91-9886033342",
+      "keywords": ["teak logs", "hardwood", "karnataka", "custom furniture", "teak wood logs", "hardwood suppliers"]
+    },
+    "benefits": [
+      "Natural Beauty - Rich grain patterns and natural color",
+      "Custom Sizing - Available in various lengths and diameters",
+      "Sustainable Sourcing - FSC certified responsible forestry",
+      "Premium Quality - Hand-selected A-grade logs",
+      "Versatile Use - Perfect for furniture and construction",
+      "Local Sourcing - Fresh from Karnataka forests"
+    ],
+    "applications": [
+      "Custom Furniture Making",
+      "Woodworking Projects",
+      "Construction Beams",
+      "Decorative Elements",
+      "Artisan Crafts"
+    ],
+    "serviceAreas": [
+      "Bangalore City",
+      "Electronic City", 
+      "Whitefield",
+      "Koramangala",
+      "BTM Layout",
+      "Jayanagar",
+      "Indiranagar",
+      "HSR Layout"
+    ],
+    "createdAt": "2025-01-01T00:00:00.000Z",
+    "updatedAt": "2025-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "burma-teak-grade-a-timber",
+    "name": "Burma Teak Grade A Timber",
+    "category": "teak",
+    "grade": "premium",
+    "description": "Premium Grade A Burma Teak timber with superior grain patterns and exceptional durability. Perfect for high-end construction and furniture projects.",
+    "specifications": {
+      "dimensions": "Custom sizes available",
+      "thickness": "25mm - 100mm",
+      "grade": "A Grade Premium",
+      "moistureContent": "8-12%",
+      "woodSpecies": "Tectona Grandis (Burma Teak)",
+      "density": "650-700 kg/m³",
+      "origin": "Myanmar (Burma)",
+      "certification": "FSC Certified",
+      "availableSizes": "Custom & Standard",
+      "seasoning": "Kiln Dried",
+      "treatment": "Natural/Treated Options",
+      "minimumOrder": "1 Cubic Foot"
+    },
+    "pricing": {
+      "basePrice": 8500,
+      "currency": "INR",
+      "unit": "cubic foot",
+      "priceRange": "₹8,000 - ₹12,000",
+      "bulkDiscount": "Available for orders above 100 CFT"
+    },
+    "images": [
+      "/images/products/burma-teak-timber-1.jpg",
+      "/images/products/burma-teak-timber-2.jpg",
+      "/images/products/burma-teak-timber-3.jpg",
+      "/images/products/burma-teak-timber-4.jpg"
+    ],
+    "isActive": true,
+    "tags": ["burma-teak", "grade-a", "timber", "premium", "bangalore", "construction"],
+    "seo": {
+      "metaTitle": "Burma Teak Grade A - Teak Wood Suppliers Bangalore | New India Timbers",
+      "metaDescription": "Premium Burma Teak Grade A at best prices in Bangalore. Sustainable sourcing, 25+ years experience. FSC certified. Contact: +91-9886033342",
+      "keywords": ["burma teak grade a", "bangalore", "premium teak", "teak wood", "grade a teak", "teak suppliers bangalore", "burma teak timber"]
+    },
+    "benefits": [
+      "Superior Durability - 25+ years lifespan with proper care",
+      "Natural Resistance - Termite and moisture resistant",
+      "Premium Grade Quality - Hand-selected A-grade timber",
+      "Sustainable Sourcing - FSC certified responsible forestry",
+      "Expert Processing - Professional kiln drying and treatment",
+      "Custom Dimensions - Cut to your exact specifications"
+    ],
+    "applications": [
+      "Residential Construction",
+      "Commercial Projects",
+      "Marine Applications",
+      "Furniture Making",
+      "Architectural Features"
+    ],
+    "serviceAreas": [
+      "Bangalore City",
+      "Electronic City", 
+      "Whitefield",
+      "Koramangala",
+      "BTM Layout",
+      "Jayanagar",
+      "Indiranagar",
+      "HSR Layout"
+    ],
+    "createdAt": "2025-01-01T00:00:00.000Z",
+    "updatedAt": "2025-01-01T00:00:00.000Z"
+  }
+]

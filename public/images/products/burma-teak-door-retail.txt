@@ -1,0 +1,18 @@
+# Burma Teak Door in Retail Context
+# This is a placeholder for the actual generated image
+# 
+# Image Details:
+# - Product: Burma Teak Door
+# - Context: retail
+# - Filename: burma-teak-door-retail.webp
+# - Dimensions: 1920x1080 (16:9 aspect ratio)
+# - Format: WebP
+# 
+# Generation Prompt:
+# Upscale retail showroom entrance with Burma teak door, premium shopping environment, elegant display, commercial photography, 16:9 aspect ratio, professional lighting
+# 
+# Status: Ready for actual image generation
+# Generated: 2025-09-26T00:08:53.490192
+# 
+# To generate the actual image, use this prompt with an AI image generator:
+# Upscale retail showroom entrance with Burma teak door, premium shopping environment, elegant display, commercial photography, 16:9 aspect ratio, professional lighting

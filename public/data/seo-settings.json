@@ -1,0 +1,33 @@
+[
+  {
+    "id": "seo-001",
+    "page": "home",
+    "metaTitle": "New India Timber - Premium Wood Suppliers Bangalore",
+    "metaDescription": "Leading timber suppliers in Bangalore offering premium quality wood, teak, and construction materials. Serving Karnataka with sustainable forestry products.",
+    "keywords": ["timber suppliers bangalore", "wood suppliers karnataka", "teak bangalore", "timber dealers", "construction wood"],
+    "canonicalUrl": null,
+    "structuredData": {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "New India Timber",
+      "description": "Premium timber and wood suppliers in Bangalore, Karnataka",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Bangalore",
+        "addressRegion": "Karnataka",
+        "addressCountry": "IN"
+      },
+      "telephone": "+91-XXXXXXXXXX",
+      "url": "https://newindiatimber.com"
+    },
+    "openGraph": {
+      "title": "New India Timber - Premium Wood Suppliers Bangalore",
+      "description": "Leading timber suppliers in Bangalore offering premium quality wood and construction materials",
+      "image": "/images/og-home.jpg",
+      "type": "website",
+      "siteName": "New India Timber"
+    },
+    "createdAt": "2024-01-01T00:00:00.000Z",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  }
+]

@@ -1,15 +1,16 @@
 
 import type { Config } from "tailwindcss";
+import { fontFamily } from 'tailwindcss/defaultTheme';
 
-export default {
-	darkMode: ["class"],
-	content: [
-		"./pages/**/*.{ts,tsx}",
-		"./components/**/*.{ts,tsx}",
-		"./app/**/*.{ts,tsx}",
-		"./src/**/*.{ts,tsx}",
-	],
-	prefix: "",
+const config: Config = {
+  darkMode: ["class"],
+  content: [
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
+  ],
+  prefix: "",
 	theme: {
 		container: {
 			center: true,
@@ -17,6 +18,14 @@ export default {
 			screens: {
 				'2xl': '1400px'
 			}
+		},
+		screens: {
+			'xs': '480px',
+			'sm': '640px',
+			'md': '768px',
+			'lg': '1024px',
+			'xl': '1280px',
+			'2xl': '1536px',
 		},
 		extend: {
 			colors: {
@@ -52,6 +61,18 @@ export default {
 				card: {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
+				},
+				success: {
+					DEFAULT: 'hsl(var(--success))',
+					foreground: 'hsl(var(--success-foreground))',
+				},
+				warning: {
+					DEFAULT: 'hsl(var(--warning))',
+					foreground: 'hsl(var(--warning-foreground))',
+				},
+				info: {
+					DEFAULT: 'hsl(var(--info))',
+					foreground: 'hsl(var(--info-foreground))',
 				},
                 timber: {
                     50: '#f8f6f2',
@@ -94,6 +115,10 @@ export default {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)'
+			},
+			boxShadow: {
+				'accessibility': '0 0 0 3px hsl(var(--ring))',
+				'accessibility-dark': '0 0 0 3px hsl(var(--ring))',
 			},
 			keyframes: {
 				'accordion-down': {
@@ -153,12 +178,17 @@ export default {
             fontFamily: {
                 'montserrat': ['Montserrat', 'sans-serif'],
                 'opensans': ['"Open Sans"', 'sans-serif'],
+                'heading': ['Montserrat', 'Inter', 'system-ui', 'sans-serif'],
             },
-            backgroundImage: {
-                'wood-pattern': 'linear-gradient(45deg, #D2691E 25%, #CD853F 25%, #CD853F 50%, #D2691E 50%, #D2691E 75%, #CD853F 75%)',
-                'hero-gradient': 'linear-gradient(135deg, #2D5016 0%, #8B4513 50%, #A0522D 100%)',
-            }
+            // Removed gradient backgrounds for modern flat design
 		}
 	},
-	plugins: [require("tailwindcss-animate")],
+	plugins: [
+		require("tailwindcss-animate"),
+		require('@tailwindcss/typography'),
+		require('@tailwindcss/forms'),
+		require('@tailwindcss/aspect-ratio'),
+	],
 } satisfies Config;
+
+export default config;

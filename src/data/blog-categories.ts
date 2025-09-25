@@ -1,0 +1,46 @@
+import type { BlogCategory } from '@/types/blog';
+
+export const blogCategoriesData: BlogCategory[] = [
+  {
+    "id": "cat-001",
+    "name": "Bangalore Timber Tips",
+    "slug": "bangalore-timber-tips",
+    "description": "Tips and guides for timber usage in Bangalore",
+    "color": "#10b981",
+    "postCount": 1,
+    "createdAt": "2024-01-01T00:00:00.000Z",
+    "updatedAt": "2024-01-15T10:00:00.000Z"
+  },
+  {
+    "id": "cat-002",
+    "name": "Karnataka Wood Guide",
+    "slug": "karnataka-wood-guide",
+    "description": "Comprehensive wood guides for Karnataka region",
+    "color": "#f59e0b",
+    "postCount": 0,
+    "createdAt": "2024-01-01T00:00:00.000Z",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "cat-003",
+    "name": "Construction Materials",
+    "slug": "construction-materials",
+    "description": "Construction-grade timber and materials",
+    "color": "#3b82f6",
+    "postCount": 0,
+    "createdAt": "2024-01-01T00:00:00.000Z",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "cat-004",
+    "name": "Sustainable Forestry",
+    "slug": "sustainable-forestry",
+    "description": "Sustainable and eco-friendly timber practices",
+    "color": "#059669",
+    "postCount": 0,
+    "createdAt": "2024-01-01T00:00:00.000Z",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  }
+];
+
+export default blogCategoriesData;

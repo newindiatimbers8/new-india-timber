@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import Layout from "../components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 const AboutPage = () => {
   useEffect(() => {
@@ -11,6 +12,31 @@ const AboutPage = () => {
   
   return (
     <Layout>
+      <Helmet>
+        <title>About New India Timbers | Leading Timber Suppliers in Bangalore</title>
+        <meta
+          name="description"
+          content="Learn about New India Timbers, your trusted timber supplier in Bangalore since 2005, offering quality wood products and exceptional service."
+        />
+        <meta
+          name="keywords"
+          content="about new india timbers, timber company bangalore, wood suppliers history bangalore, timber business karnataka, family timber business bangalore, trusted timber dealers bangalore, timber suppliers since 2005, quality timber bangalore, reliable wood suppliers karnataka"
+        />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "AboutPage",
+            "name": "About New India Timbers",
+            "description": "Learn about our timber business history and commitment to quality in Bangalore",
+            "mainEntity": {
+              "@type": "Organization",
+              "name": "New India Timbers",
+              "foundingDate": "2005",
+              "description": "Family-owned timber business serving Bangalore and Karnataka"
+            }
+          })}
+        </script>
+      </Helmet>
       <div className="bg-timber-50 py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">

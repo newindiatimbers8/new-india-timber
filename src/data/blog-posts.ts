@@ -1,0 +1,159 @@
+import type { BlogPost } from '@/types/blog';
+
+export const blogPostsData: BlogPost[] = [
+  {
+    "id": "teak-maintenance-bangalore",
+    "title": "Teak Wood Maintenance in Bangalore Climate",
+    "slug": "teak-maintenance-bangalore",
+    "summary": "Essential tips for maintaining teak wood furniture during Karnataka's monsoon season and high humidity conditions.",
+    "content": "<h2>Understanding Bangalore's Climate Impact on Teak</h2><p>Bangalore's unique climate presents both opportunities and challenges for teak wood maintenance. With moderate temperatures year-round but significant humidity during monsoon season, proper care is essential for preserving your teak investments.</p><h2>Monsoon Season Care</h2><p>During Karnataka's monsoon months (June-September), teak wood requires special attention. Ensure proper ventilation around teak furniture and avoid placing items directly against walls where moisture can accumulate.</p><h2>Daily Maintenance Tips</h2><p>Regular dusting with a soft, dry cloth helps prevent moisture buildup. For Bangalore homes, we recommend weekly inspection of teak items for any signs of moisture damage or discoloration.</p><h2>Professional Treatment</h2><p>Annual professional treatment with teak oil helps maintain the wood's natural resistance to moisture and insects common in Karnataka's climate.</p>",
+    "coverImage": null,
+    "authorId": "admin-001",
+    "author": {
+      "id": "admin-001",
+      "name": "New India Timber Team",
+      "avatar": null
+    },
+    "categoryIds": ["cat-001"],
+    "tags": ["teak", "maintenance", "bangalore", "monsoon", "humidity"],
+    "status": "published",
+    "publishedAt": "2025-01-15T10:00:00.000Z",
+    "scheduledFor": null,
+    "readingTime": 5,
+    "viewCount": 245,
+    "socialShares": {
+      "facebook": 12,
+      "twitter": 8,
+      "linkedin": 15,
+      "whatsapp": 23
+    },
+    "relatedPosts": ["plywood-selection-bangalore"],
+    "tableOfContents": [
+      { "id": "understanding-climate", "text": "Understanding Bangalore's Climate Impact on Teak", "level": 2, "children": [] },
+      { "id": "monsoon-care", "text": "Monsoon Season Care", "level": 2, "children": [] },
+      { "id": "daily-maintenance", "text": "Daily Maintenance Tips", "level": 2, "children": [] },
+      { "id": "professional-treatment", "text": "Professional Treatment", "level": 2, "children": [] }
+    ],
+    "seo": {
+      "metaTitle": "Teak Wood Maintenance in Bangalore Climate | Expert Tips",
+      "metaDescription": "Learn how to maintain teak wood furniture in Bangalore's humid climate. Expert tips for monsoon care and daily maintenance from New India Timber.",
+      "keywords": ["teak maintenance", "bangalore climate", "monsoon care", "humidity protection"],
+      "canonicalUrl": null,
+      "openGraphImage": null,
+      "structuredData": {}
+    },
+    "performance": {
+      "imageOptimized": true,
+      "criticalCSSInlined": false,
+      "lazyLoadEnabled": true
+    },
+    "aiGenerated": false,
+    "humanEdited": false,
+    "createdAt": "2025-01-15T09:00:00.000Z",
+    "updatedAt": "2025-01-15T10:00:00.000Z"
+  },
+  {
+    "id": "plywood-selection-bangalore",
+    "title": "Choosing the Right Plywood for Bangalore Homes",
+    "slug": "plywood-selection-bangalore",
+    "summary": "Complete guide to selecting plywood that performs well in Karnataka's climate conditions and humidity levels.",
+    "content": "<h2>Plywood Types for Bangalore Climate</h2><p>Bangalore's moderate climate with seasonal humidity requires careful plywood selection. Marine grade and moisture-resistant (MR) plywood perform best in Karnataka's conditions.</p><h2>Recommended Grades</h2><p>For Bangalore homes, we recommend Century Ply Sainik MR for interior applications and marine grade plywood for areas with high moisture exposure like kitchens and bathrooms.</p><h2>Thickness Considerations</h2><p>18mm thickness provides optimal strength for most furniture applications, while 12mm works well for cabinet backs and lighter applications in Bangalore's stable climate.</p><h2>Brand Recommendations</h2><p>Based on our experience serving Bangalore customers, Century Ply, Greenply, and Anchor brands consistently perform well in Karnataka's climate conditions.</p>",
+    "coverImage": null,
+    "authorId": "admin-001",
+    "author": {
+      "id": "admin-001",
+      "name": "New India Timber Team",
+      "avatar": null
+    },
+    "categoryIds": ["cat-001"],
+    "tags": ["plywood", "selection", "bangalore", "climate", "humidity"],
+    "status": "published",
+    "publishedAt": "2025-01-10T14:00:00.000Z",
+    "scheduledFor": null,
+    "readingTime": 7,
+    "viewCount": 189,
+    "socialShares": {
+      "facebook": 8,
+      "twitter": 5,
+      "linkedin": 12,
+      "whatsapp": 18
+    },
+    "relatedPosts": ["teak-maintenance-bangalore"],
+    "tableOfContents": [
+      { "id": "plywood-types", "text": "Plywood Types for Bangalore Climate", "level": 2, "children": [] },
+      { "id": "recommended-grades", "text": "Recommended Grades", "level": 2, "children": [] },
+      { "id": "thickness-considerations", "text": "Thickness Considerations", "level": 2, "children": [] },
+      { "id": "brand-recommendations", "text": "Brand Recommendations", "level": 2, "children": [] }
+    ],
+    "seo": {
+      "metaTitle": "Best Plywood for Bangalore Homes | Selection Guide 2025",
+      "metaDescription": "Expert guide to choosing the right plywood for Bangalore's climate. Compare grades, thickness, and brands for Karnataka construction projects.",
+      "keywords": ["plywood selection", "bangalore homes", "karnataka climate", "moisture resistant"],
+      "canonicalUrl": null,
+      "openGraphImage": null,
+      "structuredData": {}
+    },
+    "performance": {
+      "imageOptimized": true,
+      "criticalCSSInlined": false,
+      "lazyLoadEnabled": true
+    },
+    "aiGenerated": false,
+    "humanEdited": false,
+    "createdAt": "2025-01-10T13:00:00.000Z",
+    "updatedAt": "2025-01-10T14:00:00.000Z"
+  },
+  {
+    "id": "sustainable-timber-sourcing",
+    "title": "Sustainable Timber Sourcing in South India",
+    "slug": "sustainable-timber-sourcing",
+    "summary": "How New India Timber ensures responsible sourcing practices across Karnataka and neighboring states for environmental sustainability.",
+    "content": "<h2>Our Sustainability Commitment</h2><p>New India Timber is committed to sustainable forestry practices across South India. We work exclusively with certified suppliers who follow responsible harvesting methods in Karnataka and neighboring states.</p><h2>Certification Standards</h2><p>All our timber sources maintain FSC (Forest Stewardship Council) certification, ensuring that wood products come from responsibly managed forests that provide environmental, social, and economic benefits.</p><h2>Local Sourcing Benefits</h2><p>By sourcing timber locally within Karnataka and Tamil Nadu, we reduce transportation emissions while supporting regional forest communities and maintaining quality control standards.</p><h2>Future Initiatives</h2><p>We're expanding our sustainability program to include reforestation projects in Karnataka and educational initiatives for Bangalore's construction community about responsible timber use.</p>",
+    "coverImage": null,
+    "authorId": "admin-001",
+    "author": {
+      "id": "admin-001",
+      "name": "New India Timber Team",
+      "avatar": null
+    },
+    "categories": ["sustainability"],
+    "tags": ["sustainability", "sourcing", "karnataka", "environment", "certification"],
+    "status": "published",
+    "publishedAt": "2025-01-05T11:00:00.000Z",
+    "scheduledFor": null,
+    "readingTime": 6,
+    "viewCount": 156,
+    "socialShares": {
+      "facebook": 15,
+      "twitter": 9,
+      "linkedin": 22,
+      "whatsapp": 11
+    },
+    "relatedPosts": [],
+    "tableOfContents": [
+      { "id": "sustainability-commitment", "text": "Our Sustainability Commitment", "level": 2, "children": [] },
+      { "id": "certification-standards", "text": "Certification Standards", "level": 2, "children": [] },
+      { "id": "local-sourcing", "text": "Local Sourcing Benefits", "level": 2, "children": [] },
+      { "id": "future-initiatives", "text": "Future Initiatives", "level": 2, "children": [] }
+    ],
+    "seo": {
+      "metaTitle": "Sustainable Timber Sourcing South India | New India Timber",
+      "metaDescription": "Learn about New India Timber's sustainable sourcing practices in Karnataka and South India. FSC certified, locally sourced, environmentally responsible.",
+      "keywords": ["sustainable timber", "karnataka sourcing", "FSC certified", "environmental responsibility"],
+      "canonicalUrl": null,
+      "openGraphImage": null,
+      "structuredData": {}
+    },
+    "performance": {
+      "imageOptimized": true,
+      "criticalCSSInlined": false,
+      "lazyLoadEnabled": true
+    },
+    "aiGenerated": false,
+    "humanEdited": false,
+    "createdAt": "2025-01-05T10:00:00.000Z",
+    "updatedAt": "2025-01-05T11:00:00.000Z"
+  }
+];
+
+export default blogPostsData;

@@ -1,0 +1,111 @@
+# Image Generation Prompts for New India Timbers
+# Copy these prompts to your AI image generator
+
+## Burma Teak Door
+
+### Apartment Context
+**File:** burma-teak-door-apartment.webp
+**Prompt:** Modern residential apartment entrance with premium Burma teak door, rich golden brown wood grain, contemporary design, professional architectural photography, 16:9 aspect ratio, high quality, natural lighting
+
+### Villa Context
+**File:** burma-teak-door-villa.webp
+**Prompt:** Luxury villa entrance with elegant Burma teak door, premium wood finish, grand entrance design, high-end architectural photography, 16:9 aspect ratio, sophisticated lighting
+
+### Office Context
+**File:** burma-teak-door-office.webp
+**Prompt:** Modern commercial office building entrance with Burma teak door, professional corporate design, clean lines, business environment, architectural photography, 16:9 aspect ratio
+
+### Retail Context
+**File:** burma-teak-door-retail.webp
+**Prompt:** Upscale retail showroom entrance with Burma teak door, premium shopping environment, elegant display, commercial photography, 16:9 aspect ratio, professional lighting
+
+## Ghana Teak Window Frame
+
+### Apartment Context
+**File:** ghana-teak-window-apartment.webp
+**Prompt:** Modern apartment window with Ghana teak frame, clean contemporary design, natural wood finish, residential building, architectural photography, 16:9 aspect ratio
+
+### Villa Context
+**File:** ghana-teak-window-villa.webp
+**Prompt:** Luxury villa window with premium Ghana teak frame, elegant design, sophisticated architecture, high-end residential, professional photography, 16:9 aspect ratio
+
+### Office Context
+**File:** ghana-teak-window-office.webp
+**Prompt:** Commercial office building window with Ghana teak frame, modern corporate design, professional environment, business architecture, 16:9 aspect ratio
+
+### Retail Context
+**File:** ghana-teak-window-retail.webp
+**Prompt:** Retail storefront window with Ghana teak frame, commercial display design, shopping environment, professional commercial photography, 16:9 aspect ratio
+
+## Marine Plywood 19mm
+
+### Apartment Context
+**File:** marine-plywood-19mm-apartment.webp
+**Prompt:** Modern apartment outdoor deck with marine plywood 19mm, weather-resistant construction, contemporary residential design, architectural photography, 16:9 aspect ratio
+
+### Villa Context
+**File:** marine-plywood-19mm-villa.webp
+**Prompt:** Luxury villa outdoor structure with marine plywood 19mm, premium outdoor construction, high-end residential design, professional photography, 16:9 aspect ratio
+
+### Office Context
+**File:** marine-plywood-19mm-office.webp
+**Prompt:** Commercial office outdoor area with marine plywood 19mm, professional construction, corporate environment, business architecture, 16:9 aspect ratio
+
+### Retail Context
+**File:** marine-plywood-19mm-retail.webp
+**Prompt:** Retail outdoor display area with marine plywood 19mm, commercial construction, shopping environment, professional commercial photography, 16:9 aspect ratio
+
+## Century Ply Sainik MR 18mm
+
+### Apartment Context
+**File:** century-ply-sainik-mr-18mm-apartment.webp
+**Prompt:** Modern apartment kitchen cabinet with Century Ply Sainik MR 18mm, moisture-resistant plywood, contemporary kitchen design, residential interior, 16:9 aspect ratio
+
+### Villa Context
+**File:** century-ply-sainik-mr-18mm-villa.webp
+**Prompt:** Luxury villa kitchen with Century Ply Sainik MR 18mm, premium moisture-resistant plywood, high-end kitchen design, sophisticated interior, 16:9 aspect ratio
+
+### Office Context
+**File:** century-ply-sainik-mr-18mm-office.webp
+**Prompt:** Commercial office kitchenette with Century Ply Sainik MR 18mm, professional moisture-resistant construction, corporate environment, business interior, 16:9 aspect ratio
+
+### Retail Context
+**File:** century-ply-sainik-mr-18mm-retail.webp
+**Prompt:** Retail store display with Century Ply Sainik MR 18mm, commercial moisture-resistant construction, shopping environment, professional interior, 16:9 aspect ratio
+
+## Teak Hardwood Log
+
+### Apartment Context
+**File:** hardwood-log-teak-apartment.webp
+**Prompt:** Modern apartment custom furniture made from teak hardwood log, contemporary residential design, natural wood finish, interior design, 16:9 aspect ratio
+
+### Villa Context
+**File:** hardwood-log-teak-villa.webp
+**Prompt:** Luxury villa custom furniture from teak hardwood log, premium residential design, sophisticated wood craftsmanship, high-end interior, 16:9 aspect ratio
+
+### Office Context
+**File:** hardwood-log-teak-office.webp
+**Prompt:** Commercial office custom furniture from teak hardwood log, professional corporate design, business environment, modern office interior, 16:9 aspect ratio
+
+### Retail Context
+**File:** hardwood-log-teak-retail.webp
+**Prompt:** Retail store custom display from teak hardwood log, commercial furniture design, shopping environment, professional retail interior, 16:9 aspect ratio
+
+## Burma Teak Grade A Timber
+
+### Apartment Context
+**File:** burma-teak-grade-a-timber-apartment.webp
+**Prompt:** Modern apartment construction with Burma Teak Grade A timber, premium residential building, contemporary architecture, natural wood construction, 16:9 aspect ratio
+
+### Villa Context
+**File:** burma-teak-grade-a-timber-villa.webp
+**Prompt:** Luxury villa construction with Burma Teak Grade A timber, high-end residential building, sophisticated architecture, premium wood construction, 16:9 aspect ratio
+
+### Office Context
+**File:** burma-teak-grade-a-timber-office.webp
+**Prompt:** Commercial office building with Burma Teak Grade A timber, professional corporate construction, modern business architecture, commercial wood construction, 16:9 aspect ratio
+
+### Retail Context
+**File:** burma-teak-grade-a-timber-retail.webp
+**Prompt:** Retail commercial building with Burma Teak Grade A timber, professional commercial construction, shopping environment architecture, commercial wood construction, 16:9 aspect ratio
+

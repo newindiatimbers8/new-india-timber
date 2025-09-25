@@ -1,0 +1,18 @@
+# Teak Hardwood Log in Villa Context
+# This is a placeholder for the actual generated image
+# 
+# Image Details:
+# - Product: Teak Hardwood Log
+# - Context: villa
+# - Filename: hardwood-log-teak-villa.webp
+# - Dimensions: 1920x1080 (16:9 aspect ratio)
+# - Format: WebP
+# 
+# Generation Prompt:
+# Luxury villa custom furniture from teak hardwood log, premium residential design, sophisticated wood craftsmanship, high-end interior, 16:9 aspect ratio
+# 
+# Status: Ready for actual image generation
+# Generated: 2025-09-26T00:08:53.491960
+# 
+# To generate the actual image, use this prompt with an AI image generator:
+# Luxury villa custom furniture from teak hardwood log, premium residential design, sophisticated wood craftsmanship, high-end interior, 16:9 aspect ratio

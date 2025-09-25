@@ -1,0 +1,18 @@
+# Century Ply Sainik MR 18mm in Villa Context
+# This is a placeholder for the actual generated image
+# 
+# Image Details:
+# - Product: Century Ply Sainik MR 18mm
+# - Context: villa
+# - Filename: century-ply-sainik-mr-18mm-villa.webp
+# - Dimensions: 1920x1080 (16:9 aspect ratio)
+# - Format: WebP
+# 
+# Generation Prompt:
+# Luxury villa kitchen with Century Ply Sainik MR 18mm, premium moisture-resistant plywood, high-end kitchen design, sophisticated interior, 16:9 aspect ratio
+# 
+# Status: Ready for actual image generation
+# Generated: 2025-09-26T00:08:53.491277
+# 
+# To generate the actual image, use this prompt with an AI image generator:
+# Luxury villa kitchen with Century Ply Sainik MR 18mm, premium moisture-resistant plywood, high-end kitchen design, sophisticated interior, 16:9 aspect ratio

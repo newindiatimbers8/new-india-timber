@@ -1,191 +1,39 @@
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import Layout from "../components/layout/Layout";
-import ProductGrid, { ProductType } from "../components/products/ProductGrid";
+import ProductGrid from "../components/products/ProductGrid";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Filter, SlidersHorizontal, X, Search, ArrowRight, Star, Leaf, Shield, ChevronRight, MicIcon, SortAsc } from "lucide-react";
+import { SlidersHorizontal, X, ArrowRight } from "lucide-react";
 import { getPlaceholderImage } from "../utils/imageUtils";
-import { woodProducts } from "../data/woodProducts";
 import { cn } from "@/lib/utils";
 import { useProducts } from "../hooks/useProducts";
-import { WoodProduct } from "../services/database";
+import type { Product } from "../types/product";
+import { Helmet } from "react-helmet-async";
+import { generateProductsStructuredData } from "@/services/seo";
 
-// Sample product data
-const sampleProducts: ProductType[] = [
-  {
-    id: "burma-teak-door",
-    title: "Burma Teak Door",
-    category: "teak",
-    subcategory: "Burma Teak",
-    description: "Premium quality Burma teak door with rich grain pattern and exceptional durability. Perfect for main entrances.",
-    price: 50000,
-    dimensions: "7ft x 3.5ft",
-    color: "Dark Brown",
-    features: ["Water Resistant", "Termite Proof", "Long Lasting"],
-    image: getPlaceholderImage("teak"),
-    stockStatus: "In Stock",
-    usage: "own_premium",
-    purpose: "both"
-  },
-  {
-    id: "ghana-teak-frame",
-    title: "Ghana Teak Window Frame",
-    category: "teak",
-    subcategory: "Ghana Teak",
-    description: "Durable Ghana teak window frame with smooth finish and natural resistance to decay.",
-    price: 18000,
-    dimensions: "4ft x 3ft",
-    color: "Medium Brown",
-    features: ["Weather Resistant", "Low Maintenance"],
-    image: getPlaceholderImage("teak"),
-    stockStatus: "In Stock",
-    usage: "own_premium",
-    purpose: "both"
-  },
-  {
-    id: "brazilian-teak-table",
-    title: "Brazilian Teak Dining Table",
-    category: "teak",
-    subcategory: "Brazilian Teak",
-    description: "Elegant dining table made from premium Brazilian teak. Features natural wood grain and high durability.",
-    price: 75000,
-    dimensions: "6ft x 4ft",
-    color: "Golden Brown",
-    features: ["Scratch Resistant", "Heat Resistant", "Polished Finish"],
-    image: getPlaceholderImage("teak"),
-    stockStatus: "Low Stock",
-    usage: "own_premium",
-    purpose: "both"
-  },
-  {
-    id: "indian-sal-door",
-    title: "Indian Sal Door",
-    category: "teak",
-    subcategory: "Indian Sal",
-    description: "Budget-friendly Indian Sal door suitable for interior use with decent durability.",
-    price: 22000,
-    dimensions: "7ft x 3.5ft",
-    color: "Light Brown",
-    features: ["Cost Effective", "Good Strength"],
-    image: getPlaceholderImage("teak"),
-    stockStatus: "In Stock",
-    usage: "own_budget",
-    purpose: "both"
-  },
-  {
-    id: "sainik-mr-12mm",
-    title: "Century Ply Sainik MR 12mm",
-    category: "plywood",
-    subcategory: "Century Ply Sainik MR",
-    description: "High-quality moisture-resistant plywood suitable for kitchen cabinets and interior furniture.",
-    price: 1100,
-    thickness: "12mm",
-    features: ["Moisture Resistant", "Uniform Thickness", "No Hollow Spaces"],
-    image: getPlaceholderImage("teak"),
-    stockStatus: "In Stock",
-    usage: "own_premium",
-    purpose: "both"
-  },
-  {
-    id: "sainik-mr-18mm",
-    title: "Century Ply Sainik MR 18mm",
-    category: "plywood",
-    subcategory: "Century Ply Sainik MR",
-    description: "Durable 18mm thick moisture-resistant plywood for heavy-duty applications.",
-    price: 2300,
-    thickness: "18mm",
-    features: ["Heavy Duty", "Moisture Resistant", "High Strength"],
-    image: getPlaceholderImage("teak"),
-    stockStatus: "In Stock",
-    usage: "own_premium",
-    purpose: "both"
-  },
-  {
-    id: "marine-plywood-19mm",
-    title: "Marine Plywood 19mm",
-    category: "plywood",
-    subcategory: "Marine Plywood",
-    description: "Water-resistant plywood suitable for outdoor furniture and high-moisture areas.",
-    price: 3200,
-    thickness: "19mm",
-    features: ["Waterproof", "Weather Resistant", "Durable"],
-    image: getPlaceholderImage("teak"),
-    stockStatus: "Low Stock",
-    usage: "own_premium",
-    purpose: "commercial"
-  },
-  {
-    id: "kitlam-eg-particle-board",
-    title: "Kitlam EG Prelam Particle Board",
-    category: "plywood",
-    subcategory: "Laminated Plywood",
-    description: "Pre-laminated particle board with smooth finish, ideal for furniture and cabinets.",
-    price: 2800,
-    thickness: "18mm",
-    features: ["Pre-finished", "Easy to Clean", "Scratch Resistant"],
-    image: getPlaceholderImage("teak"),
-    stockStatus: "In Stock",
-    usage: "own_budget",
-    purpose: "both"
-  },
-  {
-    id: "waterproof-plywood-18mm",
-    title: "Waterproof Plywood 18mm",
-    category: "plywood",
-    subcategory: "Waterproof Plywood",
-    description: "High-grade waterproof plywood suitable for bathrooms, kitchens, and outdoor applications.",
-    price: 2800,
-    thickness: "18mm",
-    features: ["100% Waterproof", "Fungus Resistant", "Termite Free"],
-    image: getPlaceholderImage("teak"),
-    stockStatus: "In Stock",
-    usage: "own_budget",
-    purpose: "both"
-  },
-  {
-    id: "hardwood-log-teak",
-    title: "Teak Hardwood Log",
-    category: "hardwood",
-    subcategory: "Teak Log",
-    description: "Natural teak hardwood log suitable for custom furniture making and woodworking projects.",
-    price: null,
-    dimensions: "Varies",
-    color: "Golden Brown",
-    image: getPlaceholderImage("teak"),
-    stockStatus: "In Stock",
-    usage: "own_premium",
-    purpose: "both"
-  }
-];
 
 const ProductsPage = () => {
   const [searchParams] = useSearchParams();
   const { products: dbProducts, loading, error, getProductsByCategory } = useProducts();
-  const [filteredProducts, setFilteredProducts] = useState<WoodProduct[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [activeCategory, setActiveCategory] = useState<string>("all");
   const [activeFilters, setActiveFilters] = useState<{
-    usage: string[];
-    purpose: string[];
+    grade: string[];
     stockStatus: string[];
     priceRange: string | null;
   }>({
-    usage: [],
-    purpose: [],
+    grade: [],
     stockStatus: [],
     priceRange: null
   });
   const [isFilterSheetOpen, setIsFilterSheetOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState<string>("");
-  const [sortBy, setSortBy] = useState<string>("popular");
   
-  const usageParam = searchParams.get('usage');
-  const purposeParam = searchParams.get('purpose');
+  const gradeParam = searchParams.get('grade');
   const categoryParam = searchParams.get('category');
   const typeParam = searchParams.get('type');
   
@@ -214,30 +62,26 @@ const ProductsPage = () => {
       filtered = filtered.filter(p => p.category === categoryParam);
     }
     
-    // Filter by type parameter (for plywood subcategories)
-    if (typeParam) {
+    // Filter by grade parameter
+    if (gradeParam) {
       filtered = filtered.filter(p => {
-        const subcategoryMatch = p.grade?.toLowerCase().includes(typeParam.replace('-', ' '));
-        return subcategoryMatch;
+        // Handle special cases for plywood types
+        if (gradeParam === 'marine') {
+          return p.name.toLowerCase().includes('marine') || 
+                 p.tags?.includes('marine') ||
+                 p.specifications?.grade?.toLowerCase().includes('marine');
+        }
+        // Handle other special cases
+        if (gradeParam === 'century') {
+          return p.name.toLowerCase().includes('century');
+        }
+        // Default grade matching
+        return p.grade === gradeParam;
       });
-    }
-    
-    // Filter by usage parameter (based on grade)
-    if (usageParam) {
-      filtered = filtered.filter(p => {
-        const productUsage = p.grade === 'premium' ? 'own_premium' : 'own_budget';
-        return productUsage === usageParam;
-      });
-    }
-    
-    // Filter by purpose parameter (default to both for database products)
-    if (purposeParam) {
-      // Since database products don't have purpose field, we'll show all for now
-      // This can be enhanced later by adding purpose field to database
     }
     
     setFilteredProducts(filtered);
-  }, [dbProducts, usageParam, purposeParam, categoryParam, typeParam]);
+  }, [dbProducts, gradeParam, categoryParam, typeParam]);
   
   const handleCategoryChange = async (category: string) => {
     setActiveCategory(category);
@@ -247,10 +91,9 @@ const ProductsPage = () => {
     } else {
       // Fetch products by category from database
       try {
-        const categoryProducts = await getProductsByCategory(category);
-        setFilteredProducts(categoryProducts);
-      } catch (error) {
-        console.error('Error fetching products by category:', error);
+        await getProductsByCategory(category);
+        // The hook will update the products state, so we don't need to set it here
+      } catch {
         // Fallback to filtering existing products
         const categoryFiltered = dbProducts.filter(p => p.category === category);
         setFilteredProducts(categoryFiltered);
@@ -258,33 +101,26 @@ const ProductsPage = () => {
     }
   };
   
-  const applyFilters = (baseProducts: WoodProduct[] = filteredProducts) => {
+  const applyFilters = useCallback((baseProducts: Product[] = filteredProducts) => {
     let filtered = [...baseProducts];
     
-    // Apply usage filter (based on grade)
-    if (activeFilters.usage.length > 0) {
-      filtered = filtered.filter(p => {
-        const productUsage = p.grade === 'premium' ? 'own_premium' : 'own_budget';
-        return activeFilters.usage.includes(productUsage);
-      });
+    // Apply grade filter
+    if (activeFilters.grade.length > 0) {
+      filtered = filtered.filter(p => activeFilters.grade.includes(p.grade));
     }
     
-    // Apply purpose filter (default to both for database products)
-    if (activeFilters.purpose.length > 0) {
-      // Since database products don't have purpose field, we'll show all for now
-      // This can be enhanced later by adding purpose field to database
-    }
-    
-    // Apply stock status filter (default to "In Stock" for database products)
+    // Apply stock status filter
     if (activeFilters.stockStatus.length > 0) {
-      // Since database products don't have stock status, we'll show all for now
-      // This can be enhanced later by adding stock status field to database
+      filtered = filtered.filter(p => {
+        if (!p.stockStatus) return true; // Show products without stock status
+        return activeFilters.stockStatus.includes(p.stockStatus);
+      });
     }
     
     // Apply price range filter
     if (activeFilters.priceRange) {
       filtered = filtered.filter(p => {
-        const price = p.pricing.pricePerSqFt;
+        const price = p.pricing?.basePrice || 0;
         
         switch (activeFilters.priceRange) {
           case 'under-25k':
@@ -302,7 +138,7 @@ const ProductsPage = () => {
     }
     
     setFilteredProducts(filtered);
-  };
+  }, [activeFilters, filteredProducts]);
   
   const toggleFilter = (type: keyof typeof activeFilters, value: string) => {
     if (type === 'priceRange') {
@@ -324,72 +160,50 @@ const ProductsPage = () => {
   
   const clearAllFilters = () => {
     setActiveFilters({
-      usage: [],
-      purpose: [],
+      grade: [],
       stockStatus: [],
       priceRange: null
     });
   };
   
   const getActiveFilterCount = () => {
-    return activeFilters.usage.length + 
-           activeFilters.purpose.length + 
+    return activeFilters.grade.length + 
            activeFilters.stockStatus.length + 
            (activeFilters.priceRange ? 1 : 0);
   };
   
-  const formatUsageLabel = (usage: string) => {
-    switch (usage) {
-      case "own_premium": return "Premium";
-      case "own_budget": return "Budget";
-      default: return usage;
-    }
+  const formatGradeLabel = (grade: string) => {
+    return grade.charAt(0).toUpperCase() + grade.slice(1);
   };
   
-  const categories = [
-    { value: "all", label: "All Products", icon: Filter },
-    { value: "teak", label: "Teak", icon: Leaf },
-    { value: "plywood", label: "Plywood", icon: Shield },
-    { value: "hardwood", label: "Hardwood", icon: Star }
-  ];
   
-  const removeFilter = (key: string) => {
-    // Implementation for removing individual filters
-    console.log("Remove filter:", key);
-  };
-  
-  const activeFilterCount = getActiveFilterCount();
-  const activeFiltersList: { key: string; label: string }[] = [];
-  
-  // Helper to handle image errors
-  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>, category: string) => {
-    const target = e.target as HTMLImageElement;
-    target.src = getPlaceholderImage(category);
-  };
-  
-  // Apply filters whenever activeFilters changes
+  // Apply filters whenever activeFilters changes (only for manual filter changes, not URL params)
   useEffect(() => {
-    if (filteredProducts.length > 0) {
-      applyFilters();
+    if (dbProducts.length > 0 && !categoryParam && !gradeParam) {
+      applyFilters(dbProducts);
     }
-  }, [activeFilters]);
+  }, [activeFilters, dbProducts, applyFilters, categoryParam, gradeParam]);
   
   return (
     <Layout>
+      <Helmet>
+        <title>Timber & Plywood Products in Bangalore | Premium Teak & Hardwood</title>
+        <meta
+          name="description"
+          content="Browse New India Timber’s curated catalog of premium teak, plywood, and hardwood solutions for Bangalore builders, architects, and homeowners."
+        />
+        <script type="application/ld+json">
+          {JSON.stringify(generateProductsStructuredData())}
+        </script>
+      </Helmet>
       <div className="container mx-auto py-6 md:py-12 px-4">
         {/* Mobile-First Header */}
         <div className="text-center mb-6 md:mb-12">
           <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-2 md:mb-4">Our Products</h1>
           <p className="text-base md:text-lg text-gray-600 max-w-3xl mx-auto">
             Browse our extensive collection of premium timber products
-            {usageParam && purposeParam && (
-              <span> tailored for {purposeParam === "commercial" ? "commercial" : "residential"} {
-                usageParam === "own_premium" 
-                  ? "premium use" 
-                  : usageParam === "own_budget" 
-                    ? "budget-friendly use" 
-                    : "commercial use"
-              }</span>
+            {gradeParam && (
+              <span> in {formatGradeLabel(gradeParam)} grade</span>
             )}
           </p>
         </div>
@@ -405,64 +219,59 @@ const ProductsPage = () => {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            {woodProducts.map((wood) => (
-              <Card key={wood.id} className="group hover:shadow-lg transition-shadow duration-300">
+            {dbProducts.slice(0, 8).map((product) => (
+              <Card key={product.id} className="group hover:shadow-lg transition-shadow duration-300">
                 <CardHeader className="pb-3">
                   <div className="flex justify-between items-start mb-2">
-                    <Badge 
-                      variant={wood.grade === 'premium' ? 'default' : 'secondary'}
+                    <Badge
+                      variant={product.grade === 'premium' ? 'default' : 'secondary'}
                       className="text-xs"
                     >
-                      {wood.grade.toUpperCase()}
+                      {product.grade.toUpperCase()}
                     </Badge>
                     <Badge variant="outline" className="text-xs">
-                      {wood.category.toUpperCase()}
+                      {product.category.toUpperCase()}
                     </Badge>
                   </div>
                   <CardTitle className="text-lg group-hover:text-timber-600 transition-colors">
-                    {wood.name}
+                    {product.name}
                   </CardTitle>
                   <p className="text-sm text-gray-600 line-clamp-2">
-                    {wood.overview.tagline}
+                    {product.description || product.name}
                   </p>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  {/* Quick Metrics */}
-                  <div className="grid grid-cols-3 gap-2 text-center">
-                    <div className="flex flex-col items-center">
-                      <Shield className="h-4 w-4 text-green-600 mb-1" />
-                      <span className="text-xs text-gray-600">Durability</span>
-                      <span className="text-sm font-medium">{wood.comparisonMetrics.durability}/5</span>
-                    </div>
-                    <div className="flex flex-col items-center">
-                      <Star className="h-4 w-4 text-yellow-600 mb-1" />
-                      <span className="text-xs text-gray-600">Quality</span>
-                      <span className="text-sm font-medium">{wood.comparisonMetrics.workability}/5</span>
-                    </div>
-                    <div className="flex flex-col items-center">
-                      <Leaf className="h-4 w-4 text-green-600 mb-1" />
-                      <span className="text-xs text-gray-600">Eco</span>
-                      <span className="text-sm font-medium">{wood.comparisonMetrics.sustainability}/5</span>
-                    </div>
+                  {/* Product Image */}
+                  <div className="aspect-square bg-gray-100 rounded-lg flex items-center justify-center">
+                    {product.images && product.images.length > 0 ? (
+                      <img
+                        src={product.images[0]}
+                        alt={product.name}
+                        className="w-full h-full object-cover rounded-lg"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.src = getPlaceholderImage(product.name);
+                        }}
+                      />
+                    ) : (
+                      <div className="text-gray-400 text-sm">No image</div>
+                    )}
                   </div>
-                  
+
                   {/* Pricing */}
                   <div className="text-center">
                     <div className="text-lg font-semibold text-green-600">
-                      ₹{wood.pricing.pricePerSqFt}/sq.ft
+                      {product.pricing?.basePrice ? `₹${product.pricing.basePrice.toLocaleString('en-IN')}` : 'Contact for price'}
                     </div>
-                    <p className="text-xs text-gray-500">
-                      {wood.pricing.priceRange} range
-                    </p>
                   </div>
-                  
+
                   {/* CTA */}
-                  <Button 
-                    asChild 
+                  <Button
+                    asChild
                     className="w-full bg-timber-600 hover:bg-timber-700 group-hover:bg-timber-700 transition-colors"
                     size="sm"
                   >
-                    <Link to={`/products/wood/${wood.id}`}>
+                    <Link to={`/products/${product.id}`}>
                       View Details
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Link>
@@ -509,57 +318,35 @@ const ProductsPage = () => {
                 
                 {/* Mobile Filter Content */}
                 <div className="space-y-6">
-                  {/* Usage Filter */}
+                  {/* Grade Filter */}
                   <div>
-                    <h4 className="font-medium mb-3 text-sm uppercase tracking-wide text-gray-600">Usage Type</h4>
+                    <h4 className="font-medium mb-3 text-sm uppercase tracking-wide text-gray-600">Grade</h4>
                     <div className="flex flex-wrap gap-2">
-                      {['own_premium', 'own_budget'].map((usage) => (
+                      {['premium', 'standard'].map((grade) => (
                         <Button
-                          key={usage}
-                          variant={activeFilters.usage.includes(usage) ? "default" : "outline"}
+                          key={grade}
+                          variant={activeFilters.grade.includes(grade) ? "default" : "outline"}
                           size="sm"
-                          onClick={() => toggleFilter('usage', usage)}
+                          onClick={() => toggleFilter('grade', grade)}
                           className={cn(
                             "h-10 px-4 rounded-full",
-                            activeFilters.usage.includes(usage) 
+                            activeFilters.grade.includes(grade) 
                               ? "bg-timber-600 text-white border-timber-600" 
                               : "border-gray-300 hover:border-timber-600"
                           )}
                         >
-                          {formatUsageLabel(usage)}
+                          {formatGradeLabel(grade)}
                         </Button>
                       ))}
                     </div>
                   </div>
                   
-                  {/* Purpose Filter */}
-                  <div>
-                    <h4 className="font-medium mb-3 text-sm uppercase tracking-wide text-gray-600">Purpose</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {['residential', 'commercial'].map((purpose) => (
-                        <Button
-                          key={purpose}
-                          variant={activeFilters.purpose.includes(purpose) ? "default" : "outline"}
-                          size="sm"
-                          onClick={() => toggleFilter('purpose', purpose)}
-                          className={cn(
-                            "h-10 px-4 rounded-full capitalize",
-                            activeFilters.purpose.includes(purpose) 
-                              ? "bg-timber-600 text-white border-timber-600" 
-                              : "border-gray-300 hover:border-timber-600"
-                          )}
-                        >
-                          {purpose}
-                        </Button>
-                      ))}
-                    </div>
-                  </div>
                   
                   {/* Stock Status Filter */}
                   <div>
                     <h4 className="font-medium mb-3 text-sm uppercase tracking-wide text-gray-600">Availability</h4>
                     <div className="flex flex-wrap gap-2">
-                      {['In Stock', 'Low Stock'].map((status) => (
+                      {['in_stock', 'low_stock', 'out_of_stock'].map((status) => (
                         <Button
                           key={status}
                           variant={activeFilters.stockStatus.includes(status) ? "default" : "outline"}
@@ -572,7 +359,7 @@ const ProductsPage = () => {
                               : "border-gray-300 hover:border-timber-600"
                           )}
                         >
-                          {status}
+                          {status.replace('_', ' ').toUpperCase()}
                         </Button>
                       ))}
                     </div>
@@ -643,25 +430,14 @@ const ProductsPage = () => {
           {/* Active Filter Chips */}
           {getActiveFilterCount() > 0 && (
             <div className="flex flex-wrap gap-2">
-              {activeFilters.usage.map((usage) => (
+              {activeFilters.grade.map((grade) => (
                 <Badge
-                  key={`usage-${usage}`}
+                  key={`grade-${grade}`}
                   variant="secondary"
                   className="bg-timber-100 text-timber-800 hover:bg-timber-200 cursor-pointer"
-                  onClick={() => toggleFilter('usage', usage)}
+                  onClick={() => toggleFilter('grade', grade)}
                 >
-                  {formatUsageLabel(usage)}
-                  <X className="h-3 w-3 ml-1" />
-                </Badge>
-              ))}
-              {activeFilters.purpose.map((purpose) => (
-                <Badge
-                  key={`purpose-${purpose}`}
-                  variant="secondary"
-                  className="bg-timber-100 text-timber-800 hover:bg-timber-200 cursor-pointer capitalize"
-                  onClick={() => toggleFilter('purpose', purpose)}
-                >
-                  {purpose}
+                  {formatGradeLabel(grade)}
                   <X className="h-3 w-3 ml-1" />
                 </Badge>
               ))}
@@ -672,7 +448,7 @@ const ProductsPage = () => {
                   className="bg-timber-100 text-timber-800 hover:bg-timber-200 cursor-pointer"
                   onClick={() => toggleFilter('stockStatus', status)}
                 >
-                  {status}
+                  {status.replace('_', ' ').toUpperCase()}
                   <X className="h-3 w-3 ml-1" />
                 </Badge>
               ))}
@@ -680,7 +456,7 @@ const ProductsPage = () => {
                 <Badge
                   variant="secondary"
                   className="bg-timber-100 text-timber-800 hover:bg-timber-200 cursor-pointer"
-                  onClick={() => toggleFilter('priceRange', activeFilters.priceRange!)}
+                  onClick={() => activeFilters.priceRange && toggleFilter('priceRange', activeFilters.priceRange)}
                 >
                   Price Range
                   <X className="h-3 w-3 ml-1" />

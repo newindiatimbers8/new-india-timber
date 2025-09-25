@@ -1,51 +1,41 @@
-
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
-  User,
-  ShoppingCart,
   Menu,
-  Search,
-  X,
   Phone,
   Mail,
-  Bell,
   ArrowLeft,
-  Home,
-  // Calculator, // COMMENTED OUT
-  Package,
-  TreePine,
-  BarChart3,
-  Info
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetContent,
+  SheetHeader,
+  SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu";
-import { useLocation } from "react-router-dom";
+import { useNavigationMenu } from "@/components/navigation/useNavigationMenu";
+import { MegaMenu } from "@/components/navigation/MegaMenu";
+import { MobileNavigation } from "@/components/navigation/MobileNavigation";
+import { FALLBACK_NAVIGATION_MENU } from "@/components/navigation/fallback-data";
 
 const Header = () => {
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const location = useLocation();
+  const { menu } = useNavigationMenu({ type: "main" });
+
+  const activeMenu = menu ?? FALLBACK_NAVIGATION_MENU;
   
   // Get page title based on current route
   const getPageTitle = () => {
     if (location.pathname === "/") return "New India Timber";
     if (location.pathname.includes("/products")) return "Products";
     if (location.pathname.includes("/bulk-orders")) return "Bulk Orders";
-    // if (location.pathname.includes("/estimator")) return "Price Estimator"; // COMMENTED OUT
     if (location.pathname.includes("/about")) return "About Us";
     if (location.pathname.includes("/contact")) return "Contact";
+    if (location.pathname.includes("/blog")) return "Blog";
+    if (location.pathname.includes("/privacy")) return "Privacy Policy";
+    if (location.pathname.includes("/terms")) return "Terms & Conditions";
+    if (location.pathname.includes("/refund")) return "Refund Policy";
     if (location.pathname.includes("/login")) return "Account";
     if (location.pathname.includes("/dashboard")) return "Dashboard";
     return "New India Timber";
@@ -54,7 +44,7 @@ const Header = () => {
   const isHomePage = location.pathname === "/";
 
   return (
-    <header className="w-full border-b bg-white sticky top-0 z-40">
+    <header className="w-full border-b bg-white sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-white/90">
       {/* Desktop Top bar - hidden on mobile */}
       <div className="hidden md:block bg-forest-900 text-white py-2 px-4">
         <div className="container mx-auto flex justify-between items-center text-xs md:text-sm">
@@ -88,11 +78,12 @@ const Header = () => {
             size="icon" 
             onClick={() => window.history.back()}
             className="p-2"
+            aria-label="Go back"
           >
             <ArrowLeft size={20} />
           </Button>
         ) : (
-          <div className="w-10" /> // Spacer
+          <div className="w-10" aria-hidden="true" />
         )}
         
         {/* Center: Page Title */}
@@ -100,223 +91,34 @@ const Header = () => {
           {getPageTitle()}
         </h1>
         
-        {/* Right: Search and Menu */}
+        {/* Right: Menu */}
         <div className="flex items-center space-x-1">
-          <Button 
-            variant="ghost" 
-            size="icon" 
-            onClick={() => setIsSearchOpen(!isSearchOpen)}
-            className="p-2"
-          >
-            {isSearchOpen ? <X size={20} /> : <Search size={20} />}
-          </Button>
-          
-          <Sheet>
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="p-2">
-                <Menu size={20} />
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="right" className="w-80">
-              <div className="flex flex-col h-full">
-                <div className="flex items-center mb-6">
-                  <h2 className="text-xl font-bold">Menu</h2>
-                </div>
-                
-                <nav className="flex flex-col space-y-1 flex-1">
-                  <Link to="/" className="px-3 py-3 hover:bg-accent rounded-lg flex items-center">
-                    <Home className="mr-3" size={20} />
-                    Home
-                  </Link>
-                  
-                  <div className="py-2">
-                    <h3 className="px-3 text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Products</h3>
-                    
-                    {/* All Products Link */}
-                    <Link to="/products" className="px-3 py-2 hover:bg-accent rounded-lg ml-4 flex items-center text-sm font-medium">
-                      <Package className="mr-2" size={16} />
-                      All Products
-                    </Link>
-                    
-                    {/* Product Categories */}
-                    <Link to="/products?category=teak" className="px-3 py-2 hover:bg-accent rounded-lg ml-4 flex items-center text-sm">
-                      Teak Wood
-                    </Link>
-                    <Link to="/products?category=plywood" className="px-3 py-2 hover:bg-accent rounded-lg ml-4 flex items-center text-sm">
-                      Plywood
-                    </Link>
-                    <Link to="/products?category=hardwood" className="px-3 py-2 hover:bg-accent rounded-lg ml-4 flex items-center text-sm">
-                      Hardwood Logs
-                    </Link>
-                    
-                    {/* Wood Directory Link */}
-                    <Link to="/products/wood/burma-teak" className="px-3 py-2 hover:bg-accent rounded-lg ml-4 flex items-center text-sm text-timber-600">
-                      <TreePine className="mr-2" size={16} />
-                      Wood Directory
-                    </Link>
-                  </div>
-                  
-                  {/* CALCULATOR LINK COMMENTED OUT
-                  <Link to="/estimator" className="px-3 py-3 hover:bg-accent rounded-lg flex items-center">
-                    <Calculator className="mr-3" size={20} />
-                    Price Estimator
-                  </Link>
-                  */}
-                  
-                  <Link to="/bulk-orders" className="px-3 py-3 hover:bg-accent rounded-lg flex items-center">
-                    <ShoppingCart className="mr-3" size={20} />
-                    Bulk Orders
-                  </Link>
-                  
-                  <Link to="/compare" className="px-3 py-3 hover:bg-accent rounded-lg flex items-center">
-                    <BarChart3 className="mr-3" size={20} />
-                    Compare Woods
-                  </Link>
-                  
-                  <Link to="/about" className="px-3 py-3 hover:bg-accent rounded-lg flex items-center">
-                    <Info className="mr-3" size={20} />
-                    About Us
-                  </Link>
-                  
-                  <Link to="/contact" className="px-3 py-3 hover:bg-accent rounded-lg flex items-center">
-                    <Phone className="mr-3" size={20} />
-                    Contact
-                  </Link>
-                </nav>
-                
-                <div className="border-t pt-4 mt-4">
-                  <Link to="/login" className="px-3 py-3 hover:bg-accent rounded-lg flex items-center">
-                    <User className="mr-3" size={20} />
-                    Login / Register
-                  </Link>
-                  <div className="px-3 py-2 text-xs text-gray-500">
-                    <div className="flex items-center mb-1">
-                      <Phone size={12} className="mr-1" />
-                      +91 9886033342
-                    </div>
-                    <div className="flex items-center">
-                      <Mail size={12} className="mr-1" />
-                      newindiatimbers8@gmail.com
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </SheetContent>
-          </Sheet>
+          <MobileNavigation menu={activeMenu} />
         </div>
       </div>
       
       {/* Desktop Header */}
       <div className="hidden md:block">
-        <div className="container mx-auto py-4 px-4 flex justify-between items-center">
-          {/* Logo */}
-          <Link to="/" className="flex items-center">
-            <h1 className="text-2xl md:text-3xl font-bold font-montserrat">
-              <span className="wood-grain-text">New India</span> Timber
-            </h1>
-          </Link>
+        <div className="container mx-auto py-4 px-4 flex flex-col gap-4">
+          {/* Logo and Actions */}
+          <div className="flex items-center justify-between">
+            <Link to="/" className="flex items-center">
+              <h1 className="text-2xl md:text-3xl font-bold font-montserrat">
+                <span className="wood-grain-text">New India</span> Timber
+              </h1>
+            </Link>
+
+            <div className="flex items-center gap-3">
+              <Button asChild variant="outline" className="rounded-full border-timber-200 text-sm hover:bg-timber-50 hover:border-timber-300 transition-colors">
+                <a href="tel:+919886033342" className="inline-flex items-center">
+                  Quick Enquiry
+                </a>
+              </Button>
+            </div>
+          </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:block">
-            <NavigationMenu>
-              <NavigationMenuList>
-                <NavigationMenuItem>
-                  <Link to="/">
-                    <NavigationMenuLink className="px-3 py-2 hover:text-timber-600 transition-colors">
-                      Home
-                    </NavigationMenuLink>
-                  </Link>
-                </NavigationMenuItem>
-                
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger>Products</NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <div className="w-[400px] p-4">
-                      <div>
-                        <h3 className="font-bold mb-2 text-forest-700">Teak Wood</h3>
-                        <ul className="space-y-1">
-                          <li><Link to="/products/wood/burma-teak" className="hover:text-timber-600">Burma Teak</Link></li>
-                          <li><Link to="/products/wood/ghana-teak" className="hover:text-timber-600">Ghana Teak</Link></li>
-                          <li><Link to="/products/wood/brazilian-teak" className="hover:text-timber-600">Brazilian Teak</Link></li>
-                          <li><Link to="/products/wood/indian-sal" className="hover:text-timber-600">Indian Sal</Link></li>
-                        </ul>
-                      </div>
-                    </div>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
-                
-                <NavigationMenuItem>
-                  <Link to="/bulk-orders">
-                    <NavigationMenuLink className="px-3 py-2 hover:text-timber-600 transition-colors">
-                      Bulk Orders
-                    </NavigationMenuLink>
-                  </Link>
-                </NavigationMenuItem>
-                
-                <NavigationMenuItem>
-                  <Link to="/about">
-                    <NavigationMenuLink className="px-3 py-2 hover:text-timber-600 transition-colors">
-                      About Us
-                    </NavigationMenuLink>
-                  </Link>
-                </NavigationMenuItem>
-                
-                <NavigationMenuItem>
-                  <Link to="/contact">
-                    <NavigationMenuLink className="px-3 py-2 hover:text-timber-600 transition-colors">
-                      Contact
-                    </NavigationMenuLink>
-                  </Link>
-                </NavigationMenuItem>
-              </NavigationMenuList>
-            </NavigationMenu>
-          </div>
-
-          {/* Desktop Right Side */}
-          <div className="flex items-center space-x-2">
-            <Button variant="ghost" size="icon" onClick={() => setIsSearchOpen(!isSearchOpen)}>
-              {isSearchOpen ? <X size={20} /> : <Search size={20} />}
-            </Button>
-            
-            <Link to="/cart">
-              <Button variant="ghost" size="icon">
-                <ShoppingCart size={20} />
-              </Button>
-            </Link>
-            
-            <Link to="/login">
-              <Button variant="ghost" size="icon">
-                <User size={20} />
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </div>
-
-      {/* Search Bar */}
-      <div className={`bg-timber-50 py-3 px-4 transition-all duration-300 ${isSearchOpen ? 'block' : 'hidden'}`}>
-        <div className="container mx-auto">
-          <div className="relative">
-            <input 
-              type="text" 
-              placeholder="Search products..." 
-              className="w-full p-3 pl-10 pr-4 rounded-lg border border-timber-200 focus:outline-none focus:border-timber-500 text-base"
-            />
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-timber-400" size={18} />
-          </div>
-          
-          {/* Quick search suggestions for mobile */}
-          <div className="md:hidden mt-3 flex flex-wrap gap-2">
-            <button className="px-3 py-1 bg-white rounded-full text-xs border border-timber-200">
-              Teak Door
-            </button>
-            <button className="px-3 py-1 bg-white rounded-full text-xs border border-timber-200">
-              Plywood 18mm
-            </button>
-            <button className="px-3 py-1 bg-white rounded-full text-xs border border-timber-200">
-              Marine Board
-            </button>
-          </div>
+          <MegaMenu menu={activeMenu} />
         </div>
       </div>
     </header>

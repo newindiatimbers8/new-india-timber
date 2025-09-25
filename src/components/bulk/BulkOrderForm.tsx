@@ -24,7 +24,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { Switch } from "@/components/ui/switch";
-import { dbService } from "@/services/database";
+// Removed Appwrite dbService import - using storageService instead
 import { authService } from "@/services/auth";
 
 const formSchema = z.object({

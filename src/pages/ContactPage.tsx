@@ -1,9 +1,11 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Layout from "../components/layout/Layout";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useSearchParams } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import {
   Form,
   FormControl,
@@ -29,6 +31,7 @@ const formSchema = z.object({
 const ContactPage = () => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [searchParams] = useSearchParams();
   
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -40,6 +43,16 @@ const ContactPage = () => {
       message: "",
     },
   });
+
+  // Handle pre-filled product information from URL
+  useEffect(() => {
+    const productInfo = searchParams.get('product');
+    if (productInfo) {
+      const decodedProductInfo = decodeURIComponent(productInfo);
+      form.setValue('subject', 'Price Inquiry');
+      form.setValue('message', `Hi, I'm interested in getting a price quote for the following product:\n\n${decodedProductInfo}\n\nPlease provide me with pricing details and availability. Thank you!`);
+    }
+  }, [searchParams, form]);
   
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsSubmitting(true);
@@ -71,6 +84,39 @@ const ContactPage = () => {
   
   return (
     <Layout>
+      <Helmet>
+        <title>Contact New India Timbers | Timber Suppliers in Bangalore</title>
+        <meta
+          name="description"
+          content="Get in touch with New India Timbers for premium timber products in Bangalore. Call us or visit our store on Sarjapura Main Road today."
+        />
+        <meta
+          name="keywords"
+          content="contact timber suppliers bangalore, timber store bangalore, wood dealers contact bangalore, sarjapura road timber dealers, timber suppliers phone bangalore, visit timber store bangalore, timber suppliers address bangalore, wood suppliers contact karnataka, timber business hours bangalore"
+        />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ContactPage",
+            "name": "Contact New India Timbers",
+            "description": "Get in touch with us for timber products and services",
+            "mainEntity": {
+              "@type": "LocalBusiness",
+              "name": "New India Timbers",
+              "telephone": "+91-9886033342",
+              "email": "newindiatimbers8@gmail.com",
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "24/4 Sarjapura Main Road Doddakanna halli",
+                "addressLocality": "Bangalore",
+                "addressRegion": "Karnataka",
+                "postalCode": "560035",
+                "addressCountry": "IN"
+              }
+            }
+          })}
+        </script>
+      </Helmet>
       <div className="container mx-auto py-12 px-4">
         <div className="text-center mb-12">
           <h1 className="text-3xl md:text-4xl font-bold mb-4">Contact Us</h1>

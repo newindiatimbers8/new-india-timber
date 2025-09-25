@@ -1,0 +1,147 @@
+import type { Product } from '@/types/product';
+
+export const productsData: Product[] = [
+  {
+    "id": "burma-teak-door",
+    "name": "Burma Teak Door",
+    "category": "teak",
+    "grade": "premium",
+    "description": "Premium quality Burma teak door with rich grain pattern and exceptional durability. Perfect for main entrances in Bangalore homes.",
+    "specifications": {
+      "dimensions": "7ft x 3.5ft",
+      "thickness": "35mm",
+      "finish": "Natural",
+      "moistureContent": "8-12%"
+    },
+    "pricing": {
+      "basePrice": 50000,
+      "currency": "INR",
+      "unit": "piece"
+    },
+    "images": ["/images/products/burma-teak-door-1.jpg"],
+    "isActive": true,
+    "tags": ["door", "teak", "premium", "bangalore"],
+    "seo": {
+      "metaTitle": "Burma Teak Door - Premium Quality | New India Timber Bangalore",
+      "metaDescription": "High-quality Burma teak doors perfect for Bangalore homes. Premium grain, exceptional durability, and professional installation available.",
+      "keywords": ["burma teak door", "bangalore", "premium door", "teak wood"]
+    },
+    "createdAt": "2025-01-01T00:00:00.000Z",
+    "updatedAt": "2025-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "marine-plywood-19mm",
+    "name": "Marine Plywood 19mm",
+    "category": "plywood",
+    "grade": "premium",
+    "description": "Water-resistant marine plywood suitable for outdoor furniture and high-moisture areas in Bangalore's climate.",
+    "specifications": {
+      "thickness": "19mm",
+      "size": "8ft x 4ft",
+      "grade": "Marine Grade",
+      "waterResistance": "BWP"
+    },
+    "pricing": {
+      "basePrice": 3200,
+      "currency": "INR",
+      "unit": "sheet"
+    },
+    "images": ["/images/products/marine-plywood-19mm.jpg"],
+    "isActive": true,
+    "tags": ["plywood", "marine", "waterproof", "bangalore"],
+    "seo": {
+      "metaTitle": "Marine Plywood 19mm - Waterproof | New India Timber Bangalore",
+      "metaDescription": "Premium marine plywood sheets perfect for Bangalore's humid climate. Waterproof, durable, ideal for kitchens and bathrooms.",
+      "keywords": ["marine plywood", "bangalore", "waterproof plywood", "19mm"]
+    },
+    "createdAt": "2025-01-01T00:00:00.000Z",
+    "updatedAt": "2025-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "ghana-teak-window",
+    "name": "Ghana Teak Window Frame",
+    "category": "teak",
+    "grade": "commercial",
+    "description": "Durable Ghana teak window frame with smooth finish and natural resistance to decay. Ideal for Bangalore apartments.",
+    "specifications": {
+      "dimensions": "4ft x 3ft",
+      "thickness": "25mm",
+      "finish": "Smooth",
+      "treatment": "Kiln Dried"
+    },
+    "pricing": {
+      "basePrice": 18000,
+      "currency": "INR",
+      "unit": "piece"
+    },
+    "images": ["/images/products/burma-teak-door-1.jpg"],
+    "isActive": true,
+    "tags": ["window", "teak", "ghana", "bangalore"],
+    "seo": {
+      "metaTitle": "Ghana Teak Window Frame | New India Timber Bangalore",
+      "metaDescription": "Quality Ghana teak window frames for Bangalore homes. Weather-resistant, smooth finish, professional installation available.",
+      "keywords": ["ghana teak", "window frame", "bangalore", "teak window"]
+    },
+    "createdAt": "2025-01-01T00:00:00.000Z",
+    "updatedAt": "2025-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "century-ply-sainik-mr-18mm",
+    "name": "Century Ply Sainik MR 18mm",
+    "category": "plywood",
+    "grade": "commercial",
+    "description": "High-quality moisture-resistant plywood suitable for kitchen cabinets and interior furniture in Bangalore homes.",
+    "specifications": {
+      "thickness": "18mm",
+      "size": "8ft x 4ft",
+      "grade": "MR Grade",
+      "brand": "Century Ply"
+    },
+    "pricing": {
+      "basePrice": 2300,
+      "currency": "INR",
+      "unit": "sheet"
+    },
+    "images": ["/images/products/burma-teak-door-1.jpg"],
+    "isActive": true,
+    "tags": ["plywood", "century", "moisture resistant", "bangalore"],
+    "seo": {
+      "metaTitle": "Century Ply Sainik MR 18mm | New India Timber Bangalore",
+      "metaDescription": "Premium Century Ply Sainik MR plywood sheets for Bangalore interiors. Moisture-resistant, uniform thickness, ideal for furniture.",
+      "keywords": ["century ply", "sainik mr", "bangalore", "18mm plywood"]
+    },
+    "createdAt": "2025-01-01T00:00:00.000Z",
+    "updatedAt": "2025-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "hardwood-log-teak",
+    "name": "Teak Hardwood Log",
+    "category": "hardwood",
+    "grade": "premium",
+    "description": "Natural teak hardwood log suitable for custom furniture making and woodworking projects in Karnataka.",
+    "specifications": {
+      "length": "8-12 feet",
+      "diameter": "12-18 inches",
+      "grade": "A Grade",
+      "source": "Sustainable Forests"
+    },
+    "pricing": {
+      "basePrice": null,
+      "currency": "INR",
+      "unit": "cubic foot",
+      "priceOnRequest": true
+    },
+    "images": ["/images/products/burma-teak-door-1.jpg"],
+    "isActive": true,
+    "tags": ["hardwood", "log", "teak", "karnataka"],
+    "seo": {
+      "metaTitle": "Teak Hardwood Logs | New India Timber Karnataka",
+      "metaDescription": "Premium teak hardwood logs for custom furniture and woodworking projects in Karnataka. Sustainable sourcing, various sizes available.",
+      "keywords": ["teak logs", "hardwood", "karnataka", "custom furniture"]
+    },
+    "createdAt": "2025-01-01T00:00:00.000Z",
+    "updatedAt": "2025-01-01T00:00:00.000Z"
+  }
+];
+
+export default productsData;

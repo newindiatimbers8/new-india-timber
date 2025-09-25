@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    /* Base Options */
     "target": "ES2020",
     "useDefineForClassFields": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
@@ -9,21 +10,76 @@
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
     "isolatedModules": true,
     "moduleDetection": "force",
     "noEmit": true,
     "jsx": "react-jsx",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
 
     /* Linting */
-    "strict": false,
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
-    "noImplicitAny": false,
-    "noFallthroughCasesInSwitch": false,
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitAny": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUncheckedIndexedAccess": true,
+    "forceConsistentCasingInFileNames": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": true,
 
+    /* Path Aliases */
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      /* Core Aliases */
+      "@/*": ["./src/*"],
+      "@/components/*": ["./src/components/*"],
+      "@/lib/*": ["./src/lib/*"],
+      "@/styles/*": ["./src/styles/*"],
+      "@/config/*": ["./src/config/*"],
+      
+      /* Feature-based Aliases */
+      "@/features/*": ["./src/features/*"],
+      "@/pages/*": ["./src/pages/*"],
+      "@/layouts/*": ["./src/layouts/*"],
+      "@/providers/*": ["./src/providers/*"],
+      
+      /* Assets */
+      "@/assets/*": ["./src/assets/*"],
+      "@/public/*": ["./public/*"],
+      
+      /* UI Components */
+      "@/ui/*": ["./src/components/ui/*"],
+      
+      /* Services */
+      "@/services/*": ["./src/services/*"],
+      
+      /* Constants & Config */
+      "@/constants/*": ["./src/constants/*"],
+      "@/config/env": ["./src/config/env"],
+      
+      /* Hooks */
+      "@/hooks": ["./src/hooks/index"],
+      
+      /* Utils */
+      "@/utils": ["./src/lib/utils/index"],
+      
+      /* Types */
+      "@/types": ["./src/types/index"],
+      
+      /* Context */
+      "@/context/*": ["./src/context/*"],
+      
+      /* API */
+      "@/api/*": ["./src/api/*"],
+      
+      /* Tests */
+      "@/test-utils": ["./src/test-utils"]
     }
   },
   "include": ["src"]

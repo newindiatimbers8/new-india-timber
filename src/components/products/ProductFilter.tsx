@@ -264,7 +264,8 @@ const ProductFilter = ({ products, onFilterChange }: ProductFilterProps) => {
           </AccordionContent>
         </AccordionItem>
         
-        <AccordionItem value="price">
+        {/* Price filter hidden - moving to quote-based pricing */}
+        {/* <AccordionItem value="price">
           <AccordionTrigger>Price Range</AccordionTrigger>
           <AccordionContent>
             <div className="space-y-6">
@@ -290,7 +291,7 @@ const ProductFilter = ({ products, onFilterChange }: ProductFilterProps) => {
               </div>
             </div>
           </AccordionContent>
-        </AccordionItem>
+        </AccordionItem> */}
       </Accordion>
     </div>
   );
