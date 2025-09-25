@@ -23,6 +23,7 @@ import ProductDetailPage from "./pages/ProductDetailPage";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AISettingsPage from "./pages/admin/AISettingsPage";
 import BlogManagementDashboard from "./pages/admin/BlogManagementDashboard";
+import BlogCategoriesManagementPage from "./pages/admin/BlogCategoriesManagementPage";
 import NewBlogPostPage from "./pages/admin/NewBlogPostPage";
 import ProtectedAdmin from "./components/admin/ProtectedAdmin";
 import ServicesPage from "./pages/ServicesPage";
@@ -60,6 +61,7 @@ const App = () => (
             <Route path="/admin" element={<ProtectedAdmin><AdminDashboard /></ProtectedAdmin>} />
             <Route path="/admin/ai-settings" element={<ProtectedAdmin><AISettingsPage /></ProtectedAdmin>} />
             <Route path="/admin/blog" element={<ProtectedAdmin><BlogManagementDashboard /></ProtectedAdmin>} />
+            <Route path="/admin/blog/categories" element={<ProtectedAdmin><BlogCategoriesManagementPage /></ProtectedAdmin>} />
             <Route path="/admin/blog/new" element={<ProtectedAdmin><NewBlogPostPage /></ProtectedAdmin>} />
             <Route path="/services" element={<ServicesPage />} />
             <Route path="/services/custom" element={<CustomSolutionsPage />} />

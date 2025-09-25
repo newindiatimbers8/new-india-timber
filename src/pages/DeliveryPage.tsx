@@ -105,23 +105,23 @@ const DeliveryPage = () => {
               <div className="grid gap-4 md:grid-cols-3">
                 <div className="text-center">
                   <h3 className="font-semibold text-forest-900 mb-2">Standard Delivery</h3>
-                  <p className="text-2xl font-bold text-timber-600 mb-2">₹500</p>
+                  <p className="text-2xl font-bold text-timber-600 mb-2">Contact for Price</p>
                   <p className="text-sm text-muted-foreground">Within 10km of our warehouse</p>
                 </div>
                 <div className="text-center">
                   <h3 className="font-semibold text-forest-900 mb-2">Extended Delivery</h3>
-                  <p className="text-2xl font-bold text-timber-600 mb-2">₹1000</p>
+                  <p className="text-2xl font-bold text-timber-600 mb-2">Contact for Price</p>
                   <p className="text-sm text-muted-foreground">10-25km from warehouse</p>
                 </div>
                 <div className="text-center">
                   <h3 className="font-semibold text-forest-900 mb-2">Premium Service</h3>
-                  <p className="text-2xl font-bold text-timber-600 mb-2">₹1500</p>
+                  <p className="text-2xl font-bold text-timber-600 mb-2">Contact for Price</p>
                   <p className="text-sm text-muted-foreground">Includes installation support</p>
                 </div>
               </div>
               <div className="mt-6 p-4 bg-timber-50 rounded-xl">
                 <p className="text-sm text-muted-foreground text-center">
-                  <strong>Free delivery</strong> on orders above ₹50,000 within Bangalore city limits
+                  <strong>Free delivery</strong> available for bulk orders within Bangalore city limits
                 </p>
               </div>
             </CardContent>

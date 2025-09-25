@@ -14,7 +14,7 @@ export const productsData: Product[] = [
       "moistureContent": "8-12%"
     },
     "pricing": {
-      "basePrice": 50000,
+      "basePrice": null,
       "currency": "INR",
       "unit": "piece"
     },
@@ -42,7 +42,7 @@ export const productsData: Product[] = [
       "waterResistance": "BWP"
     },
     "pricing": {
-      "basePrice": 3200,
+      "basePrice": null,
       "currency": "INR",
       "unit": "sheet"
     },
@@ -70,7 +70,7 @@ export const productsData: Product[] = [
       "treatment": "Kiln Dried"
     },
     "pricing": {
-      "basePrice": 18000,
+      "basePrice": null,
       "currency": "INR",
       "unit": "piece"
     },
@@ -98,7 +98,7 @@ export const productsData: Product[] = [
       "brand": "Century Ply"
     },
     "pricing": {
-      "basePrice": 2300,
+      "basePrice": null,
       "currency": "INR",
       "unit": "sheet"
     },

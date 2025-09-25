@@ -39,14 +39,11 @@ const ProductSchema = ({ product }: ProductSchemaProps) => {
     },
     "offers": {
       "@type": "Offer",
-      "price": product.pricing?.basePrice || 0,
-      "priceCurrency": product.pricing?.currency || "INR",
       "availability": product.isActive ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
       "seller": {
         "@type": "Organization",
         "name": "New India Timbers"
       },
-      "priceValidUntil": new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
       "url": `https://newindiatimbers.com/products/${product.id}`
     },
     "aggregateRating": {
@@ -246,7 +243,7 @@ const ProductSchema = ({ product }: ProductSchemaProps) => {
         "name": "What are the delivery options in Bangalore?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "We offer same-day delivery within Bangalore city limits and next-day delivery to surrounding areas. Free delivery for orders above ₹50,000."
+          "text": "We offer same-day delivery within Bangalore city limits and next-day delivery to surrounding areas. Free delivery available for bulk orders."
         }
       },
       {

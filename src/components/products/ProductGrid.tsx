@@ -11,9 +11,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
-  Clock,
-  Tag,
-  ChevronRight,
   ListFilter,
   Grid3X3,
   List,
@@ -21,7 +18,26 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { getPlaceholderImage, handleImageError } from "@/utils/imageUtils";
-import { Product } from "@/types/product";
+// import { Product } from "@/types/product"; // Not used in this component
+
+// Define WoodProduct interface for type safety
+interface WoodProduct {
+  id: string;
+  name: string;
+  category: string;
+  grade: string;
+  overview: {
+    description: string;
+    keyBenefits: string[];
+  };
+  pricing: {
+    pricePerSqFt: number | null;
+  };
+  specifications: {
+    density?: string;
+    grainPattern?: string;
+  };
+}
 
 export interface ProductType {
   id: string;
@@ -212,7 +228,7 @@ const ProductGrid = ({ products, title, description, loading, error }: ProductGr
           {normalizedProducts.map((product) => (
             <Link 
               key={product.id} 
-              to={`/products/${product.category}/${product.id}`} 
+              to={`/products/${product.id}`} 
               className="block no-underline group"
             >
               <Card className={cn(
@@ -321,7 +337,7 @@ const ProductGrid = ({ products, title, description, loading, error }: ProductGr
                               window.location.href = `/contact?product=${encodeURIComponent(productInfo)}`;
                             }}
                           >
-                            Contact for price
+                            Contact for Price
                           </Link>
                         </div>
                         
@@ -365,7 +381,7 @@ const ProductGrid = ({ products, title, description, loading, error }: ProductGr
                             window.location.href = `/contact?product=${encodeURIComponent(productInfo)}`;
                           }}
                         >
-                          Contact for price
+                          Contact for Price
                         </Link>
                       </div>
                       

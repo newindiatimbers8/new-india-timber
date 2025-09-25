@@ -63,19 +63,19 @@ New India Timber provides delivery services across:
 ## Delivery Charges
 
 ### Bangalore City
-- **Orders under ₹5,000**: ₹200 delivery charge
-- **Orders ₹5,000 - ₹25,000**: ₹100 delivery charge
-- **Orders over ₹25,000**: Free delivery
+- **Small orders**: Delivery charge applies
+- **Medium orders**: Reduced delivery charge
+- **Large orders**: Free delivery
 
 ### Bangalore Metropolitan Region
-- **Orders under ₹10,000**: ₹300 delivery charge
-- **Orders ₹10,000 - ₹50,000**: ₹200 delivery charge
-- **Orders over ₹50,000**: ₹100 delivery charge
+- **Small orders**: Standard delivery charge
+- **Medium orders**: Reduced delivery charge
+- **Large orders**: Minimal delivery charge
 
 ### Karnataka State (Outside Bangalore)
-- **Orders under ₹25,000**: ₹500 delivery charge
-- **Orders ₹25,000 - ₹1,00,000**: ₹300 delivery charge
-- **Orders over ₹1,00,000**: ₹200 delivery charge
+- **Small orders**: Higher delivery charge
+- **Medium orders**: Standard delivery charge
+- **Large orders**: Reduced delivery charge
 
 ## Bulk Orders
 

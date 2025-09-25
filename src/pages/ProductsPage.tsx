@@ -117,20 +117,18 @@ const ProductsPage = () => {
       });
     }
     
-    // Apply price range filter
+    // Apply quality tier filter (replacing price range filter)
     if (activeFilters.priceRange) {
       filtered = filtered.filter(p => {
-        const price = p.pricing?.basePrice || 0;
-        
         switch (activeFilters.priceRange) {
-          case 'under-25k':
-            return price < 25000;
-          case '25k-50k':
-            return price >= 25000 && price <= 50000;
-          case '50k-75k':
-            return price > 50000 && price <= 75000;
-          case 'above-75k':
-            return price > 75000;
+          case 'budget':
+            return p.grade === 'standard' || p.grade === 'economy';
+          case 'standard':
+            return p.grade === 'standard' || p.grade === 'premium';
+          case 'premium':
+            return p.grade === 'premium' || p.grade === 'luxury';
+          case 'luxury':
+            return p.grade === 'luxury' || p.grade === 'premium';
           default:
             return true;
         }
@@ -261,7 +259,7 @@ const ProductsPage = () => {
                   {/* Pricing */}
                   <div className="text-center">
                     <div className="text-lg font-semibold text-green-600">
-                      {product.pricing?.basePrice ? `₹${product.pricing.basePrice.toLocaleString('en-IN')}` : 'Contact for price'}
+                      Contact for Price
                     </div>
                   </div>
 
@@ -370,10 +368,10 @@ const ProductsPage = () => {
                     <h4 className="font-medium mb-3 text-sm uppercase tracking-wide text-gray-600">Price Range</h4>
                     <div className="grid grid-cols-2 gap-2">
                       {[
-                        { label: 'Under ₹25K', value: 'under-25k' },
-                        { label: '₹25K - ₹50K', value: '25k-50k' },
-                        { label: '₹50K - ₹75K', value: '50k-75k' },
-                        { label: 'Above ₹75K', value: 'above-75k' }
+                        { label: 'Budget', value: 'budget' },
+                        { label: 'Standard', value: 'standard' },
+                        { label: 'Premium', value: 'premium' },
+                        { label: 'Luxury', value: 'luxury' }
                       ].map((range) => (
                         <Button
                           key={range.value}

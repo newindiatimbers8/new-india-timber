@@ -11,7 +11,7 @@
       "finish": "Natural",
       "moistureContent": "8-12%",
       "woodSpecies": "Tectona Grandis (Burma Teak)",
-      "density": "650-700 kg/m\u00b3",
+      "density": "650-700 kg/m³",
       "origin": "Myanmar (Burma)",
       "certification": "FSC Certified",
       "availableSizes": "Custom & Standard",
@@ -21,18 +21,18 @@
     },
     "pricing": {
       "type": "quote_based",
-      "displayText": "Contact for Quote",
+      "displayText": "Contact for Price",
       "ctaButton": {
-        "text": "Get Quote Now",
+        "text": "Contact for Price",
         "action": "contact",
         "style": "primary"
       },
       "internalPricing": {
-        "basePrice": 50000,
+        "basePrice": null,
         "currency": "INR",
         "unit": "piece",
-        "priceRange": "\u20b945,000 - \u20b965,000",
-        "bulkDiscount": "Available for orders above 5 pieces"
+        "priceRange": null,
+        "bulkDiscount": "Available for bulk orders"
       },
       "isVisible": true
     },
@@ -154,7 +154,7 @@
       "grade": "Marine Grade",
       "waterResistance": "BWP",
       "woodSpecies": "Hardwood Veneer",
-      "density": "600-650 kg/m\u00b3",
+      "density": "600-650 kg/m³",
       "origin": "India",
       "certification": "IS 303",
       "availableSizes": "8x4, 7x4, 6x4 feet",
@@ -164,18 +164,18 @@
     },
     "pricing": {
       "type": "quote_based",
-      "displayText": "Contact for Quote",
+      "displayText": "Contact for Price",
       "ctaButton": {
-        "text": "Get Quote Now",
+        "text": "Contact for Price",
         "action": "contact",
         "style": "primary"
       },
       "internalPricing": {
-        "basePrice": 3200,
+        "basePrice": null,
         "currency": "INR",
         "unit": "sheet",
-        "priceRange": "\u20b92,800 - \u20b93,500",
-        "bulkDiscount": "Available for orders above 50 sheets"
+        "priceRange": null,
+        "bulkDiscount": "Available for bulk orders"
       },
       "isVisible": true
     },
@@ -298,16 +298,18 @@
     },
     "pricing": {
       "type": "quote_based",
-      "displayText": "Contact for Quote",
+      "displayText": "Contact for Price",
       "ctaButton": {
-        "text": "Get Quote Now",
+        "text": "Contact for Price",
         "action": "contact",
         "style": "primary"
       },
       "internalPricing": {
-        "basePrice": 18000,
+        "basePrice": null,
         "currency": "INR",
-        "unit": "piece"
+        "unit": "piece",
+        "priceRange": null,
+        "bulkDiscount": "Available for bulk orders"
       },
       "isVisible": true
     },
@@ -400,16 +402,18 @@
     },
     "pricing": {
       "type": "quote_based",
-      "displayText": "Contact for Quote",
+      "displayText": "Contact for Price",
       "ctaButton": {
-        "text": "Get Quote Now",
+        "text": "Contact for Price",
         "action": "contact",
         "style": "primary"
       },
       "internalPricing": {
-        "basePrice": 2300,
+        "basePrice": null,
         "currency": "INR",
-        "unit": "sheet"
+        "unit": "sheet",
+        "priceRange": null,
+        "bulkDiscount": "Available for bulk orders"
       },
       "isVisible": true
     },
@@ -500,7 +504,7 @@
       "grade": "A Grade",
       "source": "Sustainable Forests",
       "woodSpecies": "Tectona Grandis",
-      "density": "650-700 kg/m\u00b3",
+      "density": "650-700 kg/m³",
       "origin": "Karnataka",
       "certification": "FSC Certified",
       "availableSizes": "Custom lengths available",
@@ -510,9 +514,9 @@
     },
     "pricing": {
       "type": "quote_based",
-      "displayText": "Contact for Quote",
+      "displayText": "Contact for Price",
       "ctaButton": {
-        "text": "Get Quote Now",
+        "text": "Contact for Price",
         "action": "contact",
         "style": "primary"
       },
@@ -520,8 +524,8 @@
         "basePrice": null,
         "currency": "INR",
         "unit": "cubic foot",
-        "priceRange": "Contact for pricing",
-        "bulkDiscount": "Volume discounts available"
+        "priceRange": null,
+        "bulkDiscount": "Available for bulk orders"
       },
       "isVisible": true
     },
@@ -641,7 +645,7 @@
       "grade": "A Grade Premium",
       "moistureContent": "8-12%",
       "woodSpecies": "Tectona Grandis (Burma Teak)",
-      "density": "650-700 kg/m\u00b3",
+      "density": "650-700 kg/m³",
       "origin": "Myanmar (Burma)",
       "certification": "FSC Certified",
       "availableSizes": "Custom & Standard",
@@ -651,18 +655,18 @@
     },
     "pricing": {
       "type": "quote_based",
-      "displayText": "Contact for Quote",
+      "displayText": "Contact for Price",
       "ctaButton": {
-        "text": "Get Quote Now",
+        "text": "Contact for Price",
         "action": "contact",
         "style": "primary"
       },
       "internalPricing": {
-        "basePrice": 8500,
+        "basePrice": null,
         "currency": "INR",
         "unit": "cubic foot",
-        "priceRange": "\u20b98,000 - \u20b912,000",
-        "bulkDiscount": "Available for orders above 100 CFT"
+        "priceRange": null,
+        "bulkDiscount": "Available for bulk orders"
       },
       "isVisible": true
     },

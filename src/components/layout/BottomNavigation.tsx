@@ -4,9 +4,6 @@ import {
   Package, 
   // Calculator, // COMMENTED OUT 
   ShoppingCart, 
-  User,
-  Search,
-  MessageSquare,
   MapPin
 } from "lucide-react";
 
@@ -40,12 +37,6 @@ const BottomNavigation = () => {
       active: location.pathname.includes("/bulk-orders") || location.pathname.includes("/cart")
     },
     {
-      path: "/login",
-      icon: User,
-      label: "Account",
-      active: location.pathname.includes("/login") || location.pathname.includes("/dashboard")
-    },
-    {
       path: "#", // Special handling for external link
       icon: MapPin,
       label: "Directions",
@@ -57,7 +48,7 @@ const BottomNavigation = () => {
 
   return (
     <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 shadow-lg">
-      <nav className="grid grid-cols-6 gap-0.5 py-2 px-1">
+      <nav className="grid grid-cols-4 gap-0.5 py-2 px-1">
         {navigationItems.map((item) => {
           const Icon = item.icon;
           

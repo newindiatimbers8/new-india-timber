@@ -161,7 +161,7 @@ const WoodProductPage = () => {
                 <div>
                   <p className="text-sm text-muted-foreground">Pricing</p>
                   <p className="text-2xl font-bold text-forest-900">
-                    {product.pricing?.displayText || 'Contact for Quote'}
+                    {product.pricing?.displayText || 'Contact for Price'}
                   </p>
                   {product.pricing?.internalPricing?.unit && (
                     <p className="text-sm text-muted-foreground">per {product.pricing.internalPricing.unit}</p>

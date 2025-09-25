@@ -98,7 +98,7 @@ const ProductDetailPage = () => {
 
   // Generate SEO-friendly title and description
   const seoTitle = product.seo?.metaTitle || `${product.name} - Premium Quality | New India Timbers Bangalore`;
-  const seoDescription = product.seo?.metaDescription || `Premium ${product.name} at best prices in Bangalore. ${product.description}. 25+ years experience. Contact for quotes: +91-9886033342`;
+  const seoDescription = product.seo?.metaDescription || `Premium ${product.name} in Bangalore. ${product.description}. 25+ years experience. Contact for pricing: +91-9886033342`;
   const seoKeywords = product.seo?.keywords?.join(', ') || `${product.name.toLowerCase()}, bangalore, premium timber, wood suppliers`;
 
   // Breadcrumb navigation
@@ -176,7 +176,7 @@ const ProductDetailPage = () => {
     },
     {
       question: "What are the delivery options in Bangalore?",
-      answer: "We offer same-day delivery within Bangalore city limits and next-day delivery to surrounding areas. Free delivery for orders above ₹50,000."
+      answer: "We offer same-day delivery within Bangalore city limits and next-day delivery to surrounding areas. Free delivery available for bulk orders."
     },
     {
       question: "Do you provide custom cutting services?",
@@ -301,7 +301,7 @@ const ProductDetailPage = () => {
                 <div>
                   <p className="text-sm text-muted-foreground">Pricing</p>
                   <p className="text-3xl font-bold text-forest-900">
-                    {product.pricing?.displayText || 'Contact for Quote'}
+                    {product.pricing?.displayText || 'Contact for Price'}
                   </p>
                   {product.pricing?.internalPricing?.unit && (
                     <p className="text-sm text-muted-foreground">per {product.pricing.internalPricing.unit}</p>
@@ -313,7 +313,7 @@ const ProductDetailPage = () => {
                 <div className="space-y-2">
                   <Button size="lg" className="bg-timber-600 hover:bg-timber-700 w-full">
                     <Phone className="w-4 h-4 mr-2" />
-                    {product.pricing?.ctaButton?.text || 'Get Quote Now'}
+                    {product.pricing?.ctaButton?.text || 'Contact for Price'}
                   </Button>
                   <Button variant="outline" size="lg" className="w-full">
                     <MessageCircle className="w-4 h-4 mr-2" />
@@ -526,7 +526,7 @@ const ProductDetailPage = () => {
                     ))}
                   </div>
                   <p className="text-muted-foreground">
-                    "Best timber suppliers in Bangalore. Competitive pricing and genuine A-grade quality."
+                    "Best timber suppliers in Bangalore. Genuine A-grade quality and excellent service."
                   </p>
                   <p className="text-sm font-medium">- Priya M., Interior Designer, Koramangala</p>
                 </div>
@@ -558,7 +558,7 @@ const ProductDetailPage = () => {
         <div className="mt-12 bg-timber-50 p-8 rounded-lg text-center">
           <h3 className="text-2xl font-bold mb-4">Ready to Order?</h3>
           <p className="text-muted-foreground mb-6">
-            Contact our experts for the best price and delivery options in Bangalore
+            Contact our experts for pricing and delivery options in Bangalore
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" className="bg-timber-600 hover:bg-timber-700">
