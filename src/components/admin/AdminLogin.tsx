@@ -14,18 +14,22 @@ const AdminLogin = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleLogin = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    console.log("Login attempt:", { email, password });
     setIsLoading(true);
     setError("");
 
     // Simple credential check
     if (email === "newindiatimbers8@gmail.com" && password === "nit181124") {
+      console.log("Credentials valid, logging in...");
       // Store login state in sessionStorage
       sessionStorage.setItem("adminLoggedIn", "true");
       sessionStorage.setItem("adminEmail", email);
-      navigate("/admin");
+      // Force a page reload to ensure the ProtectedAdmin component picks up the session
+      window.location.href = "/admin";
     } else {
+      console.log("Invalid credentials");
       setError("Invalid credentials. Please check your email and password.");
     }
     
@@ -79,12 +83,29 @@ const AdminLogin = () => {
             )}
             <Button
               type="submit"
+              onClick={handleLogin}
               className="w-full bg-timber-600 hover:bg-timber-700"
               disabled={isLoading}
             >
               {isLoading ? "Signing in..." : "Sign In"}
             </Button>
           </form>
+          
+          {/* Debug button for testing */}
+          <div className="mt-4">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => {
+                setEmail("newindiatimbers8@gmail.com");
+                setPassword("nit181124");
+              }}
+              className="w-full text-xs"
+            >
+              Auto-fill Credentials (Debug)
+            </Button>
+          </div>
+          
           <div className="mt-6 text-center">
             <p className="text-xs text-muted-foreground">
               New India Timbers Admin Portal
