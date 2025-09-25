@@ -6,7 +6,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import Layout from "@/components/layout/Layout";
+// Layout is handled by ProtectedAdmin wrapper
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AIUsageStats } from "@/components/ai/AIUsageStats";
@@ -68,7 +68,7 @@ const AdminDashboard = () => {
   }, []);
 
   return (
-    <Layout>
+    <>
       <Helmet>
         <title>Admin Dashboard | New India Timber Management</title>
         <meta name="description" content="Administrative dashboard for managing New India Timber's Bangalore operations" />
@@ -237,7 +237,7 @@ const AdminDashboard = () => {
           </TabsContent>
         </Tabs>
       </div>
-    </Layout>
+    </>
   );
 };
 

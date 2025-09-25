@@ -24,6 +24,7 @@ import AdminDashboard from "./pages/admin/AdminDashboard";
 import AISettingsPage from "./pages/admin/AISettingsPage";
 import BlogManagementDashboard from "./pages/admin/BlogManagementDashboard";
 import NewBlogPostPage from "./pages/admin/NewBlogPostPage";
+import ProtectedAdmin from "./components/admin/ProtectedAdmin";
 import ServicesPage from "./pages/ServicesPage";
 import CustomSolutionsPage from "./pages/CustomSolutionsPage";
 import DeliveryPage from "./pages/DeliveryPage";
@@ -56,10 +57,10 @@ const App = () => (
             <Route path="/about" element={<AboutPage />} />
             <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/dashboard/seo" element={<SEOSettingsPage />} />
-            <Route path="/admin" element={<AdminDashboard />} />
-            <Route path="/admin/ai-settings" element={<AISettingsPage />} />
-            <Route path="/admin/blog" element={<BlogManagementDashboard />} />
-            <Route path="/admin/blog/new" element={<NewBlogPostPage />} />
+            <Route path="/admin" element={<ProtectedAdmin><AdminDashboard /></ProtectedAdmin>} />
+            <Route path="/admin/ai-settings" element={<ProtectedAdmin><AISettingsPage /></ProtectedAdmin>} />
+            <Route path="/admin/blog" element={<ProtectedAdmin><BlogManagementDashboard /></ProtectedAdmin>} />
+            <Route path="/admin/blog/new" element={<ProtectedAdmin><NewBlogPostPage /></ProtectedAdmin>} />
             <Route path="/services" element={<ServicesPage />} />
             <Route path="/services/custom" element={<CustomSolutionsPage />} />
             <Route path="/services/delivery" element={<DeliveryPage />} />
