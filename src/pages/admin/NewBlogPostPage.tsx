@@ -238,6 +238,8 @@ New India Timber continues to set the standard for timber supply in Bangalore, o
       <Helmet>
         <title>Create New Blog Post | New India Timber Admin</title>
         <meta name="description" content="Create a new blog post for New India Timber" />
+        <meta name="robots" content="noindex, nofollow" />
+        <meta name="keywords" content="create blog post, timber admin, content creation" />
       </Helmet>
 
       <div className="container mx-auto px-4 py-8 max-w-4xl">

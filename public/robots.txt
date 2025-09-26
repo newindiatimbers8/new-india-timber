@@ -19,6 +19,19 @@ Disallow: /dashboard/
 Disallow: /api/
 Disallow: /_next/
 Disallow: /static/
+Disallow: /login
+Disallow: /compare
+
+# Allow important pages
+Allow: /products/
+Allow: /blog/
+Allow: /services/
+Allow: /about
+Allow: /contact
+Allow: /privacy
+Allow: /terms
+Allow: /refund
+Allow: /shipping-policy
 
 # Sitemap
-Sitemap: https://newindiatimbers.com/sitemap.xml
+Sitemap: https://newindiatimber.com/sitemap.xml

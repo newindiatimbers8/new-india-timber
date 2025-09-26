@@ -38,6 +38,26 @@ const DeliveryPage = () => {
           name="description"
           content="Professional timber delivery across Bangalore and Karnataka. Same-day delivery available with installation support and damage protection."
         />
+        <meta
+          name="keywords"
+          content="timber delivery bangalore, wood delivery service bangalore, timber transport bangalore, same day timber delivery bangalore, timber delivery karnataka, wood delivery bangalore, timber logistics bangalore, professional timber delivery bangalore, timber delivery with installation bangalore, secure timber transport bangalore"
+        />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Service",
+            "name": "Timber Delivery Services",
+            "description": "Professional timber delivery and logistics services across Bangalore and Karnataka",
+            "provider": {
+              "@type": "LocalBusiness",
+              "name": "New India Timbers"
+            },
+            "areaServed": {
+              "@type": "State",
+              "name": "Karnataka"
+            }
+          })}
+        </script>
       </Helmet>
 
       <section className="container mx-auto px-4 py-12">

@@ -72,6 +72,8 @@ const AdminDashboard = () => {
       <Helmet>
         <title>Admin Dashboard | New India Timber Management</title>
         <meta name="description" content="Administrative dashboard for managing New India Timber's Bangalore operations" />
+        <meta name="robots" content="noindex, nofollow" />
+        <meta name="keywords" content="admin dashboard, timber management, new india timbers admin" />
       </Helmet>
 
       <div className="container mx-auto px-4 py-8">

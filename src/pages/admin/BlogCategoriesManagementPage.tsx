@@ -304,6 +304,8 @@ const BlogCategoriesManagementPage = () => {
       <Helmet>
         <title>Blog Categories Management | New India Timber Admin</title>
         <meta name="description" content="Manage blog categories for New India Timber" />
+        <meta name="robots" content="noindex, nofollow" />
+        <meta name="keywords" content="blog categories, timber admin, content management" />
       </Helmet>
 
       <div className="container mx-auto px-4 py-8">

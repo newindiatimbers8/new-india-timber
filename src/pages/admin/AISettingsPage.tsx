@@ -137,9 +137,15 @@ const AISettingsPage = () => {
   };
 
   if (isLoading) {
-    return (
-      <Layout>
-        <div className="container mx-auto px-4 py-8">
+  return (
+    <Layout>
+      <Helmet>
+        <title>AI Settings | New India Timber Admin</title>
+        <meta name="description" content="Configure AI settings and API keys for New India Timber content generation" />
+        <meta name="robots" content="noindex, nofollow" />
+        <meta name="keywords" content="ai settings, timber admin, content generation settings" />
+      </Helmet>
+      <div className="container mx-auto px-4 py-8">
           <div className="space-y-6">
             <div className="h-8 w-64 animate-pulse rounded bg-timber-100" />
             <div className="h-96 animate-pulse rounded-2xl bg-timber-50" />

@@ -206,6 +206,8 @@ const BlogManagementDashboard = () => {
       <Helmet>
         <title>Blog Management | New India Timber Admin</title>
         <meta name="description" content="Manage blog posts, categories, and content for New India Timber" />
+        <meta name="robots" content="noindex, nofollow" />
+        <meta name="keywords" content="blog management, timber admin, content management" />
       </Helmet>
 
       <div className="container mx-auto px-4 py-8">

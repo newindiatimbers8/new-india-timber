@@ -47,6 +47,26 @@ const CustomSolutionsPage = () => {
           name="description"
           content="Custom timber solutions for architectural projects, furniture making, and commercial interiors in Bangalore. Expert consultation and precision cutting services."
         />
+        <meta
+          name="keywords"
+          content="custom timber solutions bangalore, architectural wood bangalore, furniture grade timber bangalore, custom wood cutting bangalore, precision timber cutting bangalore, bespoke timber bangalore, custom wood solutions karnataka, architectural timber bangalore, furniture timber bangalore, commercial timber solutions bangalore"
+        />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Service",
+            "name": "Custom Timber Solutions",
+            "description": "Custom timber cutting and solutions for architectural and furniture projects",
+            "provider": {
+              "@type": "LocalBusiness",
+              "name": "New India Timbers"
+            },
+            "areaServed": {
+              "@type": "State",
+              "name": "Karnataka"
+            }
+          })}
+        </script>
       </Helmet>
 
       <section className="container mx-auto px-4 py-12">

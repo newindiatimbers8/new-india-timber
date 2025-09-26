@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -211,9 +212,16 @@ export default function SEOSettingsPage({ defaultTab = 'global' }: SEOSettingsPa
   }
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex items-center justify-between">
+    <>
+      <Helmet>
+        <title>SEO Settings | New India Timber Dashboard</title>
+        <meta name="description" content="Manage SEO settings and optimize your New India Timber website for search engines" />
+        <meta name="robots" content="noindex, nofollow" />
+        <meta name="keywords" content="seo settings, timber website optimization, search engine optimization" />
+      </Helmet>
+      <div className="space-y-6">
+        {/* Header */}
+        <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-playfair font-bold">SEO Settings</h1>
           <p className="text-muted-foreground">
@@ -493,6 +501,7 @@ export default function SEOSettingsPage({ defaultTab = 'global' }: SEOSettingsPa
           </Card>
         </TabsContent>
       </Tabs>
-    </div>
+      </div>
+    </>
   );
 }
