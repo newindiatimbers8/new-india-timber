@@ -7,8 +7,7 @@ from io import BytesIO
 from typing import Optional, Any, Union, List, Tuple
 
 import PIL.Image
-from google import genai
-from google.genai import types
+import google.generativeai as genai
 from mcp.server.fastmcp import FastMCP
 
 try:
@@ -40,7 +39,7 @@ mcp = FastMCP("mcp-server-gemini-image-generator")
 async def call_gemini(
     contents: List[Any], 
     model: str = "gemini-2.5-flash-image-preview", 
-    config: Optional[types.GenerateContentConfig] = None, 
+    config: Optional[Any] = None, 
     text_only: bool = False
 ) -> Union[str, bytes]:
     """Call Gemini API with flexible configuration for different use cases.

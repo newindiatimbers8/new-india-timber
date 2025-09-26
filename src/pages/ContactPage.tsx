@@ -44,13 +44,19 @@ const ContactPage = () => {
     },
   });
 
-  // Handle pre-filled product information from URL
+  // Handle pre-filled information from URL
   useEffect(() => {
     const productInfo = searchParams.get('product');
+    const subject = searchParams.get('subject');
+    const message = searchParams.get('message');
+    
     if (productInfo) {
       const decodedProductInfo = decodeURIComponent(productInfo);
       form.setValue('subject', 'Price Inquiry');
       form.setValue('message', `Hi, I'm interested in getting a price quote for the following product:\n\n${decodedProductInfo}\n\nPlease provide me with pricing details and availability. Thank you!`);
+    } else if (subject && message) {
+      form.setValue('subject', decodeURIComponent(subject));
+      form.setValue('message', decodeURIComponent(message));
     }
   }, [searchParams, form]);
   

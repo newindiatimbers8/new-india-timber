@@ -1,0 +1,682 @@
+openapi: 3.0.3
+info:
+  title: Product Pages API
+  description: API for managing timber product pages with detailed information and SEO optimization
+  version: 1.0.0
+  contact:
+    name: New India Timbers
+    url: https://newindiatimber.com
+    email: info@newindiatimber.com
+
+servers:
+  - url: https://newindiatimber.com/api
+    description: Production server
+  - url: http://localhost:3000/api
+    description: Development server
+
+paths:
+  /products:
+    get:
+      summary: Get all products
+      description: Retrieve a list of all timber products with basic information
+      parameters:
+        - name: category
+          in: query
+          description: Filter by product category
+          schema:
+            type: string
+            enum: [hardwood, teak, imported]
+        - name: featured
+          in: query
+          description: Filter featured products only
+          schema:
+            type: boolean
+        - name: limit
+          in: query
+          description: Number of products to return
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+        - name: offset
+          in: query
+          description: Number of products to skip
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+      responses:
+        '200':
+          description: List of products
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  products:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ProductSummary'
+                  total:
+                    type: integer
+                    description: Total number of products
+                  hasMore:
+                    type: boolean
+                    description: Whether there are more products available
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /products/{productId}:
+    get:
+      summary: Get product details
+      description: Retrieve detailed information for a specific timber product
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          description: Unique identifier for the product
+          schema:
+            type: string
+            pattern: '^[a-z0-9-]+$'
+      responses:
+        '200':
+          description: Product details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /products/{productId}/images:
+    get:
+      summary: Get product images
+      description: Retrieve all images for a specific product
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          description: Unique identifier for the product
+          schema:
+            type: string
+            pattern: '^[a-z0-9-]+$'
+        - name: type
+          in: query
+          description: Filter images by type
+          schema:
+            type: string
+            enum: [hero, gallery, grain, cross-section, application]
+        - name: format
+          in: query
+          description: Preferred image format
+          schema:
+            type: string
+            enum: [webp, jpg]
+            default: webp
+      responses:
+        '200':
+          description: Product images
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  images:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ProductImage'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /products/{productId}/related:
+    get:
+      summary: Get related products
+      description: Retrieve products related to the specified product
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          description: Unique identifier for the product
+          schema:
+            type: string
+            pattern: '^[a-z0-9-]+$'
+        - name: limit
+          in: query
+          description: Number of related products to return
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 10
+            default: 4
+      responses:
+        '200':
+          description: Related products
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  relatedProducts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ProductSummary'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /products/search:
+    get:
+      summary: Search products
+      description: Search products by name, description, or specifications
+      parameters:
+        - name: q
+          in: query
+          required: true
+          description: Search query
+          schema:
+            type: string
+            minLength: 2
+            maxLength: 100
+        - name: category
+          in: query
+          description: Filter by category
+          schema:
+            type: string
+            enum: [hardwood, teak, imported]
+        - name: minPrice
+          in: query
+          description: Minimum price filter
+          schema:
+            type: number
+            minimum: 0
+        - name: maxPrice
+          in: query
+          description: Maximum price filter
+          schema:
+            type: number
+            minimum: 0
+        - name: availability
+          in: query
+          description: Filter by availability
+          schema:
+            type: string
+            enum: [in-stock, limited, out-of-stock]
+        - name: limit
+          in: query
+          description: Number of results to return
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 50
+            default: 20
+      responses:
+        '200':
+          description: Search results
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ProductSummary'
+                  total:
+                    type: integer
+                    description: Total number of matching products
+                  query:
+                    type: string
+                    description: The search query used
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+components:
+  schemas:
+    Product:
+      type: object
+      required:
+        - id
+        - slug
+        - name
+        - scientificName
+        - category
+        - origin
+        - description
+        - specifications
+        - pricing
+        - images
+        - seo
+      properties:
+        id:
+          type: string
+          pattern: '^[a-z0-9-]+$'
+          description: Unique product identifier
+        slug:
+          type: string
+          pattern: '^[a-z0-9-]+$'
+          description: URL-friendly product identifier
+        name:
+          type: string
+          minLength: 3
+          maxLength: 100
+          description: Product display name
+        scientificName:
+          type: string
+          description: Scientific name of the timber species
+        category:
+          type: string
+          enum: [hardwood, teak, imported]
+          description: Product category
+        origin:
+          type: string
+          description: Geographic origin of the timber
+        description:
+          type: string
+          minLength: 50
+          maxLength: 2000
+          description: Detailed product description
+        shortDescription:
+          type: string
+          maxLength: 200
+          description: Brief product summary
+        keyFeatures:
+          type: array
+          items:
+            type: string
+          description: Key product features
+        specifications:
+          $ref: '#/components/schemas/ProductSpecifications'
+        applications:
+          $ref: '#/components/schemas/ProductApplications'
+        qualityGrades:
+          type: array
+          items:
+            type: string
+          description: Available quality grades
+        certifications:
+          type: array
+          items:
+            type: string
+          description: Product certifications
+        sustainability:
+          $ref: '#/components/schemas/SustainabilityInfo'
+        pricing:
+          $ref: '#/components/schemas/PricingInfo'
+        availability:
+          $ref: '#/components/schemas/AvailabilityInfo'
+        images:
+          $ref: '#/components/schemas/ProductImages'
+        seo:
+          $ref: '#/components/schemas/SEOData'
+        relatedProducts:
+          type: array
+          items:
+            type: string
+          description: IDs of related products
+        createdAt:
+          type: string
+          format: date-time
+          description: Product creation timestamp
+        updatedAt:
+          type: string
+          format: date-time
+          description: Product last update timestamp
+        published:
+          type: boolean
+          description: Whether the product is published
+        featured:
+          type: boolean
+          description: Whether the product is featured
+
+    ProductSummary:
+      type: object
+      required:
+        - id
+        - slug
+        - name
+        - category
+        - shortDescription
+        - pricing
+        - images
+      properties:
+        id:
+          type: string
+          pattern: '^[a-z0-9-]+$'
+        slug:
+          type: string
+          pattern: '^[a-z0-9-]+$'
+        name:
+          type: string
+          minLength: 3
+          maxLength: 100
+        category:
+          type: string
+          enum: [hardwood, teak, imported]
+        shortDescription:
+          type: string
+          maxLength: 200
+        pricing:
+          $ref: '#/components/schemas/PricingInfo'
+        images:
+          type: object
+          properties:
+            hero:
+              $ref: '#/components/schemas/ImageVariant'
+        featured:
+          type: boolean
+
+    ProductSpecifications:
+      type: object
+      required:
+        - density
+        - grainPattern
+        - texture
+        - color
+        - workability
+        - durability
+        - moistureResistance
+        - insectResistance
+      properties:
+        density:
+          type: object
+          required: [min, max]
+          properties:
+            min:
+              type: number
+              minimum: 0
+              description: Minimum density in kg/m³
+            max:
+              type: number
+              minimum: 0
+              description: Maximum density in kg/m³
+        grainPattern:
+          type: string
+          enum: [straight, interlocked, wavy, mixed]
+        texture:
+          type: string
+          enum: [fine, medium, coarse]
+        color:
+          type: string
+          description: Primary color description
+        workability:
+          type: string
+          enum: [excellent, good, moderate, difficult]
+        durability:
+          type: string
+          enum: [excellent, good, moderate, poor]
+        moistureResistance:
+          type: string
+          enum: [excellent, good, moderate, poor]
+        insectResistance:
+          type: string
+          enum: [excellent, good, moderate, poor]
+
+    ProductApplications:
+      type: object
+      required: [primary, secondary]
+      properties:
+        primary:
+          type: array
+          items:
+            type: string
+          description: Primary applications
+        secondary:
+          type: array
+          items:
+            type: string
+          description: Secondary applications
+        notRecommended:
+          type: array
+          items:
+            type: string
+          description: Applications not recommended
+
+    SustainabilityInfo:
+      type: object
+      required: [source]
+      properties:
+        source:
+          type: string
+          enum: [sustainable, plantation, certified, traditional]
+        certification:
+          type: string
+          description: Sustainability certification details
+
+    PricingInfo:
+      type: object
+      required: [basePrice, unit]
+      properties:
+        basePrice:
+          type: number
+          minimum: 0
+          description: Base price per unit
+        unit:
+          type: string
+          enum: [cubic-foot, board-foot, log, plank]
+          description: Pricing unit
+        bulkDiscounts:
+          type: array
+          items:
+            type: object
+            required: [minQuantity, discountPercentage]
+            properties:
+              minQuantity:
+                type: number
+                minimum: 1
+              discountPercentage:
+                type: number
+                minimum: 0
+                maximum: 100
+        regionalPricing:
+          type: array
+          items:
+            type: object
+            required: [region, priceMultiplier]
+            properties:
+              region:
+                type: string
+              priceMultiplier:
+                type: number
+                minimum: 0
+
+    AvailabilityInfo:
+      type: object
+      required: [status, leadTime]
+      properties:
+        status:
+          type: string
+          enum: [in-stock, limited, out-of-stock, seasonal]
+        leadTime:
+          type: string
+          description: Expected lead time
+        seasonalAvailability:
+          type: array
+          items:
+            type: string
+          description: Seasonal availability periods
+
+    ProductImages:
+      type: object
+      required: [hero, gallery]
+      properties:
+        hero:
+          $ref: '#/components/schemas/ImageVariant'
+        gallery:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageVariant'
+        details:
+          type: object
+          properties:
+            grain:
+              $ref: '#/components/schemas/ImageVariant'
+            crossSection:
+              $ref: '#/components/schemas/ImageVariant'
+            applications:
+              type: array
+              items:
+                allOf:
+                  - $ref: '#/components/schemas/ImageVariant'
+                  - type: object
+                    properties:
+                      caption:
+                        type: string
+
+    ImageVariant:
+      type: object
+      required: [webp, jpg, alt]
+      properties:
+        webp:
+          type: string
+          format: uri
+          description: WebP image URL
+        jpg:
+          type: string
+          format: uri
+          description: JPEG fallback URL
+        alt:
+          type: string
+          description: Alt text for accessibility
+
+    ProductImage:
+      type: object
+      required: [id, productId, type, variants, alt, order]
+      properties:
+        id:
+          type: string
+        productId:
+          type: string
+        type:
+          type: string
+          enum: [hero, gallery, grain, cross-section, application]
+        variants:
+          type: object
+          required: [webp, jpg, thumbnail]
+          properties:
+            webp:
+              $ref: '#/components/schemas/ImageDetails'
+            jpg:
+              $ref: '#/components/schemas/ImageDetails'
+            thumbnail:
+              $ref: '#/components/schemas/ImageDetails'
+        alt:
+          type: string
+        caption:
+          type: string
+        order:
+          type: integer
+          minimum: 0
+
+    ImageDetails:
+      type: object
+      required: [url, width, height, size]
+      properties:
+        url:
+          type: string
+          format: uri
+        width:
+          type: integer
+          minimum: 1
+        height:
+          type: integer
+          minimum: 1
+        size:
+          type: integer
+          minimum: 0
+          description: File size in bytes
+
+    SEOData:
+      type: object
+      required: [metaTitle, metaDescription, keywords, canonicalUrl, structuredData]
+      properties:
+        metaTitle:
+          type: string
+          minLength: 30
+          maxLength: 60
+          description: SEO meta title
+        metaDescription:
+          type: string
+          minLength: 120
+          maxLength: 160
+          description: SEO meta description
+        keywords:
+          type: array
+          items:
+            type: string
+          description: SEO keywords
+        canonicalUrl:
+          type: string
+          format: uri
+          description: Canonical URL
+        ogTitle:
+          type: string
+          description: Open Graph title
+        ogDescription:
+          type: string
+          description: Open Graph description
+        ogImage:
+          type: string
+          format: uri
+          description: Open Graph image
+        twitterCard:
+          type: string
+          enum: [summary, summary_large_image]
+        structuredData:
+          type: object
+          description: JSON-LD structured data
+
+    Error:
+      type: object
+      required: [error, message]
+      properties:
+        error:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: Human-readable error message
+        details:
+          type: object
+          description: Additional error details
+
+  responses:
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: 'BAD_REQUEST'
+            message: 'Invalid request parameters'
+
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: 'NOT_FOUND'
+            message: 'Product not found'
+
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: 'INTERNAL_ERROR'
+            message: 'An unexpected error occurred'
+

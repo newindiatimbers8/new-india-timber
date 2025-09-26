@@ -1,0 +1,195 @@
+{
+  "id": "mahogany-wood",
+  "name": "Mahogany Wood",
+  "slug": "mahogany-wood",
+  "scientificName": "Swietenia macrophylla",
+  "category": "hardwood",
+  "origin": "Central America",
+  "description": "Mahogany is one of the world's most prized hardwoods, scientifically known as Swietenia macrophylla, renowned for its rich reddish-brown color and exceptional working properties. This premium timber features a straight to interlocked grain with a fine to medium texture, creating beautiful figure patterns that are highly valued in furniture making.",
+  "shortDescription": "World's most prized hardwood with rich reddish-brown color and exceptional working properties.",
+  "keyFeatures": [
+    "Rich reddish-brown color",
+    "Straight to interlocked grain",
+    "Fine to medium texture",
+    "Beautiful figure patterns",
+    "Excellent dimensional stability",
+    "Superior machining qualities"
+  ],
+  "specifications": {
+    "density": {
+      "min": 500,
+      "max": 650
+    },
+    "grainPattern": "mixed",
+    "texture": "fine",
+    "color": "Rich reddish-brown",
+    "workability": "excellent",
+    "durability": "excellent",
+    "moistureResistance": "excellent",
+    "insectResistance": "excellent"
+  },
+  "applications": {
+    "primary": [
+      "High-end furniture",
+      "Cabinetry",
+      "Boat building",
+      "Musical instruments"
+    ],
+    "secondary": [
+      "Architectural millwork",
+      "Decorative panels",
+      "Luxury interiors",
+      "Fine woodworking"
+    ],
+    "notRecommended": [
+      "Heavy structural applications",
+      "Outdoor use without treatment",
+      "High-traffic flooring"
+    ]
+  },
+  "qualityGrades": ["A", "B"],
+  "sustainability": {
+    "source": "certified",
+    "certification": "FSC Certified"
+  },
+  "pricing": {
+    "basePrice": 0,
+    "unit": "cubic-foot",
+    "bulkDiscounts": [
+      {
+        "minQuantity": 25,
+        "discountPercentage": 10
+      },
+      {
+        "minQuantity": 100,
+        "discountPercentage": 20
+      }
+    ]
+  },
+  "availability": {
+    "status": "limited",
+    "leadTime": "3-4 weeks",
+    "seasonalAvailability": ["Year-round"]
+  },
+  "images": {
+    "hero": {
+      "webp": "/images/products/mahogany-wood/hero.webp",
+      "jpg": "/images/products/mahogany-wood/hero.jpg",
+      "alt": "Premium Mahogany Wood showing rich reddish-brown color and beautiful grain patterns"
+    },
+    "gallery": [
+      {
+        "webp": "/images/products/mahogany-wood/gallery-1.webp",
+        "jpg": "/images/products/mahogany-wood/gallery-1.jpg",
+        "alt": "Mahogany Wood grain pattern detail",
+        "caption": "Beautiful figure patterns and fine texture"
+      },
+      {
+        "webp": "/images/products/mahogany-wood/gallery-2.webp",
+        "jpg": "/images/products/mahogany-wood/gallery-2.jpg",
+        "alt": "Mahogany Wood in furniture application",
+        "caption": "Perfect for high-end furniture making"
+      },
+      {
+        "webp": "/images/products/mahogany-wood/gallery-3.webp",
+        "jpg": "/images/products/mahogany-wood/gallery-3.jpg",
+        "alt": "Mahogany Wood finish quality",
+        "caption": "Accepts stains and finishes exceptionally well"
+      }
+    ],
+    "details": {
+      "grain": {
+        "webp": "/images/products/mahogany-wood/grain.webp",
+        "jpg": "/images/products/mahogany-wood/grain.jpg",
+        "alt": "Mahogany Wood grain texture detail"
+      },
+      "crossSection": {
+        "webp": "/images/products/mahogany-wood/cross-section.webp",
+        "jpg": "/images/products/mahogany-wood/cross-section.jpg",
+        "alt": "Mahogany Wood cross-section showing density"
+      }
+    }
+  },
+  "seo": {
+    "metaTitle": "Mahogany Wood - Premium Hardwood Timber | New India Timbers Bangalore",
+    "metaDescription": "Premium Mahogany Wood (Swietenia macrophylla) in Bangalore. Rich reddish-brown color, exceptional working properties, and superior quality. 25+ years experience. Contact for pricing: +91-9886033342",
+    "keywords": [
+      "mahogany wood",
+      "swietenia macrophylla",
+      "premium hardwood",
+      "bangalore timber suppliers",
+      "high-end furniture",
+      "cabinetry",
+      "boat building",
+      "musical instruments",
+      "luxury timber",
+      "central american timber"
+    ],
+    "canonicalUrl": "https://newindiatimbers.com/products/mahogany-wood",
+    "ogTitle": "Mahogany Wood - Premium Hardwood Timber | New India Timbers",
+    "ogDescription": "Premium Mahogany Wood with rich reddish-brown color and exceptional working properties. Perfect for high-end furniture and luxury applications.",
+    "ogImage": "/images/products/mahogany-wood/hero.jpg",
+    "twitterCard": "summary_large_image"
+  },
+  "structuredData": {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Mahogany Wood",
+    "description": "World's most prized hardwood with rich reddish-brown color and exceptional working properties",
+    "image": [
+      "/images/products/mahogany-wood/hero.jpg",
+      "/images/products/mahogany-wood/gallery-1.jpg",
+      "/images/products/mahogany-wood/gallery-2.jpg"
+    ],
+    "brand": {
+      "@type": "Brand",
+      "name": "New India Timbers"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "Contact for pricing",
+      "priceCurrency": "INR",
+      "availability": "https://schema.org/LimitedAvailability"
+    },
+    "category": "Premium Hardwood Timber",
+    "material": "Swietenia macrophylla",
+    "origin": "Central America"
+  },
+  "benefits": [
+    "World's most prized hardwood",
+    "Exceptional working properties and dimensional stability",
+    "Natural resistance to moisture and insects",
+    "Professional kiln drying process",
+    "Custom sizing available",
+    "Quality certification included"
+  ],
+  "applications": [
+    "High-end furniture",
+    "Cabinetry",
+    "Boat building",
+    "Musical instruments",
+    "Architectural millwork",
+    "Decorative panels"
+  ],
+  "serviceAreas": [
+    "Bangalore City",
+    "Electronic City",
+    "Whitefield",
+    "Koramangala",
+    "BTM Layout",
+    "Jayanagar",
+    "Indiranagar",
+    "HSR Layout"
+  ],
+  "stockStatus": "limited",
+  "weight": 575,
+  "dimensions": {
+    "length": 10,
+    "width": 8,
+    "height": 2,
+    "unit": "feet"
+  },
+  "createdAt": "2024-01-15T00:00:00Z",
+  "updatedAt": "2024-01-15T00:00:00Z"
+}
+

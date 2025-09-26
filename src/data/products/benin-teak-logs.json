@@ -1,0 +1,195 @@
+{
+  "id": "benin-teak-logs",
+  "name": "Benin Teak Logs",
+  "slug": "benin-teak-logs",
+  "scientificName": "Tectona grandis",
+  "category": "teak",
+  "origin": "Benin, West Africa",
+  "description": "Benin Teak represents premium African teak timber sourced from sustainable plantations in West Africa, specifically from Benin region. This timber maintains the classic characteristics of Tectona grandis but with unique properties developed in African growing conditions.",
+  "shortDescription": "Premium African teak timber from sustainable plantations in Benin, West Africa with unique properties.",
+  "keyFeatures": [
+    "Golden to dark brown color",
+    "Straight grain pattern",
+    "Natural oil content for weather resistance",
+    "Superior durability",
+    "Consistent quality",
+    "Reduced splitting tendency"
+  ],
+  "specifications": {
+    "density": {
+      "min": 550,
+      "max": 700
+    },
+    "grainPattern": "straight",
+    "texture": "medium",
+    "color": "Golden to dark brown",
+    "workability": "excellent",
+    "durability": "excellent",
+    "moistureResistance": "excellent",
+    "insectResistance": "excellent"
+  },
+  "applications": {
+    "primary": [
+      "Marine applications",
+      "Outdoor furniture",
+      "Decking",
+      "Structural work"
+    ],
+    "secondary": [
+      "Boat building",
+      "Garden furniture",
+      "Exterior construction",
+      "Heavy-duty applications"
+    ],
+    "notRecommended": [
+      "Fine interior furniture",
+      "Decorative carving",
+      "Musical instruments"
+    ]
+  },
+  "qualityGrades": ["A", "B"],
+  "sustainability": {
+    "source": "plantation",
+    "certification": "FSC Certified"
+  },
+  "pricing": {
+    "basePrice": 0,
+    "unit": "log",
+    "bulkDiscounts": [
+      {
+        "minQuantity": 10,
+        "discountPercentage": 8
+      },
+      {
+        "minQuantity": 50,
+        "discountPercentage": 15
+      }
+    ]
+  },
+  "availability": {
+    "status": "in-stock",
+    "leadTime": "2-3 weeks",
+    "seasonalAvailability": ["Year-round"]
+  },
+  "images": {
+    "hero": {
+      "webp": "/images/products/benin-teak-logs/hero.webp",
+      "jpg": "/images/products/benin-teak-logs/hero.jpg",
+      "alt": "Premium Benin Teak Logs showing golden to dark brown color and straight grain"
+    },
+    "gallery": [
+      {
+        "webp": "/images/products/benin-teak-logs/gallery-1.webp",
+        "jpg": "/images/products/benin-teak-logs/gallery-1.jpg",
+        "alt": "Benin Teak Logs grain pattern detail",
+        "caption": "Straight grain with natural oil content"
+      },
+      {
+        "webp": "/images/products/benin-teak-logs/gallery-2.webp",
+        "jpg": "/images/products/benin-teak-logs/gallery-2.jpg",
+        "alt": "Benin Teak Logs in marine application",
+        "caption": "Perfect for marine and outdoor applications"
+      },
+      {
+        "webp": "/images/products/benin-teak-logs/gallery-3.webp",
+        "jpg": "/images/products/benin-teak-logs/gallery-3.jpg",
+        "alt": "Benin Teak Logs finish quality",
+        "caption": "Excellent finishing properties"
+      }
+    ],
+    "details": {
+      "grain": {
+        "webp": "/images/products/benin-teak-logs/grain.webp",
+        "jpg": "/images/products/benin-teak-logs/grain.jpg",
+        "alt": "Benin Teak Logs grain texture detail"
+      },
+      "crossSection": {
+        "webp": "/images/products/benin-teak-logs/cross-section.webp",
+        "jpg": "/images/products/benin-teak-logs/cross-section.jpg",
+        "alt": "Benin Teak Logs cross-section showing density"
+      }
+    }
+  },
+  "seo": {
+    "metaTitle": "Benin Teak Logs - Premium African Teak Timber | New India Timbers Bangalore",
+    "metaDescription": "Premium Benin Teak Logs from sustainable plantations in West Africa. Superior durability, weather resistance, and consistent quality. 25+ years experience. Contact for pricing: +91-9886033342",
+    "keywords": [
+      "benin teak logs",
+      "african teak",
+      "tectona grandis",
+      "bangalore timber suppliers",
+      "marine applications",
+      "outdoor furniture",
+      "decking",
+      "structural work",
+      "sustainable plantations",
+      "west african timber"
+    ],
+    "canonicalUrl": "https://newindiatimbers.com/products/benin-teak-logs",
+    "ogTitle": "Benin Teak Logs - Premium African Teak Timber | New India Timbers",
+    "ogDescription": "Premium Benin Teak Logs with superior durability and weather resistance. Perfect for marine and outdoor applications.",
+    "ogImage": "/images/products/benin-teak-logs/hero.jpg",
+    "twitterCard": "summary_large_image"
+  },
+  "structuredData": {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Benin Teak Logs",
+    "description": "Premium African teak timber from sustainable plantations in Benin, West Africa with unique properties",
+    "image": [
+      "/images/products/benin-teak-logs/hero.jpg",
+      "/images/products/benin-teak-logs/gallery-1.jpg",
+      "/images/products/benin-teak-logs/gallery-2.jpg"
+    ],
+    "brand": {
+      "@type": "Brand",
+      "name": "New India Timbers"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "Contact for pricing",
+      "priceCurrency": "INR",
+      "availability": "https://schema.org/InStock"
+    },
+    "category": "Teak Timber",
+    "material": "Tectona grandis",
+    "origin": "Benin, West Africa"
+  },
+  "benefits": [
+    "Premium African teak with unique properties",
+    "Superior durability and weather resistance",
+    "Natural oil content for longevity",
+    "Professional kiln drying process",
+    "Custom sizing available",
+    "Quality certification included"
+  ],
+  "applications": [
+    "Marine applications",
+    "Outdoor furniture",
+    "Decking",
+    "Structural work",
+    "Boat building",
+    "Garden furniture"
+  ],
+  "serviceAreas": [
+    "Bangalore City",
+    "Electronic City",
+    "Whitefield",
+    "Koramangala",
+    "BTM Layout",
+    "Jayanagar",
+    "Indiranagar",
+    "HSR Layout"
+  ],
+  "stockStatus": "in_stock",
+  "weight": 625,
+  "dimensions": {
+    "length": 16,
+    "width": 12,
+    "height": 8,
+    "unit": "feet"
+  },
+  "createdAt": "2024-01-15T00:00:00Z",
+  "updatedAt": "2024-01-15T00:00:00Z"
+}
+

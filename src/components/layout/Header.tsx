@@ -1,19 +1,11 @@
-import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
-  Menu,
   Phone,
   Mail,
   ArrowLeft,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import Logo from "@/components/ui/Logo";
 import { useNavigationMenu } from "@/components/navigation/useNavigationMenu";
 import { MegaMenu } from "@/components/navigation/MegaMenu";
 import { MobileNavigation } from "@/components/navigation/MobileNavigation";
@@ -71,8 +63,8 @@ const Header = () => {
 
       {/* Mobile Header */}
       <div className="md:hidden px-4 py-3 flex items-center justify-between">
-        {/* Left: Back button or Logo */}
-        {!isHomePage ? (
+        {/* Left: Back button (only on non-home pages) */}
+        {!isHomePage && (
           <Button 
             variant="ghost" 
             size="icon" 
@@ -82,14 +74,21 @@ const Header = () => {
           >
             <ArrowLeft size={20} />
           </Button>
-        ) : (
-          <div className="w-10" aria-hidden="true" />
         )}
+        {isHomePage && <div className="w-10" />} {/* Spacer for home page */}
         
-        {/* Center: Page Title */}
-        <h1 className="text-lg font-semibold text-center flex-1 truncate px-2">
-          {getPageTitle()}
-        </h1>
+        {/* Center: Logo (home page) or Page Title (other pages) */}
+        <div className="flex-1 flex justify-center">
+          {isHomePage ? (
+            <Link to="/" className="logo-container">
+              <Logo size="sm" variant="text" />
+            </Link>
+          ) : (
+            <h1 className="text-lg font-semibold text-center truncate px-2">
+              {getPageTitle()}
+            </h1>
+          )}
+        </div>
         
         {/* Right: Menu */}
         <div className="flex items-center space-x-1">
@@ -99,13 +98,11 @@ const Header = () => {
       
       {/* Desktop Header */}
       <div className="hidden md:block">
-        <div className="container mx-auto py-4 px-4 flex flex-col gap-4">
+        <div className="container mx-auto py-6 px-4 flex flex-col gap-4">
           {/* Logo and Actions */}
           <div className="flex items-center justify-between">
-            <Link to="/" className="flex items-center">
-              <h1 className="text-2xl md:text-3xl font-bold font-montserrat">
-                <span className="wood-grain-text">New India</span> Timber
-              </h1>
+            <Link to="/" className="flex items-center logo-container">
+              <Logo size="2xl" variant="text" className="mr-3" />
             </Link>
 
             <div className="flex items-center gap-3">

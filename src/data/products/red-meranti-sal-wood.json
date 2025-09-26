@@ -1,0 +1,195 @@
+{
+  "id": "red-meranti-sal-wood",
+  "name": "Red Meranti Sal Wood",
+  "slug": "red-meranti-sal-wood",
+  "scientificName": "Shorea spp.",
+  "category": "hardwood",
+  "origin": "Southeast Asia",
+  "description": "Red Meranti Sal is a tropical hardwood from the Dipterocarpaceae family, combining the properties of Meranti with enhanced durability characteristics. This timber features a light to medium reddish-brown color with a moderately coarse texture and interlocked grain pattern.",
+  "shortDescription": "Tropical hardwood with light to medium reddish-brown color and enhanced durability characteristics.",
+  "keyFeatures": [
+    "Light to medium reddish-brown color",
+    "Moderately coarse texture",
+    "Interlocked grain pattern",
+    "Good strength properties",
+    "Good workability and easy machining",
+    "Excellent finishing properties"
+  ],
+  "specifications": {
+    "density": {
+      "min": 450,
+      "max": 650
+    },
+    "grainPattern": "interlocked",
+    "texture": "medium",
+    "color": "Light to medium reddish-brown",
+    "workability": "good",
+    "durability": "good",
+    "moistureResistance": "moderate",
+    "insectResistance": "moderate"
+  },
+  "applications": {
+    "primary": [
+      "Construction",
+      "Joinery work",
+      "Furniture making",
+      "Plywood manufacturing"
+    ],
+    "secondary": [
+      "Interior applications",
+      "Decorative panels",
+      "General carpentry",
+      "Light structural work"
+    ],
+    "notRecommended": [
+      "Heavy structural applications",
+      "Marine applications",
+      "Outdoor use without treatment"
+    ]
+  },
+  "qualityGrades": ["A", "B", "C"],
+  "sustainability": {
+    "source": "sustainable",
+    "certification": "FSC Certified"
+  },
+  "pricing": {
+    "basePrice": 0,
+    "unit": "cubic-foot",
+    "bulkDiscounts": [
+      {
+        "minQuantity": 100,
+        "discountPercentage": 5
+      },
+      {
+        "minQuantity": 300,
+        "discountPercentage": 12
+      }
+    ]
+  },
+  "availability": {
+    "status": "in-stock",
+    "leadTime": "1-2 weeks",
+    "seasonalAvailability": ["Year-round"]
+  },
+  "images": {
+    "hero": {
+      "webp": "/images/products/red-meranti-sal-wood/hero.webp",
+      "jpg": "/images/products/red-meranti-sal-wood/hero.jpg",
+      "alt": "Red Meranti Sal Wood showing light to medium reddish-brown color and interlocked grain"
+    },
+    "gallery": [
+      {
+        "webp": "/images/products/red-meranti-sal-wood/gallery-1.webp",
+        "jpg": "/images/products/red-meranti-sal-wood/gallery-1.jpg",
+        "alt": "Red Meranti Sal Wood grain pattern detail",
+        "caption": "Interlocked grain pattern with moderate texture"
+      },
+      {
+        "webp": "/images/products/red-meranti-sal-wood/gallery-2.webp",
+        "jpg": "/images/products/red-meranti-sal-wood/gallery-2.jpg",
+        "alt": "Red Meranti Sal Wood in construction application",
+        "caption": "Suitable for construction and joinery work"
+      },
+      {
+        "webp": "/images/products/red-meranti-sal-wood/gallery-3.webp",
+        "jpg": "/images/products/red-meranti-sal-wood/gallery-3.jpg",
+        "alt": "Red Meranti Sal Wood finish quality",
+        "caption": "Excellent finishing properties"
+      }
+    ],
+    "details": {
+      "grain": {
+        "webp": "/images/products/red-meranti-sal-wood/grain.webp",
+        "jpg": "/images/products/red-meranti-sal-wood/grain.jpg",
+        "alt": "Red Meranti Sal Wood grain texture detail"
+      },
+      "crossSection": {
+        "webp": "/images/products/red-meranti-sal-wood/cross-section.webp",
+        "jpg": "/images/products/red-meranti-sal-wood/cross-section.jpg",
+        "alt": "Red Meranti Sal Wood cross-section showing density"
+      }
+    }
+  },
+  "seo": {
+    "metaTitle": "Red Meranti Sal Wood - Tropical Hardwood Timber | New India Timbers Bangalore",
+    "metaDescription": "Premium Red Meranti Sal Wood in Bangalore. Good workability, excellent finishing, and enhanced durability. 25+ years experience. Contact for pricing: +91-9886033342",
+    "keywords": [
+      "red meranti sal wood",
+      "tropical hardwood",
+      "bangalore timber suppliers",
+      "construction timber",
+      "joinery work",
+      "furniture making",
+      "plywood manufacturing",
+      "interior applications",
+      "dipterocarpaceae",
+      "southeast asian timber"
+    ],
+    "canonicalUrl": "https://newindiatimbers.com/products/red-meranti-sal-wood",
+    "ogTitle": "Red Meranti Sal Wood - Tropical Hardwood Timber | New India Timbers",
+    "ogDescription": "Premium Red Meranti Sal Wood with good workability and excellent finishing properties. Perfect for construction and furniture making.",
+    "ogImage": "/images/products/red-meranti-sal-wood/hero.jpg",
+    "twitterCard": "summary_large_image"
+  },
+  "structuredData": {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Red Meranti Sal Wood",
+    "description": "Tropical hardwood with light to medium reddish-brown color and enhanced durability characteristics",
+    "image": [
+      "/images/products/red-meranti-sal-wood/hero.jpg",
+      "/images/products/red-meranti-sal-wood/gallery-1.jpg",
+      "/images/products/red-meranti-sal-wood/gallery-2.jpg"
+    ],
+    "brand": {
+      "@type": "Brand",
+      "name": "New India Timbers"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "Contact for pricing",
+      "priceCurrency": "INR",
+      "availability": "https://schema.org/InStock"
+    },
+    "category": "Tropical Hardwood Timber",
+    "material": "Shorea spp.",
+    "origin": "Southeast Asia"
+  },
+  "benefits": [
+    "Good workability and easy machining",
+    "Excellent finishing properties",
+    "Enhanced durability characteristics",
+    "Professional kiln drying process",
+    "Custom sizing available",
+    "Quality certification included"
+  ],
+  "applications": [
+    "Construction",
+    "Joinery work",
+    "Furniture making",
+    "Plywood manufacturing",
+    "Interior applications",
+    "Decorative panels"
+  ],
+  "serviceAreas": [
+    "Bangalore City",
+    "Electronic City",
+    "Whitefield",
+    "Koramangala",
+    "BTM Layout",
+    "Jayanagar",
+    "Indiranagar",
+    "HSR Layout"
+  ],
+  "stockStatus": "in_stock",
+  "weight": 550,
+  "dimensions": {
+    "length": 12,
+    "width": 6,
+    "height": 2,
+    "unit": "feet"
+  },
+  "createdAt": "2024-01-15T00:00:00Z",
+  "updatedAt": "2024-01-15T00:00:00Z"
+}
+

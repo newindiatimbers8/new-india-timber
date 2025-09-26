@@ -42,7 +42,7 @@ const BottomNavigation = () => {
       label: "Directions",
       active: false,
       isExternal: true,
-      externalUrl: "https://maps.google.com/?q=No.+134/20,+5th+Main,+HSR+Layout+Sector+7,+Bangalore+-+560068"
+      externalUrl: "https://share.google/wy5zsZJlZLGB41zl7"
     }
   ];
 

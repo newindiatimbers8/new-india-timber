@@ -1,0 +1,197 @@
+{
+  "id": "red-sal-wood",
+  "name": "Red Sal Wood",
+  "slug": "red-sal-wood",
+  "scientificName": "Shorea robusta",
+  "category": "hardwood",
+  "origin": "India",
+  "description": "Red Sal is a premium hardwood timber sourced from the Shorea robusta species, known for its distinctive reddish-brown color and exceptional strength properties. This timber is highly valued in the construction industry for its durability and resistance to moisture and insects.",
+  "shortDescription": "Premium hardwood with distinctive reddish-brown color and exceptional strength properties.",
+  "keyFeatures": [
+    "Distinctive reddish-brown color",
+    "Exceptional strength and durability",
+    "Resistance to moisture and insects",
+    "Straight grain pattern with coarse texture",
+    "High density (800-900 kg/m³)",
+    "Excellent load-bearing capacity"
+  ],
+  "specifications": {
+    "density": {
+      "min": 800,
+      "max": 900
+    },
+    "grainPattern": "straight",
+    "texture": "coarse",
+    "color": "Reddish-brown",
+    "workability": "good",
+    "durability": "excellent",
+    "moistureResistance": "excellent",
+    "insectResistance": "excellent"
+  },
+  "applications": {
+    "primary": [
+      "Structural applications",
+      "Railway sleepers",
+      "Heavy construction work",
+      "Bridge construction",
+      "Pier work"
+    ],
+    "secondary": [
+      "Flooring",
+      "General construction",
+      "Outdoor furniture",
+      "Fencing"
+    ],
+    "notRecommended": [
+      "Fine furniture",
+      "Decorative carving",
+      "Musical instruments"
+    ]
+  },
+  "qualityGrades": ["A", "B", "C"],
+  "sustainability": {
+    "source": "sustainable",
+    "certification": "FSC Certified"
+  },
+  "pricing": {
+    "basePrice": 0,
+    "unit": "cubic-foot",
+    "bulkDiscounts": [
+      {
+        "minQuantity": 100,
+        "discountPercentage": 5
+      },
+      {
+        "minQuantity": 500,
+        "discountPercentage": 10
+      }
+    ]
+  },
+  "availability": {
+    "status": "in-stock",
+    "leadTime": "1-2 weeks",
+    "seasonalAvailability": ["Year-round"]
+  },
+  "images": {
+    "hero": {
+      "webp": "/images/products/red-sal-wood/hero.webp",
+      "jpg": "/images/products/red-sal-wood/hero.jpg",
+      "alt": "Premium Red Sal Wood timber showing distinctive reddish-brown color and straight grain"
+    },
+    "gallery": [
+      {
+        "webp": "/images/products/red-sal-wood/gallery-1.webp",
+        "jpg": "/images/products/red-sal-wood/gallery-1.jpg",
+        "alt": "Red Sal Wood grain pattern detail",
+        "caption": "Distinctive straight grain pattern"
+      },
+      {
+        "webp": "/images/products/red-sal-wood/gallery-2.webp",
+        "jpg": "/images/products/red-sal-wood/gallery-2.jpg",
+        "alt": "Red Sal Wood in construction application",
+        "caption": "Used in structural applications"
+      },
+      {
+        "webp": "/images/products/red-sal-wood/gallery-3.webp",
+        "jpg": "/images/products/red-sal-wood/gallery-3.jpg",
+        "alt": "Red Sal Wood cross-section",
+        "caption": "High density and strength"
+      }
+    ],
+    "details": {
+      "grain": {
+        "webp": "/images/products/red-sal-wood/grain.webp",
+        "jpg": "/images/products/red-sal-wood/grain.jpg",
+        "alt": "Red Sal Wood grain texture detail"
+      },
+      "crossSection": {
+        "webp": "/images/products/red-sal-wood/cross-section.webp",
+        "jpg": "/images/products/red-sal-wood/cross-section.jpg",
+        "alt": "Red Sal Wood cross-section showing density"
+      }
+    }
+  },
+  "seo": {
+    "metaTitle": "Red Sal Wood - Premium Hardwood Timber | New India Timbers Bangalore",
+    "metaDescription": "Premium Red Sal Wood (Shorea robusta) in Bangalore. Exceptional strength, moisture resistance, and durability. 25+ years experience. Contact for pricing: +91-9886033342",
+    "keywords": [
+      "red sal wood",
+      "shorea robusta",
+      "premium hardwood",
+      "bangalore timber suppliers",
+      "construction timber",
+      "railway sleepers",
+      "structural timber",
+      "moisture resistant wood",
+      "durable hardwood",
+      "indian timber"
+    ],
+    "canonicalUrl": "https://newindiatimbers.com/products/red-sal-wood",
+    "ogTitle": "Red Sal Wood - Premium Hardwood Timber | New India Timbers",
+    "ogDescription": "Premium Red Sal Wood with exceptional strength and durability. Perfect for construction and structural applications.",
+    "ogImage": "/images/products/red-sal-wood/hero.jpg",
+    "twitterCard": "summary_large_image"
+  },
+  "structuredData": {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Red Sal Wood",
+    "description": "Premium hardwood timber with distinctive reddish-brown color and exceptional strength properties",
+    "image": [
+      "/images/products/red-sal-wood/hero.jpg",
+      "/images/products/red-sal-wood/gallery-1.jpg",
+      "/images/products/red-sal-wood/gallery-2.jpg"
+    ],
+    "brand": {
+      "@type": "Brand",
+      "name": "New India Timbers"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "Contact for pricing",
+      "priceCurrency": "INR",
+      "availability": "https://schema.org/InStock"
+    },
+    "category": "Hardwood Timber",
+    "material": "Shorea robusta",
+    "origin": "India"
+  },
+  "benefits": [
+    "Superior durability with 25+ years lifespan",
+    "Natural resistance to moisture and insects",
+    "Excellent load-bearing capacity",
+    "Professional kiln drying process",
+    "Custom sizing available",
+    "Quality certification included"
+  ],
+  "applications": [
+    "Structural applications",
+    "Railway sleepers",
+    "Heavy construction work",
+    "Bridge construction",
+    "Pier work",
+    "Flooring",
+    "General construction"
+  ],
+  "serviceAreas": [
+    "Bangalore City",
+    "Electronic City",
+    "Whitefield",
+    "Koramangala",
+    "BTM Layout",
+    "Jayanagar",
+    "Indiranagar",
+    "HSR Layout"
+  ],
+  "stockStatus": "in_stock",
+  "weight": 850,
+  "dimensions": {
+    "length": 12,
+    "width": 6,
+    "height": 2,
+    "unit": "feet"
+  },
+  "createdAt": "2024-01-15T00:00:00Z",
+  "updatedAt": "2024-01-15T00:00:00Z"
+}
+

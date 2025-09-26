@@ -1,0 +1,195 @@
+{
+  "id": "tanzania-teak-wood",
+  "name": "Tanzania Teak Wood",
+  "slug": "tanzania-teak-wood",
+  "scientificName": "Tectona grandis",
+  "category": "teak",
+  "origin": "Tanzania, East Africa",
+  "description": "Tanzania Teak is premium plantation-grown teak timber from East African sustainable forests, offering excellent quality characteristics similar to traditional teak varieties. This timber displays the classic teak golden-brown color with straight to slightly wavy grain patterns and natural oil content that ensures longevity.",
+  "shortDescription": "Premium plantation-grown teak timber from East African sustainable forests with excellent quality characteristics.",
+  "keyFeatures": [
+    "Classic teak golden-brown color",
+    "Straight to slightly wavy grain patterns",
+    "Natural oil content for longevity",
+    "Excellent dimensional stability",
+    "Natural weather resistance",
+    "Superior workability"
+  ],
+  "specifications": {
+    "density": {
+      "min": 600,
+      "max": 700
+    },
+    "grainPattern": "wavy",
+    "texture": "medium",
+    "color": "Golden-brown",
+    "workability": "excellent",
+    "durability": "excellent",
+    "moistureResistance": "excellent",
+    "insectResistance": "excellent"
+  },
+  "applications": {
+    "primary": [
+      "Furniture manufacturing",
+      "Construction applications",
+      "Flooring",
+      "Decorative panels"
+    ],
+    "secondary": [
+      "Export-quality products",
+      "Interior applications",
+      "Architectural features",
+      "Custom woodworking"
+    ],
+    "notRecommended": [
+      "Heavy structural applications",
+      "Marine applications without treatment",
+      "High-traffic commercial flooring"
+    ]
+  },
+  "qualityGrades": ["A", "B"],
+  "sustainability": {
+    "source": "plantation",
+    "certification": "FSC Certified"
+  },
+  "pricing": {
+    "basePrice": 0,
+    "unit": "cubic-foot",
+    "bulkDiscounts": [
+      {
+        "minQuantity": 50,
+        "discountPercentage": 8
+      },
+      {
+        "minQuantity": 200,
+        "discountPercentage": 15
+      }
+    ]
+  },
+  "availability": {
+    "status": "in-stock",
+    "leadTime": "2-3 weeks",
+    "seasonalAvailability": ["Year-round"]
+  },
+  "images": {
+    "hero": {
+      "webp": "/images/products/tanzania-teak-wood/hero.webp",
+      "jpg": "/images/products/tanzania-teak-wood/hero.jpg",
+      "alt": "Premium Tanzania Teak Wood showing classic golden-brown color and grain patterns"
+    },
+    "gallery": [
+      {
+        "webp": "/images/products/tanzania-teak-wood/gallery-1.webp",
+        "jpg": "/images/products/tanzania-teak-wood/gallery-1.jpg",
+        "alt": "Tanzania Teak Wood grain pattern detail",
+        "caption": "Straight to slightly wavy grain patterns"
+      },
+      {
+        "webp": "/images/products/tanzania-teak-wood/gallery-2.webp",
+        "jpg": "/images/products/tanzania-teak-wood/gallery-2.jpg",
+        "alt": "Tanzania Teak Wood in furniture application",
+        "caption": "Perfect for furniture manufacturing"
+      },
+      {
+        "webp": "/images/products/tanzania-teak-wood/gallery-3.webp",
+        "jpg": "/images/products/tanzania-teak-wood/gallery-3.jpg",
+        "alt": "Tanzania Teak Wood finish quality",
+        "caption": "Machines well and accepts various finishes"
+      }
+    ],
+    "details": {
+      "grain": {
+        "webp": "/images/products/tanzania-teak-wood/grain.webp",
+        "jpg": "/images/products/tanzania-teak-wood/grain.jpg",
+        "alt": "Tanzania Teak Wood grain texture detail"
+      },
+      "crossSection": {
+        "webp": "/images/products/tanzania-teak-wood/cross-section.webp",
+        "jpg": "/images/products/tanzania-teak-wood/cross-section.jpg",
+        "alt": "Tanzania Teak Wood cross-section showing density"
+      }
+    }
+  },
+  "seo": {
+    "metaTitle": "Tanzania Teak Wood - Premium Plantation Teak Timber | New India Timbers Bangalore",
+    "metaDescription": "Premium Tanzania Teak Wood from sustainable plantations in East Africa. Excellent quality, dimensional stability, and natural weather resistance. 25+ years experience. Contact for pricing: +91-9886033342",
+    "keywords": [
+      "tanzania teak wood",
+      "plantation teak",
+      "tectona grandis",
+      "bangalore timber suppliers",
+      "furniture manufacturing",
+      "construction applications",
+      "flooring",
+      "decorative panels",
+      "sustainable forests",
+      "east african timber"
+    ],
+    "canonicalUrl": "https://newindiatimbers.com/products/tanzania-teak-wood",
+    "ogTitle": "Tanzania Teak Wood - Premium Plantation Teak Timber | New India Timbers",
+    "ogDescription": "Premium Tanzania Teak Wood with excellent quality and dimensional stability. Perfect for furniture manufacturing and construction applications.",
+    "ogImage": "/images/products/tanzania-teak-wood/hero.jpg",
+    "twitterCard": "summary_large_image"
+  },
+  "structuredData": {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Tanzania Teak Wood",
+    "description": "Premium plantation-grown teak timber from East African sustainable forests with excellent quality characteristics",
+    "image": [
+      "/images/products/tanzania-teak-wood/hero.jpg",
+      "/images/products/tanzania-teak-wood/gallery-1.jpg",
+      "/images/products/tanzania-teak-wood/gallery-2.jpg"
+    ],
+    "brand": {
+      "@type": "Brand",
+      "name": "New India Timbers"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "Contact for pricing",
+      "priceCurrency": "INR",
+      "availability": "https://schema.org/InStock"
+    },
+    "category": "Teak Timber",
+    "material": "Tectona grandis",
+    "origin": "Tanzania, East Africa"
+  },
+  "benefits": [
+    "Premium plantation-grown teak with excellent quality",
+    "Excellent dimensional stability and natural weather resistance",
+    "Natural oil content ensures longevity",
+    "Professional kiln drying process",
+    "Custom sizing available",
+    "Quality certification included"
+  ],
+  "applications": [
+    "Furniture manufacturing",
+    "Construction applications",
+    "Flooring",
+    "Decorative panels",
+    "Export-quality products",
+    "Interior applications"
+  ],
+  "serviceAreas": [
+    "Bangalore City",
+    "Electronic City",
+    "Whitefield",
+    "Koramangala",
+    "BTM Layout",
+    "Jayanagar",
+    "Indiranagar",
+    "HSR Layout"
+  ],
+  "stockStatus": "in_stock",
+  "weight": 650,
+  "dimensions": {
+    "length": 12,
+    "width": 8,
+    "height": 2,
+    "unit": "feet"
+  },
+  "createdAt": "2024-01-15T00:00:00Z",
+  "updatedAt": "2024-01-15T00:00:00Z"
+}
+

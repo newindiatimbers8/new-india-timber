@@ -1,136 +1,580 @@
-// Enhanced image utility with WebP support and lazy loading
-// Maps categories to optimized images in /public/images/ folder
+/**
+ * Image Optimization Utilities
+ * Comprehensive image handling and optimization for timber product pages
+ */
 
-// Static images - AI-generated images from Gemini MCP with WebP support
-export const TEAK_WOOD_IMAGE = '/images/teak-wood.jpg';
-export const TEAK_WOOD_IMAGE_WEBP = '/images/teak-wood.webp';
-export const PLYWOOD_IMAGE = '/images/plywood.jpg';
-export const PLYWOOD_IMAGE_WEBP = '/images/plywood.webp';
-export const HARDWOOD_IMAGE = '/images/hardwood-logs.jpg';
-export const HARDWOOD_IMAGE_WEBP = '/images/hardwood-logs.webp';
-export const WOOD_TEXTURE_IMAGE = '/images/wood-texture.svg';
+import { Product, ImageVariant, GalleryImage, ApplicationImage } from '../types/Product';
 
-// Keep original placeholders as fallbacks
-export const WOOD_TEXTURE_PLACEHOLDER = "data:image/svg+xml,%3Csvg width='400' height='300' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='wood' x='0' y='0' width='40' height='40' patternUnits='userSpaceOnUse'%3E%3Crect width='40' height='40' fill='%23D2691E'/%3E%3Cpath d='M0 20h40M20 0v40' stroke='%23A0522D' stroke-width='1'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23wood)'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23fff' font-family='Arial' font-size='16'%3EWood Texture%3C/text%3E%3C/svg%3E";
-
-export const TEAK_WOOD_PLACEHOLDER = "data:image/svg+xml,%3Csvg width='400' height='300' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='teak' x='0' y='0' width='60' height='40' patternUnits='userSpaceOnUse'%3E%3Crect width='60' height='40' fill='%23CD853F'/%3E%3Cpath d='M0 20h60M30 0v40' stroke='%23A0522D' stroke-width='2'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23teak)'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23fff' font-family='Arial' font-size='18' font-weight='bold'%3ETeak Wood%3C/text%3E%3C/svg%3E";
-
-export const PLYWOOD_PLACEHOLDER = "data:image/svg+xml,%3Csvg width='400' height='300' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100%25' height='100%25' fill='%23DEB887'/%3E%3Cg stroke='%23CD853F' stroke-width='2' fill='none'%3E%3Cpath d='M0 60h400M0 120h400M0 180h400M0 240h400'/%3E%3C/g%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23654321' font-family='Arial' font-size='18' font-weight='bold'%3EPlywood%3C/text%3E%3C/svg%3E";
-
-export const HARDWOOD_PLACEHOLDER = "data:image/svg+xml,%3Csvg width='400' height='300' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='hardwood' x='0' y='0' width='80' height='60' patternUnits='userSpaceOnUse'%3E%3Crect width='80' height='60' fill='%238B4513'/%3E%3Ccircle cx='40' cy='30' r='15' fill='%236B3410' fill-opacity='0.3'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23hardwood)'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23fff' font-family='Arial' font-size='18' font-weight='bold'%3EHardwood%3C/text%3E%3C/svg%3E";
-
-// Simple function to get static image based on category
-export const getPlaceholderImage = (category?: string): string => {
-  switch (category?.toLowerCase()) {
-    case 'teak':
-      return TEAK_WOOD_IMAGE;
-    case 'plywood':
-      return PLYWOOD_IMAGE;
-    case 'hardwood':
-      return HARDWOOD_IMAGE;
-    default:
-      return WOOD_TEXTURE_IMAGE;
+/**
+ * Image optimization configuration
+ */
+const IMAGE_CONFIG = {
+  // Image sizes for different use cases
+  sizes: {
+    hero: { width: 800, height: 600 },
+    gallery: { width: 600, height: 400 },
+    thumbnail: { width: 200, height: 150 },
+    detail: { width: 400, height: 300 },
+    application: { width: 500, height: 350 }
+  },
+  
+  // Quality settings
+  quality: {
+    webp: 85,
+    jpeg: 90
+  },
+  
+  // Lazy loading configuration
+  lazyLoading: {
+    rootMargin: '50px',
+    threshold: 0.1
+  },
+  
+  // Placeholder configuration
+  placeholder: {
+    backgroundColor: '#f3f4f6',
+    textColor: '#6b7280',
+    fontSize: '14px'
   }
 };
 
-// Synchronous version for initial render (returns placeholder, then updates)
-export const getPlaceholderImageSync = (category?: string): string => {
-  switch (category?.toLowerCase()) {
-    case 'teak':
-      return TEAK_WOOD_IMAGE;
-    case 'plywood':
-      return PLYWOOD_IMAGE;
-    case 'hardwood':
-      return HARDWOOD_IMAGE;
-    default:
-      return WOOD_TEXTURE_IMAGE;
-  }
-};
+/**
+ * Image format support detection
+ */
+class ImageFormatSupport {
+  private static webpSupported: boolean | null = null;
+  private static avifSupported: boolean | null = null;
 
-// Image error handler with fallback to placeholders
-export const handleImageError = (event: React.SyntheticEvent<HTMLImageElement>, category?: string) => {
-  const img = event.currentTarget;
+  /**
+   * Detects WebP support
+   */
+  static async detectWebPSupport(): Promise<boolean> {
+    if (this.webpSupported !== null) {
+      return this.webpSupported;
+    }
 
-  // Fallback to placeholder if static image fails to load
-  switch (category?.toLowerCase()) {
-    case 'teak':
-      img.src = TEAK_WOOD_PLACEHOLDER;
-      break;
-    case 'plywood':
-      img.src = PLYWOOD_PLACEHOLDER;
-      break;
-    case 'hardwood':
-      img.src = HARDWOOD_PLACEHOLDER;
-      break;
-    default:
-      img.src = WOOD_TEXTURE_PLACEHOLDER;
-  }
-};
-
-// Function to check if static images exist
-export const checkStaticImages = (): { [key: string]: boolean } => {
-  const images = ['wood-texture.svg'];
-  const results: { [key: string]: boolean } = {};
-
-  images.forEach(imageName => {
-    const img = new Image();
-    img.onload = () => results[imageName] = true;
-    img.onerror = () => results[imageName] = false;
-    img.src = `/images/${imageName}`;
-  });
-
-  return results;
-};
-
-// Function to get image info
-export const getImageInfo = (category?: string) => {
-  const imagePath = getPlaceholderImage(category);
-  return {
-    path: imagePath,
-    category: category || 'default',
-    exists: imagePath.startsWith('/images/'), // Static images exist in /images folder
-    isPlaceholder: imagePath.includes('data:image') // SVG placeholders
-  };
-};
-
-// WebP support detection
-export const supportsWebP = (): Promise<boolean> => {
   return new Promise((resolve) => {
     const webP = new Image();
     webP.onload = webP.onerror = () => {
-      resolve(webP.height === 2);
+        this.webpSupported = webP.height === 2;
+        resolve(this.webpSupported);
     };
     webP.src = 'data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6WWgAA/veff/0PP8bA//LwYAAA';
   });
-};
+  }
 
-// Get optimized image with WebP fallback
-export const getOptimizedImage = async (category?: string): Promise<string> => {
-  const webPSupported = await supportsWebP();
-  
-  if (webPSupported) {
-    switch (category?.toLowerCase()) {
-      case 'teak':
-        return TEAK_WOOD_IMAGE_WEBP;
-      case 'plywood':
-        return PLYWOOD_IMAGE_WEBP;
-      case 'hardwood':
-        return HARDWOOD_IMAGE_WEBP;
-      default:
-        return getPlaceholderImage(category);
+  /**
+   * Detects AVIF support
+   */
+  static async detectAVIFSupport(): Promise<boolean> {
+    if (this.avifSupported !== null) {
+      return this.avifSupported;
+    }
+
+    return new Promise((resolve) => {
+      const avif = new Image();
+      avif.onload = avif.onerror = () => {
+        this.avifSupported = avif.height === 2;
+        resolve(this.avifSupported);
+      };
+      avif.src = 'data:image/avif;base64,AAAAIGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZk1BMUIAAADybWV0YQAAAAAAAAAoaGRscgAAAAAAAAAAcGljdAAAAAAAAAAAAAAAAGxpYmF2aWYAAAAADnBpdG0AAAAAAAEAAAAeaWxvYwAAAABEAAABAAEAAAABAAABGgAAABcAAAAoaWluZgAAAAAAAQAAABppbmZlAgAAAAABAABhdjAxQ29sb3IAAAAAamlwcnAAAABLaXBjbwAAABRpc3BlAAAAAAAAAAEAAAABAAAAEHBpeGkAAAAAAwgICAAAAAxhdjFDgQAMAAAAABNjb2xybmNseAACAAIABoAAAAAXaXBtYQAAAAAAAAABAAEEAQKDBAAAAB9tZGF0EgAKCBgABogQEAwgMgkfAAAAAAAAP0o=';
+    });
+  }
+
+  /**
+   * Gets the best supported image format
+   */
+  static async getBestFormat(): Promise<'avif' | 'webp' | 'jpeg'> {
+    if (await this.detectAVIFSupport()) {
+      return 'avif';
+    }
+    if (await this.detectWebPSupport()) {
+      return 'webp';
+    }
+    return 'jpeg';
+  }
+}
+
+/**
+ * Image lazy loading utility
+ */
+class LazyImageLoader {
+  private observer: IntersectionObserver | null = null;
+  private loadedImages: Set<string> = new Set();
+
+  constructor() {
+    this.initObserver();
+  }
+
+  private initObserver(): void {
+    if (typeof window === 'undefined' || !('IntersectionObserver' in window)) {
+      return;
+    }
+
+    this.observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            this.loadImage(entry.target as HTMLImageElement);
+            this.observer?.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        rootMargin: IMAGE_CONFIG.lazyLoading.rootMargin,
+        threshold: IMAGE_CONFIG.lazyLoading.threshold
+      }
+    );
+  }
+
+  private async loadImage(img: HTMLImageElement): Promise<void> {
+    const src = img.dataset.src;
+    if (!src || this.loadedImages.has(src)) {
+      return;
+    }
+
+    try {
+      // Check for WebP support
+      const webpSupported = await ImageFormatSupport.detectWebPSupport();
+      const finalSrc = this.getOptimalImageSrc(src, webpSupported);
+      
+      img.src = finalSrc;
+      img.classList.remove('lazy');
+      img.classList.add('loaded');
+      this.loadedImages.add(src);
+    } catch (error) {
+      console.error('Failed to load image:', error);
+      img.classList.add('error');
     }
   }
-  
-  return getPlaceholderImage(category);
+
+  private getOptimalImageSrc(originalSrc: string, webpSupported: boolean): string {
+    if (webpSupported && originalSrc.includes('.jpg')) {
+      return originalSrc.replace('.jpg', '.webp');
+    }
+    return originalSrc;
+  }
+
+  public observe(img: HTMLImageElement): void {
+    if (this.observer) {
+      this.observer.observe(img);
+    } else {
+      // Fallback for browsers without IntersectionObserver
+      this.loadImage(img);
+    }
+  }
+
+  public unobserve(img: HTMLImageElement): void {
+    if (this.observer) {
+      this.observer.unobserve(img);
+    }
+  }
+
+  public disconnect(): void {
+    if (this.observer) {
+      this.observer.disconnect();
+    }
+  }
+}
+
+/**
+ * Image optimization utility
+ */
+class ImageOptimizer {
+  /**
+   * Generates responsive image sources
+   */
+  static generateResponsiveSources(basePath: string, imageName: string): {
+    webp: string[];
+    jpeg: string[];
+    sizes: string;
+  } {
+    const webpSources: string[] = [];
+    const jpegSources: string[] = [];
+    const sizes = '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw';
+
+    // Generate different sizes
+    const sizes_config = [
+      { width: 400, suffix: '400w' },
+      { width: 600, suffix: '600w' },
+      { width: 800, suffix: '800w' },
+      { width: 1200, suffix: '1200w' }
+    ];
+
+    sizes_config.forEach(({ width, suffix }) => {
+      webpSources.push(`${basePath}/${imageName}-${suffix}.webp ${width}w`);
+      jpegSources.push(`${basePath}/${imageName}-${suffix}.jpg ${width}w`);
+    });
+
+    return {
+      webp: webpSources,
+      jpeg: jpegSources,
+      sizes
+    };
+  }
+
+  /**
+   * Generates image placeholder
+   */
+  static generatePlaceholder(width: number, height: number, text: string = ''): string {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    
+    if (!ctx) {
+      return '';
+    }
+
+    canvas.width = width;
+    canvas.height = height;
+
+    // Fill background
+    ctx.fillStyle = IMAGE_CONFIG.placeholder.backgroundColor;
+    ctx.fillRect(0, 0, width, height);
+
+    // Add text if provided
+    if (text) {
+      ctx.fillStyle = IMAGE_CONFIG.placeholder.textColor;
+      ctx.font = `${IMAGE_CONFIG.placeholder.fontSize} Arial`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(text, width / 2, height / 2);
+    }
+
+    return canvas.toDataURL('image/jpeg', 0.1);
+  }
+
+  /**
+   * Preloads critical images
+   */
+  static preloadImages(urls: string[]): void {
+    urls.forEach(url => {
+      const link = document.createElement('link');
+      link.rel = 'preload';
+      link.as = 'image';
+      link.href = url;
+      document.head.appendChild(link);
+    });
+  }
+
+  /**
+   * Generates image alt text
+   */
+  static generateAltText(product: Product, imageType: string, index?: number): string {
+    const baseText = `${product.name} timber`;
+    
+    switch (imageType) {
+      case 'hero':
+        return `${baseText} sample showing ${product.specifications.color} color and ${product.specifications.grainPattern} grain pattern`;
+      case 'gallery':
+        return `${baseText} ${index ? `view ${index}` : 'detail view'} showing natural wood characteristics`;
+      case 'grain':
+        return `Close-up of ${baseText} grain pattern showing ${product.specifications.texture} texture`;
+      case 'cross-section':
+        return `Cross-section view of ${baseText} showing internal structure and density`;
+      case 'application':
+        return `${baseText} being used in ${product.applications.primary[0] || 'construction'} application`;
+      default:
+        return baseText;
+    }
+  }
+}
+
+/**
+ * Image gallery utility
+ */
+class ImageGallery {
+  private currentIndex: number = 0;
+  private images: GalleryImage[] = [];
+  private onImageChange?: (index: number) => void;
+
+  constructor(images: GalleryImage[], onImageChange?: (index: number) => void) {
+    this.images = images;
+    this.onImageChange = onImageChange;
+  }
+
+  public getCurrentImage(): GalleryImage | null {
+    return this.images[this.currentIndex] || null;
+  }
+
+  public getNextImage(): GalleryImage | null {
+    const nextIndex = (this.currentIndex + 1) % this.images.length;
+    return this.images[nextIndex] || null;
+  }
+
+  public getPreviousImage(): GalleryImage | null {
+    const prevIndex = (this.currentIndex - 1 + this.images.length) % this.images.length;
+    return this.images[prevIndex] || null;
+  }
+
+  public goToNext(): void {
+    this.currentIndex = (this.currentIndex + 1) % this.images.length;
+    this.onImageChange?.(this.currentIndex);
+  }
+
+  public goToPrevious(): void {
+    this.currentIndex = (this.currentIndex - 1 + this.images.length) % this.images.length;
+    this.onImageChange?.(this.currentIndex);
+  }
+
+  public goToIndex(index: number): void {
+    if (index >= 0 && index < this.images.length) {
+      this.currentIndex = index;
+      this.onImageChange?.(this.currentIndex);
+    }
+  }
+
+  public getTotalImages(): number {
+    return this.images.length;
+  }
+
+  public getCurrentIndex(): number {
+    return this.currentIndex;
+  }
+}
+
+/**
+ * Image zoom utility
+ */
+class ImageZoom {
+  private isZoomed: boolean = false;
+  private originalTransform: string = '';
+  private zoomLevel: number = 2;
+
+  public zoomIn(img: HTMLImageElement): void {
+    if (this.isZoomed) return;
+
+    this.originalTransform = img.style.transform;
+    img.style.transform = `scale(${this.zoomLevel})`;
+    img.style.cursor = 'zoom-out';
+    img.style.transition = 'transform 0.3s ease';
+    this.isZoomed = true;
+  }
+
+  public zoomOut(img: HTMLImageElement): void {
+    if (!this.isZoomed) return;
+
+    img.style.transform = this.originalTransform;
+    img.style.cursor = 'zoom-in';
+    this.isZoomed = false;
+  }
+
+  public toggleZoom(img: HTMLImageElement): void {
+    if (this.isZoomed) {
+      this.zoomOut(img);
+    } else {
+      this.zoomIn(img);
+    }
+  }
+
+  public setZoomLevel(level: number): void {
+    this.zoomLevel = Math.max(1, Math.min(5, level));
+  }
+}
+
+/**
+ * Image compression utility
+ */
+class ImageCompressor {
+  /**
+   * Compresses an image file
+   */
+  static async compressImage(
+    file: File, 
+    maxWidth: number = 800, 
+    quality: number = 0.8
+  ): Promise<Blob> {
+    return new Promise((resolve, reject) => {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      const img = new Image();
+
+      img.onload = () => {
+        // Calculate new dimensions
+        let { width, height } = img;
+        if (width > maxWidth) {
+          height = (height * maxWidth) / width;
+          width = maxWidth;
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+
+        // Draw and compress
+        ctx?.drawImage(img, 0, 0, width, height);
+        canvas.toBlob(
+          (blob) => {
+            if (blob) {
+              resolve(blob);
+            } else {
+              reject(new Error('Failed to compress image'));
+            }
+          },
+          'image/jpeg',
+          quality
+        );
+      };
+
+      img.onerror = () => reject(new Error('Failed to load image'));
+      img.src = URL.createObjectURL(file);
+    });
+  }
+
+  /**
+   * Converts image to WebP format
+   */
+  static async convertToWebP(file: File, quality: number = 0.8): Promise<Blob> {
+    return new Promise((resolve, reject) => {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      const img = new Image();
+
+      img.onload = () => {
+        canvas.width = img.width;
+        canvas.height = img.height;
+        ctx?.drawImage(img, 0, 0);
+
+        canvas.toBlob(
+          (blob) => {
+            if (blob) {
+              resolve(blob);
+            } else {
+              reject(new Error('Failed to convert to WebP'));
+            }
+          },
+          'image/webp',
+          quality
+        );
+      };
+
+      img.onerror = () => reject(new Error('Failed to load image'));
+      img.src = URL.createObjectURL(file);
+    });
+  }
+}
+
+/**
+ * Image loading state manager
+ */
+class ImageLoadingState {
+  private loadingStates: Map<string, 'loading' | 'loaded' | 'error'> = new Map();
+
+  public setLoading(src: string): void {
+    this.loadingStates.set(src, 'loading');
+  }
+
+  public setLoaded(src: string): void {
+    this.loadingStates.set(src, 'loaded');
+  }
+
+  public setError(src: string): void {
+    this.loadingStates.set(src, 'error');
+  }
+
+  public getState(src: string): 'loading' | 'loaded' | 'error' | undefined {
+    return this.loadingStates.get(src);
+  }
+
+  public isLoading(src: string): boolean {
+    return this.loadingStates.get(src) === 'loading';
+  }
+
+  public isLoaded(src: string): boolean {
+    return this.loadingStates.get(src) === 'loaded';
+  }
+
+  public hasError(src: string): boolean {
+    return this.loadingStates.get(src) === 'error';
+  }
+}
+
+/**
+ * Utility functions for image handling
+ */
+export const imageUtils = {
+  /**
+   * Gets the optimal image source based on browser support
+   */
+  async getOptimalImageSrc(webpSrc: string, jpegSrc: string): Promise<string> {
+    const webpSupported = await ImageFormatSupport.detectWebPSupport();
+    return webpSupported ? webpSrc : jpegSrc;
+  },
+
+  /**
+   * Generates image dimensions for responsive loading
+   */
+  generateImageDimensions(width: number, height: number): {
+    aspectRatio: number;
+    sizes: string;
+  } {
+    const aspectRatio = width / height;
+    const sizes = '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw';
+    
+    return { aspectRatio, sizes };
+  },
+
+  /**
+   * Validates image URL
+   */
+  isValidImageUrl(url: string): boolean {
+    try {
+      new URL(url);
+      return /\.(jpg|jpeg|png|webp|avif)$/i.test(url);
+    } catch {
+      return false;
+    }
+  },
+
+  /**
+   * Generates image fallback
+   */
+  generateFallback(product: Product): string {
+    return `/images/products/${product.slug}/placeholder.jpg`;
+  },
+
+  /**
+   * Calculates image loading priority
+   */
+  getImagePriority(imageType: string, index: number = 0): 'high' | 'low' {
+    if (imageType === 'hero' || (imageType === 'gallery' && index === 0)) {
+      return 'high';
+    }
+    return 'low';
+  }
 };
 
-// Lazy loading image component props
-export const getLazyImageProps = (category?: string) => {
-  return {
-    loading: 'lazy' as const,
-    decoding: 'async' as const,
-    alt: `${category || 'Wood'} product image`,
-    onError: (event: React.SyntheticEvent<HTMLImageElement>) => 
-      handleImageError(event, category)
+/**
+ * Get placeholder image for a given category
+ */
+export function getPlaceholderImage(category: string): string {
+  const categoryMap: Record<string, string> = {
+    'teak': '/images/placeholder/teak-placeholder.jpg',
+    'plywood': '/images/placeholder/plywood-placeholder.jpg',
+    'hardwood': '/images/placeholder/hardwood-placeholder.jpg',
+    'wood': '/images/placeholder/wood-placeholder.jpg',
+    'default': '/images/placeholder/default-placeholder.jpg'
   };
+  
+  return categoryMap[category.toLowerCase()] || categoryMap.default;
+}
+
+/**
+ * Handle image loading errors
+ */
+export function handleImageError(event: any, category: string = 'default'): void {
+  if (event.target) {
+    event.target.src = getPlaceholderImage(category);
+    event.target.alt = `Placeholder image for ${category}`;
+  }
+}
+
+// Export all utilities
+export {
+  IMAGE_CONFIG,
+  ImageFormatSupport,
+  LazyImageLoader,
+  ImageOptimizer,
+  ImageGallery,
+  ImageZoom,
+  ImageCompressor,
+  ImageLoadingState
 };

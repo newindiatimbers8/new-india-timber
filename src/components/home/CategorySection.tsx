@@ -18,7 +18,7 @@ const categories = [
     id: "teak",
     title: "Premium Teak Wood",
     description: "Explore our collection of Burma, Ghana, Brazilian, and Indian Sal teak wood options.",
-    image: getPlaceholderImage("teak"),
+    image: "/images/teak-wood.jpg",
     link: "/products?category=teak",
     features: ["Premium Quality", "Certified", "Durable"],
     badge: "Most Popular"
@@ -27,7 +27,7 @@ const categories = [
     id: "plywood",
     title: "Quality Plywood",
     description: "Century Ply Sainik MR, Marine, Laminated, and Waterproof plywood solutions.",
-    image: getPlaceholderImage("plywood"),
+    image: "/images/plywood.jpg",
     link: "/products?category=plywood",
     features: ["Water Resistant", "Strong", "Versatile"],
     badge: "Best Seller"
@@ -36,7 +36,7 @@ const categories = [
     id: "hardwood",
     title: "Hardwood Logs",
     description: "Various hardwood logs perfect for custom projects and specialized needs.",
-    image: getPlaceholderImage("hardwood"),
+    image: "/images/hardwood-logs.jpg",
     link: "/products?category=hardwood",
     features: ["Natural", "Customizable", "Premium"],
     badge: "Premium"

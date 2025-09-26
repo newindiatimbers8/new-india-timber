@@ -9,10 +9,51 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { SlidersHorizontal, X, ArrowRight } from "lucide-react";
-import { getPlaceholderImage } from "../utils/imageUtils";
 import { cn } from "@/lib/utils";
 import { useProducts } from "../hooks/useProducts";
-import type { Product } from "../types/product";
+// Define a compatible Product interface for the products.json structure
+interface TimberProduct {
+  id: string;
+  name: string;
+  category: string;
+  grade: string;
+  description: string;
+  specifications: {
+    grade?: string;
+    [key: string]: any;
+  };
+  pricing: {
+    [key: string]: any;
+  };
+  images: Array<{
+    id: string;
+    productId: string;
+    url: string;
+    altText: string;
+    context: string;
+    sequence: number;
+    dimensions: {
+      [key: string]: any;
+    };
+    metadata: {
+      [key: string]: any;
+    };
+    isActive: boolean;
+    isPlaceholder: boolean;
+  }>;
+  isActive: boolean;
+  tags?: string[];
+  seo: {
+    [key: string]: any;
+  };
+  benefits?: string[];
+  applications?: string[];
+  serviceAreas?: string[];
+  createdAt: string;
+  updatedAt: string;
+  primaryImage: string;
+  stockStatus?: string;
+}
 import { Helmet } from "react-helmet-async";
 import { generateProductsStructuredData } from "@/services/seo";
 
@@ -20,7 +61,7 @@ import { generateProductsStructuredData } from "@/services/seo";
 const ProductsPage = () => {
   const [searchParams] = useSearchParams();
   const { products: dbProducts, loading, error, getProductsByCategory } = useProducts();
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<TimberProduct[]>([]);
   const [activeCategory, setActiveCategory] = useState<string>("all");
   const [activeFilters, setActiveFilters] = useState<{
     grade: string[];
@@ -47,7 +88,7 @@ const ProductsPage = () => {
     
     // Set initial filtered products from database
     if (dbProducts.length > 0) {
-      setFilteredProducts(dbProducts);
+      setFilteredProducts(dbProducts as unknown as TimberProduct[]);
     }
   }, [dbProducts, categoryParam]);
 
@@ -80,14 +121,14 @@ const ProductsPage = () => {
       });
     }
     
-    setFilteredProducts(filtered);
+    setFilteredProducts(filtered as unknown as TimberProduct[]);
   }, [dbProducts, gradeParam, categoryParam, typeParam]);
   
   const handleCategoryChange = async (category: string) => {
     setActiveCategory(category);
     
     if (category === "all") {
-      setFilteredProducts(dbProducts);
+      setFilteredProducts(dbProducts as unknown as TimberProduct[]);
     } else {
       // Fetch products by category from database
       try {
@@ -96,12 +137,12 @@ const ProductsPage = () => {
       } catch {
         // Fallback to filtering existing products
         const categoryFiltered = dbProducts.filter(p => p.category === category);
-        setFilteredProducts(categoryFiltered);
+        setFilteredProducts(categoryFiltered as unknown as TimberProduct[]);
       }
     }
   };
   
-  const applyFilters = useCallback((baseProducts: Product[] = filteredProducts) => {
+  const applyFilters = useCallback((baseProducts: TimberProduct[]) => {
     let filtered = [...baseProducts];
     
     // Apply grade filter
@@ -135,8 +176,8 @@ const ProductsPage = () => {
       });
     }
     
-    setFilteredProducts(filtered);
-  }, [activeFilters, filteredProducts]);
+    setFilteredProducts(filtered as unknown as TimberProduct[]);
+  }, [activeFilters]);
   
   const toggleFilter = (type: keyof typeof activeFilters, value: string) => {
     if (type === 'priceRange') {
@@ -178,9 +219,9 @@ const ProductsPage = () => {
   // Apply filters whenever activeFilters changes (only for manual filter changes, not URL params)
   useEffect(() => {
     if (dbProducts.length > 0 && !categoryParam && !gradeParam) {
-      applyFilters(dbProducts);
+      applyFilters(dbProducts as unknown as TimberProduct[]);
     }
-  }, [activeFilters, dbProducts, applyFilters, categoryParam, gradeParam]);
+  }, [activeFilters, dbProducts, categoryParam, gradeParam]);
   
   return (
     <Layout>
@@ -194,79 +235,113 @@ const ProductsPage = () => {
           {JSON.stringify(generateProductsStructuredData())}
         </script>
       </Helmet>
-      <div className="container mx-auto py-6 md:py-12 px-4">
-        {/* Mobile-First Header */}
-        <div className="text-center mb-6 md:mb-12">
-          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-2 md:mb-4">Our Products</h1>
-          <p className="text-base md:text-lg text-gray-600 max-w-3xl mx-auto">
-            Browse our extensive collection of premium timber products
-            {gradeParam && (
-              <span> in {formatGradeLabel(gradeParam)} grade</span>
-            )}
-          </p>
+      <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50">
+        {/* Hero Section */}
+        <div className="relative bg-gradient-to-r from-timber-800 via-timber-700 to-timber-600 text-white py-16 md:py-24">
+          <div className="absolute inset-0 bg-black/20"></div>
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="text-center max-w-4xl mx-auto">
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6">
+                Premium Timber Products
+              </h1>
+              <p className="text-lg md:text-xl text-timber-100 mb-6 md:mb-8">
+                Discover our extensive collection of premium teak, plywood, and hardwood solutions
+                {gradeParam && (
+                  <span className="block mt-2 text-timber-200">
+                    in {formatGradeLabel(gradeParam)} grade
+                  </span>
+                )}
+              </p>
+              <div className="flex flex-wrap justify-center gap-4">
+                <Badge variant="secondary" className="bg-white/20 text-white border-white/30 px-4 py-2">
+                  ✓ FSC Certified
+                </Badge>
+                <Badge variant="secondary" className="bg-white/20 text-white border-white/30 px-4 py-2">
+                  ✓ 25+ Years Experience
+                </Badge>
+                <Badge variant="secondary" className="bg-white/20 text-white border-white/30 px-4 py-2">
+                  ✓ Premium Quality
+                </Badge>
+              </div>
+            </div>
+          </div>
         </div>
+
+        <div className="container mx-auto py-8 md:py-12 px-4">
         
         {/* Wood Directory Section */}
-        <div className="mb-12">
-          <div className="text-center mb-8">
-            <h2 className="text-2xl md:text-3xl font-bold mb-4">Wood Directory</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
+        <div className="mb-16">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-timber-800">Featured Products</h2>
+            <p className="text-gray-600 max-w-3xl mx-auto text-lg">
               Explore our comprehensive collection of premium wood types with detailed specifications, 
-              comparisons, and expert guidance.
+              comparisons, and expert guidance from our workshop.
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
             {dbProducts.slice(0, 8).map((product) => (
-              <Card key={product.id} className="group hover:shadow-lg transition-shadow duration-300">
+              <Card key={product.id} className="group hover:shadow-xl transition-all duration-300 border-0 bg-white/80 backdrop-blur-sm">
                 <CardHeader className="pb-3">
-                  <div className="flex justify-between items-start mb-2">
+                  <div className="flex justify-between items-start mb-3">
                     <Badge
                       variant={product.grade === 'premium' ? 'default' : 'secondary'}
-                      className="text-xs"
+                      className={`text-xs font-semibold ${
+                        product.grade === 'premium' 
+                          ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white' 
+                          : 'bg-gray-100 text-gray-700'
+                      }`}
                     >
                       {product.grade.toUpperCase()}
                     </Badge>
-                    <Badge variant="outline" className="text-xs">
+                    <Badge variant="outline" className="text-xs border-timber-300 text-timber-700">
                       {product.category.toUpperCase()}
                     </Badge>
                   </div>
-                  <CardTitle className="text-lg group-hover:text-timber-600 transition-colors">
+                  <CardTitle className="text-lg group-hover:text-timber-600 transition-colors font-semibold">
                     {product.name}
                   </CardTitle>
-                  <p className="text-sm text-gray-600 line-clamp-2">
+                  <p className="text-sm text-gray-600 line-clamp-2 leading-relaxed">
                     {product.description || product.name}
                   </p>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   {/* Product Image */}
-                  <div className="aspect-square bg-gray-100 rounded-lg flex items-center justify-center">
+                  <div className="aspect-square bg-gradient-to-br from-amber-50 to-orange-50 rounded-xl overflow-hidden shadow-inner">
                     {product.images && product.images.length > 0 ? (
                       <img
-                        src={product.images[0]}
+                        src={product.images[0].url}
                         alt={product.name}
-                        className="w-full h-full object-cover rounded-lg"
+                        className="w-full h-full object-cover rounded-xl transition-transform duration-500 group-hover:scale-105"
                         onError={(e) => {
                           const target = e.target as HTMLImageElement;
-                          target.src = getPlaceholderImage(product.name);
+                          target.src = '/images/teak-wood.jpg';
                         }}
                       />
                     ) : (
-                      <div className="text-gray-400 text-sm">No image</div>
+                      <div className="w-full h-full flex items-center justify-center text-gray-400">
+                        <div className="text-center">
+                          <div className="text-4xl mb-2">🪵</div>
+                          <div className="text-sm">Workshop Image</div>
+                        </div>
+                      </div>
                     )}
                   </div>
 
                   {/* Pricing */}
-                  <div className="text-center">
-                    <div className="text-lg font-semibold text-green-600">
+                  <div className="text-center bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg p-3">
+                    <div className="text-lg font-bold text-green-700">
                       Contact for Price
+                    </div>
+                    <div className="text-xs text-green-600 mt-1">
+                      Custom quotes available
                     </div>
                   </div>
 
                   {/* CTA */}
                   <Button
                     asChild
-                    className="w-full bg-timber-600 hover:bg-timber-700 group-hover:bg-timber-700 transition-colors"
+                    className="w-full bg-gradient-to-r from-timber-600 to-timber-700 hover:from-timber-700 hover:to-timber-800 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
                     size="sm"
                   >
                     <Link to={`/products/${product.id}`}>
@@ -280,7 +355,7 @@ const ProductsPage = () => {
           </div>
           
           <div className="text-center">
-            <Button asChild variant="outline" size="lg">
+            <Button asChild variant="outline" size="lg" className="border-2 border-timber-300 text-timber-700 hover:bg-timber-50 hover:border-timber-400 font-semibold px-8 py-3">
               <Link to="/products/wood/burma-teak">
                 Explore Full Wood Directory
                 <ArrowRight className="ml-2 h-5 w-5" />
@@ -289,21 +364,20 @@ const ProductsPage = () => {
           </div>
         </div>
         
-        {/* Mobile Filter Controls */}
-        <div className="mb-4 md:mb-6">
-          {/* Filter Button & Active Filters Row */}
-          <div className="flex items-center gap-2 mb-3">
+        {/* Enhanced Filter Controls */}
+        <div className="mb-8 md:mb-10 bg-white/60 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/20">
+          <div className="flex items-center gap-2 mb-4">
             <Sheet open={isFilterSheetOpen} onOpenChange={setIsFilterSheetOpen}>
               <SheetTrigger asChild>
                 <Button 
                   variant="outline" 
                   size="sm" 
-                  className="h-10 px-4 border-2 hover:border-timber-600"
+                  className="h-12 px-6 border-2 border-timber-300 hover:border-timber-500 hover:bg-timber-50 font-semibold text-timber-700"
                 >
                   <SlidersHorizontal className="h-4 w-4 mr-2" />
                   Filters
                   {getActiveFilterCount() > 0 && (
-                    <Badge className="ml-2 bg-timber-600 text-white text-xs">
+                    <Badge className="ml-2 bg-gradient-to-r from-timber-600 to-timber-700 text-white text-xs font-bold">
                       {getActiveFilterCount()}
                     </Badge>
                   )}
@@ -464,20 +538,20 @@ const ProductsPage = () => {
           )}
         </div>
         
-        {/* Mobile-Optimized Category Tabs */}
+        {/* Enhanced Category Tabs */}
         <Tabs defaultValue="all" value={activeCategory} onValueChange={handleCategoryChange}>
-          <div className="mb-6 md:mb-8">
-            <TabsList className="grid w-full grid-cols-2 md:inline-flex md:w-auto h-auto md:h-10">
-              <TabsTrigger value="all" className="text-xs md:text-sm py-2.5 md:py-2">All Products</TabsTrigger>
-              <TabsTrigger value="teak" className="text-xs md:text-sm py-2.5 md:py-2">Teak Wood</TabsTrigger>
-              <TabsTrigger value="plywood" className="text-xs md:text-sm py-2.5 md:py-2">Plywood</TabsTrigger>
-              <TabsTrigger value="hardwood" className="text-xs md:text-sm py-2.5 md:py-2">Hardwood Logs</TabsTrigger>
+          <div className="mb-8 md:mb-10">
+            <TabsList className="grid w-full grid-cols-2 md:inline-flex md:w-auto h-auto md:h-12 bg-white/80 backdrop-blur-sm border border-white/20 shadow-lg rounded-xl p-1">
+              <TabsTrigger value="all" className="text-sm md:text-base py-3 md:py-2 px-4 font-semibold data-[state=active]:bg-gradient-to-r data-[state=active]:from-timber-600 data-[state=active]:to-timber-700 data-[state=active]:text-white rounded-lg transition-all duration-300">All Products</TabsTrigger>
+              <TabsTrigger value="teak" className="text-sm md:text-base py-3 md:py-2 px-4 font-semibold data-[state=active]:bg-gradient-to-r data-[state=active]:from-timber-600 data-[state=active]:to-timber-700 data-[state=active]:text-white rounded-lg transition-all duration-300">Teak Wood</TabsTrigger>
+              <TabsTrigger value="plywood" className="text-sm md:text-base py-3 md:py-2 px-4 font-semibold data-[state=active]:bg-gradient-to-r data-[state=active]:from-timber-600 data-[state=active]:to-timber-700 data-[state=active]:text-white rounded-lg transition-all duration-300">Plywood</TabsTrigger>
+              <TabsTrigger value="hardwood" className="text-sm md:text-base py-3 md:py-2 px-4 font-semibold data-[state=active]:bg-gradient-to-r data-[state=active]:from-timber-600 data-[state=active]:to-timber-700 data-[state=active]:text-white rounded-lg transition-all duration-300">Hardwood Logs</TabsTrigger>
             </TabsList>
           </div>
           
           <TabsContent value="all">
             <ProductGrid 
-              products={filteredProducts} 
+              products={filteredProducts as any} 
               loading={loading}
               error={error}
             />
@@ -485,7 +559,7 @@ const ProductsPage = () => {
           
           <TabsContent value="teak">
             <ProductGrid
-              products={filteredProducts.filter(p => p.category === "teak")}
+              products={filteredProducts.filter(p => p.category === "teak") as any}
               title="Premium Teak Wood"
               description="Explore our collection of Burma, Ghana, Brazilian, and Indian Sal teak wood options."
               loading={loading}
@@ -495,7 +569,7 @@ const ProductsPage = () => {
           
           <TabsContent value="plywood">
             <ProductGrid
-              products={filteredProducts.filter(p => p.category === "plywood")}
+              products={filteredProducts.filter(p => p.category === "plywood") as any}
               title="Quality Plywood"
               description="Century Ply Sainik MR, Marine, Laminated, and Waterproof plywood solutions."
               loading={loading}
@@ -505,7 +579,7 @@ const ProductsPage = () => {
           
           <TabsContent value="hardwood">
             <ProductGrid
-              products={filteredProducts.filter(p => p.category === "hardwood")}
+              products={filteredProducts.filter(p => p.category === "hardwood") as any}
               title="Hardwood Logs"
               description="Various hardwood logs perfect for custom projects and specialized needs."
               loading={loading}
@@ -513,6 +587,7 @@ const ProductsPage = () => {
             />
           </TabsContent>
         </Tabs>
+        </div>
       </div>
     </Layout>
   );

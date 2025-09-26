@@ -33,7 +33,7 @@ const CustomerSegment = () => {
       id: "premium",
       title: "Premium Quality",
       description: "High-end wood products for long-term investment and premium aesthetics.",
-      image: getPlaceholderImage("teak"),
+      image: "/images/teak-wood.jpg",
       icon: Star,
       benefits: ["Premium Grade", "Long-lasting", "Investment Quality"]
     },
@@ -41,7 +41,7 @@ const CustomerSegment = () => {
       id: "budget",
       title: "Budget Friendly",
       description: "Quality wood products at affordable prices without compromising durability.",
-      image: getPlaceholderImage("plywood"),
+      image: "/images/plywood.jpg",
       icon: Target,
       benefits: ["Cost-effective", "Quality Assured", "Value for Money"]
     }
@@ -52,7 +52,7 @@ const CustomerSegment = () => {
       id: "residential",
       title: "Residential",
       description: "Perfect for homes, apartments, and personal living spaces.",
-      image: getPlaceholderImage("wood"),
+      image: "/images/hardwood-logs.jpg",
       icon: Home,
       benefits: ["Home Projects", "Personal Use", "Interior Design"]
     },
@@ -60,7 +60,7 @@ const CustomerSegment = () => {
       id: "commercial",
       title: "Commercial",
       description: "Designed for offices, retail spaces, and business environments.",
-      image: getPlaceholderImage("wood"),
+      image: "/images/teak-wood.jpg",
       icon: Building2,
       benefits: ["Business Use", "Professional", "High Traffic"]
     }
@@ -100,7 +100,7 @@ const CustomerSegment = () => {
               Customer Preferences
             </Badge>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold mb-4 md:mb-6 text-foreground">
-              Find Your Perfect Wood Solution
+              Tailored Solutions for Every Need
             </h2>
             <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
               Tell us about your needs, and we'll help you find

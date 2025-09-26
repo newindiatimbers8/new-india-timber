@@ -1,0 +1,195 @@
+{
+  "id": "australia-honne-wood",
+  "name": "Australia Honne Wood",
+  "slug": "australia-honne-wood",
+  "scientificName": "Pterocarpus marsupium",
+  "category": "imported",
+  "origin": "Australia",
+  "description": "Australia Honne, scientifically known as Pterocarpus marsupium, is a premium imported hardwood that offers superior quality compared to local varieties. This timber is characterized by its golden-yellow to light brown color with darker streaks, creating an attractive grain pattern.",
+  "shortDescription": "Premium imported hardwood with golden-yellow to light brown color and superior quality characteristics.",
+  "keyFeatures": [
+    "Golden-yellow to light brown color",
+    "Attractive grain pattern with darker streaks",
+    "Excellent working properties",
+    "Good dimensional stability",
+    "Natural resistance to termites and decay",
+    "Superior quality compared to local varieties"
+  ],
+  "specifications": {
+    "density": {
+      "min": 700,
+      "max": 800
+    },
+    "grainPattern": "straight",
+    "texture": "medium",
+    "color": "Golden-yellow to light brown",
+    "workability": "excellent",
+    "durability": "excellent",
+    "moistureResistance": "good",
+    "insectResistance": "excellent"
+  },
+  "applications": {
+    "primary": [
+      "Furniture making",
+      "Interior paneling",
+      "Decorative work",
+      "High-end construction projects"
+    ],
+    "secondary": [
+      "Cabinetry",
+      "Architectural millwork",
+      "Luxury furniture",
+      "Decorative panels"
+    ],
+    "notRecommended": [
+      "Outdoor applications without treatment",
+      "Marine applications",
+      "Heavy structural work"
+    ]
+  },
+  "qualityGrades": ["A", "B"],
+  "sustainability": {
+    "source": "plantation",
+    "certification": "FSC Certified"
+  },
+  "pricing": {
+    "basePrice": 0,
+    "unit": "cubic-foot",
+    "bulkDiscounts": [
+      {
+        "minQuantity": 50,
+        "discountPercentage": 8
+      },
+      {
+        "minQuantity": 200,
+        "discountPercentage": 15
+      }
+    ]
+  },
+  "availability": {
+    "status": "in-stock",
+    "leadTime": "2-3 weeks",
+    "seasonalAvailability": ["Year-round"]
+  },
+  "images": {
+    "hero": {
+      "webp": "/images/products/australia-honne-wood/hero.webp",
+      "jpg": "/images/products/australia-honne-wood/hero.jpg",
+      "alt": "Premium Australia Honne Wood showing golden-yellow color and attractive grain pattern"
+    },
+    "gallery": [
+      {
+        "webp": "/images/products/australia-honne-wood/gallery-1.webp",
+        "jpg": "/images/products/australia-honne-wood/gallery-1.jpg",
+        "alt": "Australia Honne Wood grain pattern detail",
+        "caption": "Beautiful grain pattern with darker streaks"
+      },
+      {
+        "webp": "/images/products/australia-honne-wood/gallery-2.webp",
+        "jpg": "/images/products/australia-honne-wood/gallery-2.jpg",
+        "alt": "Australia Honne Wood in furniture application",
+        "caption": "Perfect for luxury furniture making"
+      },
+      {
+        "webp": "/images/products/australia-honne-wood/gallery-3.webp",
+        "jpg": "/images/products/australia-honne-wood/gallery-3.jpg",
+        "alt": "Australia Honne Wood finish quality",
+        "caption": "Excellent finishing properties"
+      }
+    ],
+    "details": {
+      "grain": {
+        "webp": "/images/products/australia-honne-wood/grain.webp",
+        "jpg": "/images/products/australia-honne-wood/grain.jpg",
+        "alt": "Australia Honne Wood grain texture detail"
+      },
+      "crossSection": {
+        "webp": "/images/products/australia-honne-wood/cross-section.webp",
+        "jpg": "/images/products/australia-honne-wood/cross-section.jpg",
+        "alt": "Australia Honne Wood cross-section showing density"
+      }
+    }
+  },
+  "seo": {
+    "metaTitle": "Australia Honne Wood - Premium Imported Hardwood | New India Timbers Bangalore",
+    "metaDescription": "Premium Australia Honne Wood (Pterocarpus marsupium) in Bangalore. Superior quality, excellent workability, and natural resistance. 25+ years experience. Contact for pricing: +91-9886033342",
+    "keywords": [
+      "australia honne wood",
+      "pterocarpus marsupium",
+      "premium imported hardwood",
+      "bangalore timber suppliers",
+      "luxury furniture wood",
+      "interior paneling",
+      "decorative wood",
+      "high-end construction",
+      "kiln dried timber",
+      "australian timber"
+    ],
+    "canonicalUrl": "https://newindiatimbers.com/products/australia-honne-wood",
+    "ogTitle": "Australia Honne Wood - Premium Imported Hardwood | New India Timbers",
+    "ogDescription": "Premium Australia Honne Wood with superior quality and excellent workability. Perfect for luxury furniture and interior applications.",
+    "ogImage": "/images/products/australia-honne-wood/hero.jpg",
+    "twitterCard": "summary_large_image"
+  },
+  "structuredData": {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Australia Honne Wood",
+    "description": "Premium imported hardwood with golden-yellow to light brown color and superior quality characteristics",
+    "image": [
+      "/images/products/australia-honne-wood/hero.jpg",
+      "/images/products/australia-honne-wood/gallery-1.jpg",
+      "/images/products/australia-honne-wood/gallery-2.jpg"
+    ],
+    "brand": {
+      "@type": "Brand",
+      "name": "New India Timbers"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "Contact for pricing",
+      "priceCurrency": "INR",
+      "availability": "https://schema.org/InStock"
+    },
+    "category": "Imported Hardwood Timber",
+    "material": "Pterocarpus marsupium",
+    "origin": "Australia"
+  },
+  "benefits": [
+    "Superior quality compared to local varieties",
+    "Excellent working properties and dimensional stability",
+    "Natural resistance to termites and decay",
+    "Professional kiln drying process",
+    "Custom sizing available",
+    "Quality certification included"
+  ],
+  "applications": [
+    "Furniture making",
+    "Interior paneling",
+    "Decorative work",
+    "High-end construction projects",
+    "Cabinetry",
+    "Architectural millwork"
+  ],
+  "serviceAreas": [
+    "Bangalore City",
+    "Electronic City",
+    "Whitefield",
+    "Koramangala",
+    "BTM Layout",
+    "Jayanagar",
+    "Indiranagar",
+    "HSR Layout"
+  ],
+  "stockStatus": "in_stock",
+  "weight": 750,
+  "dimensions": {
+    "length": 10,
+    "width": 8,
+    "height": 2,
+    "unit": "feet"
+  },
+  "createdAt": "2024-01-15T00:00:00Z",
+  "updatedAt": "2024-01-15T00:00:00Z"
+}
+

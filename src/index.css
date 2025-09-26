@@ -128,7 +128,42 @@
 }
 
 @layer components {
-  /* Removed gradient text utility for modern flat design */
+  /* Logo styling */
+  .logo-text-primary {
+    @apply transition-colors duration-300;
+  }
+  
+  .logo-text-secondary {
+    @apply transition-colors duration-300;
+  }
+  
+  .logo-text-tagline {
+    @apply transition-opacity duration-300;
+  }
+  
+  /* Logo hover effects */
+  .logo-container:hover .logo-text-primary {
+    @apply text-timber-800;
+  }
+  
+  .logo-container:hover .logo-text-secondary {
+    @apply text-timber-700;
+  }
+  
+  .logo-container:hover .logo-text-tagline {
+    @apply opacity-100;
+  }
+  
+  /* Wood grain text effect */
+  .wood-grain-text {
+    background: linear-gradient(45deg, #8B4513, #A0522D, #654321, #8B4513);
+    background-size: 300% 300%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: woodGrainShift 4s ease-in-out infinite;
+    font-weight: 700;
+  }
   
   .card-hover {
     @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
@@ -237,6 +272,15 @@
     }
     50% {
       box-shadow: 0 0 30px rgba(139, 69, 19, 0.5);
+    }
+  }
+  
+  @keyframes woodGrainShift {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
     }
   }
 }

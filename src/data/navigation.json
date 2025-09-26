@@ -40,7 +40,7 @@
               {
                 "id": "nav-products-teak-burma",
                 "label": "Burma Teak",
-                "url": "/products/wood/burma-teak",
+                "url": "/products/burma-teak-door",
                 "order": 1,
                 "isExternal": false,
                 "isVisible": true,
@@ -49,8 +49,26 @@
               {
                 "id": "nav-products-teak-ghana",
                 "label": "Ghana Teak",
-                "url": "/products/wood/ghana-teak",
+                "url": "/products/ghana-teak-window",
                 "order": 2,
+                "isExternal": false,
+                "isVisible": true,
+                "type": "page"
+              },
+              {
+                "id": "nav-products-teak-benin",
+                "label": "Benin Teak Logs",
+                "url": "/products/benin-teak-logs",
+                "order": 3,
+                "isExternal": false,
+                "isVisible": true,
+                "type": "page"
+              },
+              {
+                "id": "nav-products-teak-tanzania",
+                "label": "Tanzania Teak Wood",
+                "url": "/products/tanzania-teak-wood",
+                "order": 4,
                 "isExternal": false,
                 "isVisible": true,
                 "type": "page"
@@ -69,22 +87,22 @@
             "isVisible": true,
             "children": [
               {
-                "id": "nav-products-plywood-marine",
-                "label": "Marine Grade",
-                "url": "/products?category=plywood&grade=marine",
+                "id": "nav-products-plywood-century",
+                "label": "Century Ply Sainik MR 18mm",
+                "url": "/products/century-ply-sainik-mr-18mm",
                 "order": 1,
                 "isExternal": false,
                 "isVisible": true,
-                "type": "category"
+                "type": "page"
               },
               {
-                "id": "nav-products-plywood-commercial",
-                "label": "Commercial",
-                "url": "/products?category=plywood&grade=commercial",
+                "id": "nav-products-plywood-marine",
+                "label": "Marine Grade",
+                "url": "/products/marine-plywood-19mm",
                 "order": 2,
                 "isExternal": false,
                 "isVisible": true,
-                "type": "category"
+                "type": "page"
               }
             ],
             "type": "category"
@@ -98,6 +116,53 @@
             "order": 3,
             "isExternal": false,
             "isVisible": true,
+            "children": [
+              {
+                "id": "nav-products-hardwood-red-sal",
+                "label": "Red Sal Wood",
+                "url": "/products/red-sal-wood",
+                "order": 1,
+                "isExternal": false,
+                "isVisible": true,
+                "type": "page"
+              },
+              {
+                "id": "nav-products-hardwood-australia-honne",
+                "label": "Australia Honne Wood",
+                "url": "/products/australia-honne-wood",
+                "order": 2,
+                "isExternal": false,
+                "isVisible": true,
+                "type": "page"
+              },
+              {
+                "id": "nav-products-hardwood-red-meranti",
+                "label": "Red Meranti Sal Wood",
+                "url": "/products/red-meranti-sal-wood",
+                "order": 3,
+                "isExternal": false,
+                "isVisible": true,
+                "type": "page"
+              },
+              {
+                "id": "nav-products-hardwood-mahogany",
+                "label": "Mahogany Wood",
+                "url": "/products/mahogany-wood",
+                "order": 4,
+                "isExternal": false,
+                "isVisible": true,
+                "type": "page"
+              },
+              {
+                "id": "nav-products-hardwood-teak-log",
+                "label": "Teak Hardwood Log",
+                "url": "/products/hardwood-log-teak",
+                "order": 5,
+                "isExternal": false,
+                "isVisible": true,
+                "type": "page"
+              }
+            ],
             "type": "category"
           }
         ]

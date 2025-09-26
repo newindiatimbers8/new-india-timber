@@ -58,6 +58,17 @@ export interface ProductType {
 
 // Helper function to convert database WoodProduct to ProductType
 export const convertWoodProductToProductType = (woodProduct: WoodProduct): ProductType => {
+  // Map categories to actual image paths
+  const getCategoryImage = (category: string): string => {
+    const categoryMap: Record<string, string> = {
+      'teak': '/images/teak-wood.jpg',
+      'plywood': '/images/plywood.jpg',
+      'hardwood': '/images/hardwood-logs.jpg',
+      'default': '/images/teak-wood.jpg'
+    };
+    return categoryMap[category.toLowerCase()] || categoryMap.default;
+  };
+
   return {
     id: woodProduct.id,
     title: woodProduct.name,
@@ -69,7 +80,7 @@ export const convertWoodProductToProductType = (woodProduct: WoodProduct): Produ
     color: woodProduct.specifications.grainPattern,
     features: woodProduct.overview.keyBenefits,
     dimensions: undefined, // Not available in current structure
-    image: getPlaceholderImage(woodProduct.category),
+    image: getCategoryImage(woodProduct.category),
     stockStatus: "In Stock", // Default status
     usage: woodProduct.grade === 'premium' ? "own_premium" : "own_budget",
     purpose: "both" // Default purpose
@@ -248,7 +259,7 @@ const ProductGrid = ({ products, title, description, loading, error }: ProductGr
                       : "aspect-square lg:w-1/3 lg:aspect-auto"
                 )}>
                   <img
-                    src={product.image || getPlaceholderImage(product.category)}
+                    src={product.image || '/images/teak-wood.jpg'}
                     alt={product.title}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     onError={(e) => handleImageError(e, product.category)}

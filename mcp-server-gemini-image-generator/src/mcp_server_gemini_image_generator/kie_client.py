@@ -1,6 +1,7 @@
 import asyncio
 import logging
 import os
+import ssl
 import time
 from typing import Dict, List, Optional, Tuple, Any
 import aiohttp
@@ -36,6 +37,11 @@ class KIEAPIClient:
             "output_format": "png",
             "image_size": "auto"
         }
+        
+        # SSL context for macOS compatibility
+        self.ssl_context = ssl.create_default_context()
+        self.ssl_context.check_hostname = False
+        self.ssl_context.verify_mode = ssl.CERT_NONE
     
     async def _test_endpoints(self) -> bool:
         """Test if the API endpoints are accessible."""
@@ -49,7 +55,7 @@ class KIEAPIClient:
             }
         }
         
-        async with aiohttp.ClientSession() as session:
+        async with aiohttp.ClientSession(connector=aiohttp.TCPConnector(ssl=self.ssl_context)) as session:
             try:
                 url = f"{self.base_url}{self.create_task_endpoint}"
                 async with session.post(url, headers=self.headers, json=test_payload) as response:
@@ -100,7 +106,7 @@ class KIEAPIClient:
         if image_urls:
             logger.warning("Image editing is not supported in the current KIE.ai API. Using text-to-image generation only.")
         
-        async with aiohttp.ClientSession() as session:
+        async with aiohttp.ClientSession(connector=aiohttp.TCPConnector(ssl=self.ssl_context)) as session:
             try:
                 url = f"{self.base_url}{self.create_task_endpoint}"
                 async with session.post(url, headers=self.headers, json=payload) as response:
@@ -136,7 +142,7 @@ class KIEAPIClient:
         Raises:
             Exception: If status check fails
         """
-        async with aiohttp.ClientSession() as session:
+        async with aiohttp.ClientSession(connector=aiohttp.TCPConnector(ssl=self.ssl_context)) as session:
             try:
                 url = f"{self.base_url}{self.query_task_endpoint}?taskId={task_id}"
                 async with session.get(url, headers=self.headers) as response:
@@ -241,7 +247,7 @@ class KIEAPIClient:
         image_url = result_urls[0]  # Get first image URL
         
         # Download image data
-        async with aiohttp.ClientSession() as session:
+        async with aiohttp.ClientSession(connector=aiohttp.TCPConnector(ssl=self.ssl_context)) as session:
             async with session.get(image_url) as response:
                 if response.status != 200:
                     raise Exception(f"Failed to download image: {response.status}")

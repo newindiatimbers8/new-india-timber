@@ -129,7 +129,7 @@ const WoodProductPage = () => {
             <div className="aspect-square rounded-lg bg-gray-100 overflow-hidden">
               {product.images && product.images.length > 0 ? (
                 <img
-                  src={product.images[0]}
+                  src={product.images[0].url}
                   alt={product.name}
                   className="w-full h-full object-cover"
                 />
