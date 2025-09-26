@@ -1,20 +1,72 @@
-import { Play, Factory, Users, Award } from "lucide-react";
+import { Play, Factory, Users, Award, Volume2, VolumeX } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/utils";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 const WorkshopVideoSection = () => {
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+  const [showYouTubePlayer, setShowYouTubePlayer] = useState(false);
+  const [isInView, setIsInView] = useState(false);
+  const [autoplayFailed, setAutoplayFailed] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
   const navigate = useNavigate();
+  const videoRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
 
-  const handleVideoLoad = () => {
-    setIsVideoLoaded(true);
-  };
+  // YouTube video ID extracted from the URL
+  const youtubeVideoId = "MdkVvDU-TLs";
+  const youtubeThumbnail = `https://img.youtube.com/vi/${youtubeVideoId}/maxresdefault.jpg`;
 
-  const handleVideoPlay = () => {
+  useEffect(() => {
+    // Auto-load and auto-play the video after a short delay
+    const timer = setTimeout(() => {
+      setIsVideoLoaded(true);
+      setShowYouTubePlayer(true);
+      setIsVideoPlaying(true);
+      
+      // Check if autoplay failed after a delay
+      setTimeout(() => {
+        if (!isVideoPlaying) {
+          setAutoplayFailed(true);
+        }
+      }, 3000);
+    }, 1500);
+
+    return () => clearTimeout(timer);
+  }, [isVideoPlaying]);
+
+  // Intersection Observer for auto-play when in view
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !showYouTubePlayer) {
+          setIsInView(true);
+          // Auto-play when section comes into view
+          setTimeout(() => {
+            setShowYouTubePlayer(true);
+            setIsVideoPlaying(true);
+          }, 500);
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, [showYouTubePlayer]);
+
+  const handlePlayVideo = () => {
+    setShowYouTubePlayer(true);
     setIsVideoPlaying(true);
   };
 
@@ -33,7 +85,7 @@ const WorkshopVideoSection = () => {
   };
 
   return (
-    <section className="relative py-16 md:py-24 overflow-hidden bg-gradient-to-br from-timber-50 to-white">
+    <section ref={sectionRef} className="relative py-16 md:py-24 overflow-hidden bg-gradient-to-br from-timber-50 to-white">
       {/* Enhanced Background Pattern */}
       <div className="absolute inset-0 bg-white">
         <div className="absolute inset-0 opacity-[0.02]">
@@ -74,41 +126,82 @@ const WorkshopVideoSection = () => {
             <Card className="relative bg-card border border-border shadow-xl overflow-hidden group">
               <CardContent className="p-0">
                 <div className="relative aspect-video bg-gradient-to-br from-timber-100 to-timber-200 sm:aspect-[16/9]">
-                  {!isVideoLoaded && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-timber-100 to-timber-200">
-                      <div className="text-center">
-                        <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
-                          <Play className="w-8 h-8 text-primary ml-1" />
+                  {!showYouTubePlayer ? (
+                    <>
+                      {/* YouTube Thumbnail Background */}
+                      <div 
+                        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+                        style={{ backgroundImage: `url(${youtubeThumbnail})` }}
+                      >
+                        <div className="absolute inset-0 bg-black/20" />
+                      </div>
+                      
+                      {/* Loading State */}
+                      {!isVideoLoaded && (
+                        <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-timber-100 to-timber-200">
+                          <div className="text-center">
+                            <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
+                              <Play className="w-8 h-8 text-primary ml-1" />
+                            </div>
+                            <p className="text-timber-600 font-medium">Loading video...</p>
+                          </div>
                         </div>
-                        <p className="text-timber-600 font-medium">Loading video...</p>
+                      )}
+                      
+                      {/* Play Button Overlay */}
+                      <div 
+                        className="absolute inset-0 flex items-center justify-center cursor-pointer"
+                        onClick={handlePlayVideo}
+                      >
+                        <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                          <Play className="w-6 h-6 sm:w-8 sm:h-8 text-primary ml-1" />
+                        </div>
                       </div>
-                    </div>
-                  )}
-                  <video
-                    className={cn(
-                      "w-full h-full object-cover transition-opacity duration-500",
-                      isVideoLoaded ? "opacity-100" : "opacity-0"
-                    )}
-                    controls
-                    preload="metadata"
-                    onLoadedData={handleVideoLoad}
-                    onPlay={handleVideoPlay}
-                    onPause={handleVideoPause}
-                    playsInline
-                    muted
-                    controlsList="nodownload"
-                    disablePictureInPicture
-                  >
-                    <source src="/video/new-india-timber-workshop.mp4" type="video/mp4" />
-                    Your browser does not support the video tag.
-                  </video>
-                  
-                  {/* Play Button Overlay */}
-                  {!isVideoPlaying && (
-                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                      <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-                        <Play className="w-6 h-6 sm:w-8 sm:h-8 text-primary ml-1" />
+                      
+                      {/* Video Title Overlay */}
+                      <div className="absolute bottom-4 left-4 right-4">
+                        <div className="bg-black/70 backdrop-blur-sm rounded-lg p-3">
+                          <p className="text-white font-medium text-sm">New India Timbers Workshop Tour</p>
+                          <p className="text-white/80 text-xs">Click to watch our craftsmanship in action</p>
+                          <p className="text-white/60 text-xs mt-1">Video starts muted - click to unmute</p>
+                        </div>
                       </div>
+                    </>
+                  ) : (
+                    /* YouTube Embed */
+                    <div className="relative w-full h-full">
+                      <iframe
+                        ref={videoRef}
+                        className="w-full h-full"
+                        src={`https://www.youtube.com/embed/${youtubeVideoId}?autoplay=1&mute=1&rel=0&modestbranding=1&showinfo=0&controls=1&loop=1&playlist=${youtubeVideoId}&start=0&enablejsapi=1`}
+                        title="New India Timbers Workshop Tour"
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowFullScreen
+                        loading="eager"
+                      />
+                      
+                      {/* Mute indicator */}
+                      {isMuted && (
+                        <div className="absolute top-4 right-4">
+                          <div className="bg-black/70 backdrop-blur-sm rounded-lg px-3 py-2 flex items-center space-x-2">
+                            <VolumeX className="w-4 h-4 text-white" />
+                            <span className="text-white text-sm font-medium">Muted</span>
+                          </div>
+                        </div>
+                      )}
+                      
+                      {/* Fallback play button if autoplay fails */}
+                      {autoplayFailed && (
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/20">
+                          <button
+                            onClick={handlePlayVideo}
+                            className="w-16 h-16 sm:w-20 sm:h-20 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-300"
+                          >
+                            <Play className="w-6 h-6 sm:w-8 sm:h-8 text-primary ml-1" />
+                          </button>
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>
