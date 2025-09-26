@@ -72,7 +72,7 @@ const Hero = () => {
             {/* Enhanced Description */}
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl text-center lg:text-left animate-slide-up" style={{ animationDelay: '0.8s' }}>
               From premium teak to budget-friendly plywood - we've been crafting
-              <span className="text-primary font-semibold">Bangalore's finest spaces</span> since 2005.
+              <span className="text-primary font-semibold"> Bangalore's finest spaces</span> since 2005.
             </p>
 
             {/* Enhanced Action Buttons */}

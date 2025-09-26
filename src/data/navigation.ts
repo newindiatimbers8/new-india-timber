@@ -174,6 +174,24 @@ export const navigationData: NavigationMenu[] = [
             "isExternal": false,
             "isVisible": true,
             "type": "category"
+          },
+          {
+            "id": "nav-blog-construction",
+            "label": "Construction Guide",
+            "url": "/blog/category/construction-guide",
+            "order": 3,
+            "isExternal": false,
+            "isVisible": true,
+            "type": "category"
+          },
+          {
+            "id": "nav-blog-maintenance",
+            "label": "Maintenance Tips",
+            "url": "/blog/category/maintenance-tips",
+            "order": 4,
+            "isExternal": false,
+            "isVisible": true,
+            "type": "category"
           }
         ],
         "type": "page"
@@ -197,6 +215,99 @@ export const navigationData: NavigationMenu[] = [
         "isExternal": false,
         "isVisible": true,
         "type": "page"
+      },
+      {
+        "id": "nav-estimator",
+        "label": "Price Estimator",
+        "url": "/estimator",
+        "icon": "calculator",
+        "description": "Get instant price estimates for your timber needs",
+        "order": 7,
+        "isExternal": false,
+        "isVisible": true,
+        "type": "page"
+      },
+      {
+        "id": "nav-comparison",
+        "label": "Product Comparison",
+        "url": "/compare",
+        "icon": "git-compare",
+        "description": "Compare different timber products side by side",
+        "order": 8,
+        "isExternal": false,
+        "isVisible": true,
+        "type": "page"
+      },
+      {
+        "id": "nav-dashboard",
+        "label": "My Dashboard",
+        "url": "/dashboard",
+        "icon": "layout-dashboard",
+        "description": "Track your orders and manage your account",
+        "order": 9,
+        "isExternal": false,
+        "isVisible": true,
+        "type": "page"
+      },
+      {
+        "id": "nav-legal",
+        "label": "Legal",
+        "url": "#",
+        "icon": "file-text",
+        "description": "Terms, privacy policy, and legal information",
+        "order": 10,
+        "isExternal": false,
+        "isVisible": true,
+        "type": "category",
+        "children": [
+          {
+            "id": "nav-legal-terms",
+            "label": "Terms of Service",
+            "url": "/terms",
+            "order": 1,
+            "isExternal": false,
+            "isVisible": true,
+            "type": "page"
+          },
+          {
+            "id": "nav-legal-privacy",
+            "label": "Privacy Policy",
+            "url": "/privacy",
+            "order": 2,
+            "isExternal": false,
+            "isVisible": true,
+            "type": "page"
+          },
+          {
+            "id": "nav-legal-refund",
+            "label": "Refund Policy",
+            "url": "/refund",
+            "order": 3,
+            "isExternal": false,
+            "isVisible": true,
+            "type": "page"
+          },
+          {
+            "id": "nav-legal-shipping",
+            "label": "Shipping Policy",
+            "url": "/shipping-policy",
+            "order": 4,
+            "isExternal": false,
+            "isVisible": true,
+            "type": "page"
+          }
+        ]
+      },
+      {
+        "id": "nav-directions",
+        "label": "Get Directions",
+        "url": "https://share.google/wy5zsZJlZLGB41zl7",
+        "icon": "map-pin",
+        "description": "Find our workshop location",
+        "order": 11,
+        "isExternal": true,
+        "isVisible": true,
+        "type": "external"
       }
     ],
     "settings": {
