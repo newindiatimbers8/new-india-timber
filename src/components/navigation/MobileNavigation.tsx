@@ -46,6 +46,15 @@ export function MobileNavigation({ menu }: MobileNavigationProps) {
       return;
     }
 
+    // If item has a URL, navigate to it
+    if (item.url && item.url !== "#") {
+      if (item.isExternal) {
+        window.open(item.url, '_blank', 'noopener,noreferrer');
+      } else {
+        window.location.href = item.url;
+      }
+    }
+
     setOpen(false);
   };
 
