@@ -105,23 +105,12 @@ export const navigationData: NavigationMenu[] = [
         ]
       },
       {
-        "id": "nav-estimator",
-        "label": "Price Estimator",
-        "url": "/estimator",
-        "icon": "calculator",
-        "description": "Get instant price estimates for your timber needs",
-        "order": 3,
-        "isExternal": false,
-        "isVisible": true,
-        "type": "page"
-      },
-      {
         "id": "nav-services",
         "label": "Services",
         "url": "/services",
         "icon": "briefcase",
         "description": "Bulk orders, custom solutions, and delivery support",
-        "order": 4,
+        "order": 3,
         "isExternal": false,
         "isVisible": true,
         "children": [
@@ -164,7 +153,7 @@ export const navigationData: NavigationMenu[] = [
         "url": "/blog",
         "icon": "newspaper",
         "description": "Insights and guides for Bangalore timber projects",
-        "order": 5,
+        "order": 4,
         "isExternal": false,
         "isVisible": true,
         "children": [
@@ -212,7 +201,7 @@ export const navigationData: NavigationMenu[] = [
         "label": "About",
         "url": "/about",
         "icon": "info",
-        "order": 6,
+        "order": 5,
         "isExternal": false,
         "isVisible": true,
         "type": "page"
@@ -222,92 +211,10 @@ export const navigationData: NavigationMenu[] = [
         "label": "Contact",
         "url": "/contact",
         "icon": "phone",
-        "order": 7,
+        "order": 6,
         "isExternal": false,
         "isVisible": true,
         "type": "page"
-      },
-      {
-        "id": "nav-comparison",
-        "label": "Product Comparison",
-        "url": "/compare",
-        "icon": "git-compare",
-        "description": "Compare different timber products side by side",
-        "order": 8,
-        "isExternal": false,
-        "isVisible": true,
-        "type": "page"
-      },
-      {
-        "id": "nav-dashboard",
-        "label": "My Dashboard",
-        "url": "/dashboard",
-        "icon": "layout-dashboard",
-        "description": "Track your orders and manage your account",
-        "order": 9,
-        "isExternal": false,
-        "isVisible": true,
-        "type": "page"
-      },
-      {
-        "id": "nav-directions",
-        "label": "Get Directions",
-        "url": "https://share.google/wy5zsZJlZLGB41zl7",
-        "icon": "map-pin",
-        "description": "Find our workshop location",
-        "order": 10,
-        "isExternal": true,
-        "isVisible": true,
-        "type": "external"
-      },
-      {
-        "id": "nav-legal",
-        "label": "Legal",
-        "url": "#",
-        "icon": "file-text",
-        "description": "Terms, privacy policy, and legal information",
-        "order": 11,
-        "isExternal": false,
-        "isVisible": true,
-        "type": "category",
-        "children": [
-          {
-            "id": "nav-legal-terms",
-            "label": "Terms of Service",
-            "url": "/terms",
-            "order": 1,
-            "isExternal": false,
-            "isVisible": true,
-            "type": "page"
-          },
-          {
-            "id": "nav-legal-privacy",
-            "label": "Privacy Policy",
-            "url": "/privacy",
-            "order": 2,
-            "isExternal": false,
-            "isVisible": true,
-            "type": "page"
-          },
-          {
-            "id": "nav-legal-refund",
-            "label": "Refund Policy",
-            "url": "/refund",
-            "order": 3,
-            "isExternal": false,
-            "isVisible": true,
-            "type": "page"
-          },
-          {
-            "id": "nav-legal-shipping",
-            "label": "Shipping Policy",
-            "url": "/shipping-policy",
-            "order": 4,
-            "isExternal": false,
-            "isVisible": true,
-            "type": "page"
-          }
-        ]
       }
     ],
     "settings": {
