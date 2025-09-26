@@ -105,12 +105,23 @@ export const navigationData: NavigationMenu[] = [
         ]
       },
       {
+        "id": "nav-estimator",
+        "label": "Price Estimator",
+        "url": "/estimator",
+        "icon": "calculator",
+        "description": "Get instant price estimates for your timber needs",
+        "order": 3,
+        "isExternal": false,
+        "isVisible": true,
+        "type": "page"
+      },
+      {
         "id": "nav-services",
         "label": "Services",
         "url": "/services",
         "icon": "briefcase",
         "description": "Bulk orders, custom solutions, and delivery support",
-        "order": 3,
+        "order": 4,
         "isExternal": false,
         "isVisible": true,
         "children": [
@@ -153,7 +164,7 @@ export const navigationData: NavigationMenu[] = [
         "url": "/blog",
         "icon": "newspaper",
         "description": "Insights and guides for Bangalore timber projects",
-        "order": 4,
+        "order": 5,
         "isExternal": false,
         "isVisible": true,
         "children": [
@@ -201,7 +212,7 @@ export const navigationData: NavigationMenu[] = [
         "label": "About",
         "url": "/about",
         "icon": "info",
-        "order": 5,
+        "order": 6,
         "isExternal": false,
         "isVisible": true,
         "type": "page"
@@ -211,17 +222,6 @@ export const navigationData: NavigationMenu[] = [
         "label": "Contact",
         "url": "/contact",
         "icon": "phone",
-        "order": 6,
-        "isExternal": false,
-        "isVisible": true,
-        "type": "page"
-      },
-      {
-        "id": "nav-estimator",
-        "label": "Price Estimator",
-        "url": "/estimator",
-        "icon": "calculator",
-        "description": "Get instant price estimates for your timber needs",
         "order": 7,
         "isExternal": false,
         "isVisible": true,
@@ -250,12 +250,23 @@ export const navigationData: NavigationMenu[] = [
         "type": "page"
       },
       {
+        "id": "nav-directions",
+        "label": "Get Directions",
+        "url": "https://share.google/wy5zsZJlZLGB41zl7",
+        "icon": "map-pin",
+        "description": "Find our workshop location",
+        "order": 10,
+        "isExternal": true,
+        "isVisible": true,
+        "type": "external"
+      },
+      {
         "id": "nav-legal",
         "label": "Legal",
         "url": "#",
         "icon": "file-text",
         "description": "Terms, privacy policy, and legal information",
-        "order": 10,
+        "order": 11,
         "isExternal": false,
         "isVisible": true,
         "type": "category",
@@ -297,17 +308,6 @@ export const navigationData: NavigationMenu[] = [
             "type": "page"
           }
         ]
-      },
-      {
-        "id": "nav-directions",
-        "label": "Get Directions",
-        "url": "https://share.google/wy5zsZJlZLGB41zl7",
-        "icon": "map-pin",
-        "description": "Find our workshop location",
-        "order": 11,
-        "isExternal": true,
-        "isVisible": true,
-        "type": "external"
       }
     ],
     "settings": {
