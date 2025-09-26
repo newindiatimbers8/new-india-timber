@@ -1,4 +1,4 @@
-import { Play, Factory, Users, Award, Volume2, VolumeX } from "lucide-react";
+import { Play, Factory, Users, Award, Volume2, VolumeX, Pause } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/utils";
@@ -12,9 +12,11 @@ const WorkshopVideoSection = () => {
   const [isInView, setIsInView] = useState(false);
   const [autoplayFailed, setAutoplayFailed] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
+  const [showPlayButton, setShowPlayButton] = useState(true);
   const navigate = useNavigate();
   const videoRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
 
   // YouTube video ID extracted from the URL
   const youtubeVideoId = "MdkVvDU-TLs";
@@ -26,11 +28,13 @@ const WorkshopVideoSection = () => {
       setIsVideoLoaded(true);
       setShowYouTubePlayer(true);
       setIsVideoPlaying(true);
+      setShowPlayButton(false); // Hide play button when video starts
       
       // Check if autoplay failed after a delay
       setTimeout(() => {
         if (!isVideoPlaying) {
           setAutoplayFailed(true);
+          setShowPlayButton(true); // Show play button if autoplay failed
         }
       }, 3000);
     }, 1500);
@@ -48,6 +52,7 @@ const WorkshopVideoSection = () => {
           setTimeout(() => {
             setShowYouTubePlayer(true);
             setIsVideoPlaying(true);
+            setShowPlayButton(false); // Hide play button when video starts
           }, 500);
         }
       },
@@ -65,13 +70,35 @@ const WorkshopVideoSection = () => {
     };
   }, [showYouTubePlayer]);
 
+  // Auto-hide play button after video starts playing
+  useEffect(() => {
+    if (isVideoPlaying && showYouTubePlayer) {
+      const timer = setTimeout(() => {
+        setShowPlayButton(false);
+      }, 2000); // Hide play button 2 seconds after video starts
+
+      return () => clearTimeout(timer);
+    }
+  }, [isVideoPlaying, showYouTubePlayer]);
+
   const handlePlayVideo = () => {
     setShowYouTubePlayer(true);
     setIsVideoPlaying(true);
+    setShowPlayButton(false); // Hide play button when video starts
+    setAutoplayFailed(false); // Reset autoplay failed state
   };
 
   const handleVideoPause = () => {
     setIsVideoPlaying(false);
+    setShowPlayButton(true); // Show play button when video is paused
+  };
+
+  const handleVideoClick = () => {
+    if (isVideoPlaying) {
+      handleVideoPause();
+    } else {
+      handlePlayVideo();
+    }
   };
 
   const handleScheduleVisit = () => {
@@ -148,15 +175,17 @@ const WorkshopVideoSection = () => {
                         </div>
                       )}
                       
-                      {/* Play Button Overlay */}
-                      <div 
-                        className="absolute inset-0 flex items-center justify-center cursor-pointer"
-                        onClick={handlePlayVideo}
-                      >
-                        <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-                          <Play className="w-6 h-6 sm:w-8 sm:h-8 text-primary ml-1" />
+                      {/* Play Button Overlay - Only show when not playing */}
+                      {showPlayButton && (
+                        <div 
+                          className="absolute inset-0 flex items-center justify-center cursor-pointer"
+                          onClick={handlePlayVideo}
+                        >
+                          <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                            <Play className="w-6 h-6 sm:w-8 sm:h-8 text-primary ml-1" />
+                          </div>
                         </div>
-                      </div>
+                      )}
                       
                       {/* Video Title Overlay */}
                       <div className="absolute bottom-4 left-4 right-4">
@@ -171,7 +200,7 @@ const WorkshopVideoSection = () => {
                     /* YouTube Embed */
                     <div className="relative w-full h-full">
                       <iframe
-                        ref={videoRef}
+                        ref={iframeRef}
                         className="w-full h-full"
                         src={`https://www.youtube.com/embed/${youtubeVideoId}?autoplay=1&mute=1&rel=0&modestbranding=1&showinfo=0&controls=1&loop=1&playlist=${youtubeVideoId}&start=0&enablejsapi=1`}
                         title="New India Timbers Workshop Tour"
@@ -180,6 +209,25 @@ const WorkshopVideoSection = () => {
                         allowFullScreen
                         loading="eager"
                       />
+                      
+                      {/* Click overlay for play/pause control */}
+                      <div 
+                        className="absolute inset-0 cursor-pointer"
+                        onClick={handleVideoClick}
+                      />
+                      
+                      {/* Play/Pause Button Overlay - Only show when not playing or when paused */}
+                      {showPlayButton && (
+                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                          <div className="w-16 h-16 sm:w-20 sm:h-20 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg transition-all duration-300 pointer-events-auto">
+                            {isVideoPlaying ? (
+                              <Pause className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
+                            ) : (
+                              <Play className="w-6 h-6 sm:w-8 sm:h-8 text-white ml-1" />
+                            )}
+                          </div>
+                        </div>
+                      )}
                       
                       {/* Mute indicator */}
                       {isMuted && (
