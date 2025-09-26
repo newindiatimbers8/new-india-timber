@@ -14,14 +14,14 @@ import {
   ChevronRight,
   Users
 } from "lucide-react";
-import Layout from "../components/layout/Layout";
+import Layout from "@/components/layout/Layout";
 import { getProducts } from "@/services/products";
 import type { Product } from "@/types/product";
-import ProductSEO from "../components/products/ProductSEO";
-import ProductSpecifications from "../components/products/ProductSpecifications";
-import ProductImages from "../components/products/ProductImages";
-import ProductApplications from "../components/products/ProductApplications";
-import ProductComparison from "../components/products/ProductComparison";
+import ProductSEO from "@/components/products/ProductSEO";
+import ProductSpecifications from "@/components/products/ProductSpecifications";
+import ProductImages from "@/components/products/ProductImages";
+import ProductApplications from "@/components/products/ProductApplications";
+import ProductComparison from "@/components/products/ProductComparison";
 
 // Helper function to transform existing product data to match component expectations
 const transformProductData = (product: any): Product => {

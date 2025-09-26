@@ -3,7 +3,7 @@
  * Comprehensive image handling and optimization for timber product pages
  */
 
-import { Product, ImageVariant, GalleryImage, ApplicationImage } from '../types/Product';
+import { Product, ImageVariant, GalleryImage, ApplicationImage } from '@/types/product';
 
 /**
  * Image optimization configuration

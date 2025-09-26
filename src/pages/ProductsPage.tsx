@@ -1,8 +1,8 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { useSearchParams, Link } from "react-router-dom";
-import Layout from "../components/layout/Layout";
-import ProductGrid from "../components/products/ProductGrid";
+import Layout from "@/components/layout/Layout";
+import ProductGrid from "@/components/products/ProductGrid";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -10,7 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { SlidersHorizontal, X, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useProducts } from "../hooks/useProducts";
+import { useProducts } from "@/hooks/useProducts";
 // Define a compatible Product interface for the products.json structure
 interface TimberProduct {
   id: string;

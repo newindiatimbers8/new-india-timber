@@ -20,7 +20,7 @@ import {
   MapPin,
   Clock
 } from "lucide-react";
-import Layout from "../layout/Layout";
+import Layout from "@/components/layout/Layout";
 import { Progress } from "@/components/ui/progress";
 import { getProducts } from "@/services/products";
 import type { Product } from "@/types/product";

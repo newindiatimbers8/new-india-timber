@@ -1,7 +1,7 @@
 
 import { useEffect } from "react";
-import Layout from "../components/layout/Layout";
-import LoginForm from "../components/auth/LoginForm";
+import Layout from "@/components/layout/Layout";
+import LoginForm from "@/components/auth/LoginForm";
 
 const LoginPage = () => {
   useEffect(() => {

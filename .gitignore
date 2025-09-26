@@ -12,6 +12,37 @@ dist
 dist-ssr
 *.local
 
+# Build artifacts
+build/
+out/
+
+# Generated files
+generated-images/
+tools/mcp-server-gemini-image-generator/generated-images/
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

@@ -1,18 +1,18 @@
 
 import { useEffect, Suspense, lazy } from "react";
-import Layout from "../components/layout/Layout";
+import Layout from "@/components/layout/Layout";
 import { Helmet } from "react-helmet-async";
 import { generateHomeStructuredData } from "@/services/seo";
 
 // Lazy load homepage sections for better performance
-const Hero = lazy(() => import("../components/home/Hero"));
-const CategorySection = lazy(() => import("../components/home/CategorySection"));
-const CustomerSegment = lazy(() => import("../components/home/CustomerSegment"));
-const HowItWorks = lazy(() => import("../components/home/HowItWorks"));
-const FeaturesSection = lazy(() => import("../components/home/FeaturesSection"));
-const WorkshopVideoSection = lazy(() => import("../components/home/WorkshopVideoSection"));
-const TestimonialsSection = lazy(() => import("../components/home/TestimonialsSection"));
-const CTASection = lazy(() => import("../components/home/CTASection"));
+const Hero = lazy(() => import("@/components/home/Hero"));
+const CategorySection = lazy(() => import("@/components/home/CategorySection"));
+const CustomerSegment = lazy(() => import("@/components/home/CustomerSegment"));
+const HowItWorks = lazy(() => import("@/components/home/HowItWorks"));
+const FeaturesSection = lazy(() => import("@/components/home/FeaturesSection"));
+const WorkshopVideoSection = lazy(() => import("@/components/home/WorkshopVideoSection"));
+const TestimonialsSection = lazy(() => import("@/components/home/TestimonialsSection"));
+const CTASection = lazy(() => import("@/components/home/CTASection"));
 
 // Loading component for sections
 const SectionLoader = () => (

@@ -71,7 +71,7 @@ For AI-powered image generation features:
 
 1. **Navigate to the MCP server directory:**
 ```bash
-cd mcp-server-gemini-image-generator
+cd tools/mcp-server-gemini-image-generator
 ```
 
 2. **Set up Python environment:**
@@ -162,8 +162,8 @@ npx playwright test tests/e2e/homepage.spec.ts
 
 ```bash
 # Test the image generation server
-cd mcp-server-gemini-image-generator
-python test-gemini-mcp.py
+cd tools/mcp-server-gemini-image-generator
+python test_image_generation.py
 ```
 
 ## Available Scripts
@@ -181,27 +181,45 @@ python test-gemini-mcp.py
 ## Project Structure
 
 ```
-src/
-├── components/          # Reusable UI components
-├── pages/              # Page components
-├── hooks/              # Custom React hooks
-├── services/           # API and external service integrations
-├── utils/              # Utility functions
-├── types/              # TypeScript type definitions
-├── data/               # Static data and configurations
-└── lib/                # Library configurations
-
-tests/
-├── unit/               # Unit tests
-├── integration/        # Integration tests
-├── e2e/                # End-to-end tests
-├── a11y/               # Accessibility tests
-└── performance/        # Performance tests
-
-mcp-server-gemini-image-generator/
-├── src/                # MCP server source code
-├── examples/           # Generated image examples
-└── tests/              # Server tests
+timber-craft-commerce-hub/
+├── src/                    # Main application source code
+│   ├── components/         # Reusable UI components
+│   │   ├── ui/            # shadcn/ui components
+│   │   ├── layout/        # Layout components
+│   │   ├── products/      # Product-related components
+│   │   ├── home/          # Homepage sections
+│   │   └── ...            # Other component categories
+│   ├── pages/             # Page components
+│   ├── hooks/             # Custom React hooks
+│   ├── services/          # API and external service integrations
+│   ├── utils/             # Utility functions
+│   ├── types/             # TypeScript type definitions
+│   ├── data/              # Static data and configurations
+│   └── lib/               # Library configurations
+│
+├── public/                # Static assets
+│   ├── images/           # Image assets
+│   ├── data/             # JSON data files
+│   └── ...               # Other static files
+│
+├── tests/                 # Test files
+│   ├── unit/             # Unit tests
+│   ├── integration/      # Integration tests
+│   ├── performance/      # Performance tests
+│   └── ...               # Other test types
+│
+├── tools/                 # Development tools
+│   └── mcp-server-gemini-image-generator/  # AI image generation server
+│       ├── src/          # MCP server source code
+│       ├── generated-images/  # Generated image examples
+│       └── ...           # Server configuration
+│
+├── docs/                  # Documentation
+│   ├── specs/            # Project specifications
+│   └── ...               # Other documentation
+│
+├── scripts/               # Build and utility scripts
+└── ...                    # Configuration files
 ```
 
 ## Deployment

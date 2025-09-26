@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Product } from '../../types/Product';
-import { generateSEOData, generateAllStructuredData } from '../../utils/seoUtils';
+import { Product } from '@/types/product';
+import { generateSEOData, generateAllStructuredData } from '@/utils/seoUtils';
 
 interface ProductSEOProps {
   product: Product;

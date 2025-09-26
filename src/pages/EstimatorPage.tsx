@@ -1,7 +1,7 @@
 /* ESTIMATOR PAGE COMMENTED OUT
 import { useEffect } from "react";
-import Layout from "../components/layout/Layout";
-import DetailedPriceEstimator from "../components/estimator/DetailedPriceEstimator";
+import Layout from "@/components/layout/Layout";
+import DetailedPriceEstimator from "@/components/estimator/DetailedPriceEstimator";
 
 const EstimatorPage = () => {
   useEffect(() => {

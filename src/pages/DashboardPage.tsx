@@ -1,7 +1,7 @@
 
 import { useEffect } from "react";
-import DashboardLayout from "../components/dashboard/DashboardLayout";
-import DashboardOverview from "../components/dashboard/DashboardOverview";
+import DashboardLayout from "@/components/dashboard/DashboardLayout";
+import DashboardOverview from "@/components/dashboard/DashboardOverview";
 
 const DashboardPage = () => {
   useEffect(() => {

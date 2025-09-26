@@ -1,8 +1,8 @@
 
 import { useEffect } from "react";
-import Layout from "../components/layout/Layout";
-import BulkOrderForm from "../components/bulk/BulkOrderForm";
-// import CostCalculator from "../components/bulk/CostCalculator"; // COMMENTED OUT
+import Layout from "@/components/layout/Layout";
+import BulkOrderForm from "@/components/bulk/BulkOrderForm";
+// import CostCalculator from "@/components/bulk/CostCalculator"; // COMMENTED OUT
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Helmet } from "react-helmet-async";
 

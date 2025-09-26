@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Product } from '../../types/Product';
-import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
-import { Button } from '../ui/button';
-import { Badge } from '../ui/badge';
+import { Product } from '@/types/product';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import { 
   ChevronLeft, 
   ChevronRight, 
@@ -12,7 +12,7 @@ import {
   Play,
   Pause
 } from 'lucide-react';
-import { LazyImageLoader, ImageZoom, ImageGallery } from '../../utils/imageUtils';
+import { LazyImageLoader, ImageZoom, ImageGallery } from '@/utils/imageUtils';
 
 interface ProductImagesProps {
   product: Product;

@@ -3,7 +3,7 @@
  * Comprehensive SEO utilities for timber product pages
  */
 
-import { Product, SEOData, StructuredData } from '../types/Product';
+import { Product, SEOData, StructuredData } from '@/types/product';
 
 /**
  * SEO configuration constants

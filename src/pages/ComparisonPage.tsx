@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import Layout from "../components/layout/Layout";
-import WoodComparisonTool from "../components/products/WoodComparisonTool";
+import Layout from "@/components/layout/Layout";
+import WoodComparisonTool from "@/components/products/WoodComparisonTool";
 import { Helmet } from "react-helmet-async";
 
 const ComparisonPage = () => {
